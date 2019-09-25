@@ -1,0 +1,20 @@
+## Impedir que se pueda ver el listado de contenidos de un directorio
+#
+#Options All -Indexes
+#
+## Url Amigables
+#
+RewriteEngine On
+##RewriteCond %{HTTPS} off
+##RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#
+#
+#
+RewriteRule ^([a-zA-Z0-9/-]+)$ index.php?ruta=$1
+#
+##ErrorDocument 400 http://localhost/snsanfrancisco/errors
+##ErrorDocument 401 http://localhost/snsanfrancisco/errors
+##ErrorDocument 403 http://localhost/snsanfrancisco/errors
+ErrorDocument 404 http://localhost/snsanfrancisco/error/404
+##ErrorDocument 500 http://localhost/snsanfrancisco/errors
+##ErrorDocument 503 http://localhost/snsanfrancisco/errors
