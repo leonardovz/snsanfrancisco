@@ -1,6 +1,7 @@
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/popper.min.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/mdb.min.js"></script>
+<script type="text/javascript" src="<?php echo $ruta; ?>script/funciones.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/sweetalert2/sweetalert2.all.min.js"></script>
 <?php if ($UserLogin) { ?>
   <script>

@@ -4,7 +4,8 @@ session_start();
 require_once '../config/ruta.php';
 require_once '../config/config.php';
 require_once '../config/funciones.php';
-require_once '../recursos/PHPMailer/PHPMailerAutoload.php';
+require_once '../recursos/PHPMailer/src/PHPMailer.php';
+require_once '../recursos/PHPMailer/src/SMTP.php';
 
 
 $conexion = conexion($bd_config);
@@ -27,6 +28,12 @@ if (!isset($_POST['opcion'])) {
 
 switch ($_POST['opcion']) {
     case 'registro':
+    // $datos = array(
+    //     'correo' => $email,
+    //     'url' => 'https://snsanfrancisco.com/',
+    //     'validarCorreo' => md5($email),
+    // );
+    // $respuesta = enviarCorreo2($datos);
         $email     = (isset($_POST['email'])    && !empty($_POST['email']))    ? strtolower($_POST['email']) : false;
         $emailR    = (isset($_POST['emailR'])   && !empty($_POST['emailR']))   ? strtolower($_POST['emailR']) : false;
         $nombre    = (isset($_POST['nombre'])   && !empty($_POST['nombre']))   ? strtolower($_POST['nombre']) : false;
@@ -39,7 +46,7 @@ switch ($_POST['opcion']) {
         $validar = 0;
         $modo = 'dir';
         // var_dump($resultado);
-
+        enviarCorreo2(false);
         if ($email && $emailR && $nombre && $apellidos && $password && $passwordR) {
             if ($email == $emailR) {
                 if ($password == $passwordR) {
@@ -49,11 +56,11 @@ switch ($_POST['opcion']) {
                         // var_dump($resultado);
                         if ($resultado) {
                             $datos = array(
-                                'correo' => $email,
-                                'url' => $ruta,
+                                'correo' => 'leonardovazquez81@gmail.com',
+                                'url' => 'https://snsanfrancisco.com/',
                                 'validarCorreo' => md5($email),
                             );
-                            $respuesta = enviarCorreo($datos);
+                            $respuesta = enviarCorreo2($datos);
                         } else {
                             $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible realizar el registro', 'sql' => $sql, 'error' => $respuesta->error);
                         }
@@ -82,7 +89,7 @@ switch ($_POST['opcion']) {
                 $resultado = $conexion->query($sql);
                 $resultado = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
                 if ($resultado) {
-                    if($resultado['validar']==0){
+                    if ($resultado['validar'] == 0) {
                         die(json_encode(array('respuesta' => 'error', 'Texto' => 'Es necesario que verifiques tu cuenta',)));
                     }
                     $respuesta = array('respuesta' => 'exito', 'Texto' => 'Redireccionando a tu perfil',);
@@ -90,22 +97,22 @@ switch ($_POST['opcion']) {
                     $_SESSION['snsanfrancisco']['idUsuario'] =  $resultado['idUsuario'];
                     $_SESSION['snsanfrancisco']['nombre'] =  $resultado['nombre'];
                     $_SESSION['snsanfrancisco']['apellidos'] =  $resultado['apellidos'];
-                    $_SESSION['snsanfrancisco']['rol'] =  $resultado['correo'];
+                    $_SESSION['snsanfrancisco']['correo'] =  $resultado['correo'];
                     $_SESSION['snsanfrancisco']['fecha'] =  $resultado['fecha'];
                     $_SESSION['snsanfrancisco']['modo'] =  $resultado['modo'];
+                    $_SESSION['snsanfrancisco']['rol'] =  $resultado['tipoUser'];
                     $_SESSION['snsanfrancisco']['imagen'] =  $resultado['img'];
                     $_SESSION['snsanfrancisco']['membresia'] = false;
-                    
-                    $respuesta = array('respuesta' => 'exito', 'Texto' => 'Iniciando Sesion',);
 
+                    $respuesta = array('respuesta' => 'exito', 'Texto' => 'Iniciando Sesion',);
                 } else {
                     $respuesta = array('respuesta' => 'error', 'Texto' => 'Correo electronico o contraseña Incorrectos',);
                 }
             } else {
                 $respuesta = array('respuesta' => 'error', 'Texto' => 'Correo electronico o contraseña Incorrectos',);
             }
-        }else{
-            $respuesta = array('respuesta' => 'error', 'Texto' => 'No llegaron los datos de forma correcta','post'=>$_POST);
+        } else {
+            $respuesta = array('respuesta' => 'error', 'Texto' => 'No llegaron los datos de forma correcta', 'post' => $_POST);
         }
         die(json_encode($respuesta));
         break;
@@ -115,10 +122,43 @@ switch ($_POST['opcion']) {
         $respuesta = array('respuesta' => 'exito', 'Texto' => 'Verificacion Exitosa',);
         die(json_encode($respuesta));
         break;
+    case 'subscribirCuenta':
+        $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
+        $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
+
+        break;
     default:
         break;
 }
 
+function enviarCorreo2($datos)
+{
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+    $mail->CharSet = 'UTF-8';
+    $mail->SMTPDebug = 2;
+    $mail->Debugoutput = 'html';
+
+    $mail->IsSMTP(); // enable SMTP
+    $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+    $mail->SMTPAuth = true; // authentication enabled
+    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+    $mail->Host = "mx72.hostgator.mx";
+    $mail->Port = 465; // or 587
+    $mail->IsHTML(true);
+    $mail->Username = "no-reply@snsanfrancisco.com";
+    $mail->Password = ")L7l9h1y~keT";
+    $mail->SetFrom("no-reply@snsanfrancisco.com");
+    $mail->Subject = "Comprobación de correo Electronico";
+    $mail->Body = "Prueba de envio de correos desde hostgator";
+    $mail->AddAddress("leonardovazquez81@gmail.com");
+    // $mail->AddAddress("blancaflore2305@gmail.com");
+    $mail->msgHTML('');
+    if (!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+    } else {
+        echo "Mensaje enviado correctamente";
+    }
+}
 function enviarCorreo($datos)
 {
 

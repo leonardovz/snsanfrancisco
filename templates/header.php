@@ -41,6 +41,8 @@
     echo '<link href="' . $ruta . 'recursos/css/addons/cropper.css" rel="stylesheet">';
     echo '<script type="text/javascript" src="'.$ruta.'recursos/js/addons/cropper.js"></script>';
     echo '<script type="text/javascript" src="'.$ruta.'recursos/js/addons/bootstrap.bundle.min.js"></script>';
+    echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />';
+    echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>';
   }
   ?>
   <script>

@@ -12,67 +12,51 @@
     <div class="container"><br>
         <div class="row">
             <div class="col-md-6 m-auto">
-                <!-- Card -->
                 <div class="card">
-
-                    <!-- Card body -->
                     <h5 class="card-header info-color-dark white-text text-center py-4 m-0">
-                        <strong>Registro</strong>
+                        <strong>¡Registrate!</strong>
                     </h5>
                     <div class="card-body">
 
-                        <!-- Material form register -->
                         <form id="formRegistro" method="post"> 
-                            <!-- Material input text -->
                             <div class="md-form">
                                 <input type="text" id="nombre" name="nombre" class="form-control">
-                                <label for="nombre" class="font-weight-light">Tu nombre</label>
+                                <label for="nombre" class="font-weight-light">Nombre</label>
                             </div>
                             <div class="md-form">
                                 <input type="text" id="apellido" name="apellido" class="form-control">
-                                <label for="apellido" class="font-weight-light">Tu apellido</label>
+                                <label for="apellido" class="font-weight-light">Apellidos</label>
                             </div>
 
-                            <!-- Material input email -->
                             <div class="md-form">
                                 <input type="email" id="email" name="email" class="form-control">
-                                <label for="email" class="font-weight-light">Tu correo</label>
+                                <label for="email" class="font-weight-light">Email</label>
                             </div>
 
-                            <!-- Material input email -->
                             <div class="md-form">
-                                <!-- <i class="fa fa-exclamation-triangle prefix orange-text"></i> -->
                                 <input type="email" id="emailR" name="emailR" class="form-control">
-                                <label for="emailR" class="font-weight-light">Confirma tu
-                                    correo</label>
+                                <label for="emailR" class="font-weight-light">Confirmación de  email</label>
                             </div>
 
-                            <!-- Material input password -->
                             <div class="md-form">
-                                <!-- <i class="fa fa-lock prefix blue-text"></i> -->
                                 <input type="password" id="password" name="password" class="form-control">
-                                <label for="password" class="font-weight-light">Ingresa una
-                                    contraseña</label>
+                                <label for="password" class="font-weight-light">Contraseña</label>
                             </div>
                             <div class="md-form">
-                                <!-- <i class="fa fa-exclamation-triangle prefix orange-text"></i> -->
                                 <input type="password" name="passwordR" id="passwordR" class="form-control">
-                                <label for="passwordR" class="font-weight-light">Repite tu
-                                    contraseña</label>
+                                <label for="passwordR" class="font-weight-light">Repite la contraseña</label>
                             </div>
 
                             <div class="text-center py-4 mt-3">
-                                <button class="btn btn-cyan" type="submit">Register</button>
+                                <button class="btn btn-cyan" type="submit">Registrarme</button>
                             </div>
 
                             <div class="text-center py-4 mt-0">
-                                <!-- Register -->
                                 <p>Ya eres miembro?
                                     <a href="<?php echo $ruta; ?>login">Ingresa</a>
                                 </p>
 
-                                <!-- Social login -->
-                                <p>Inicia Sesión con :</p>
+                                <p>Ingresa con  :</p>
                                 <a type="button" class="btn btn-primary text-white text-center">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
@@ -82,20 +66,16 @@
                             </div>
 
                         </form>
-                        <!-- Material form register -->
 
                     </div>
-                    <!-- Card body -->
 
                 </div>
                 <div class="card">
                     <div class="card-body" id="errores">
                     
                     </div>
-                    <!-- Card body -->
 
                 </div>
-                <!-- Card -->
             </div>
         </div>
     </div>

@@ -49,7 +49,7 @@ require_once 'templates/header.php'; ?>
                             <!-- Featured news -->
 
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6">
 
                             <!-- Featured news -->
                             <div class="single-news mb-lg-0 mb-5 pt-5 ">
@@ -57,7 +57,7 @@ require_once 'templates/header.php'; ?>
                                     <a href="#!" class="deep-blue-text">
                                         <h6 class="font-weight-bold"><i class="fas fa-code pr-2"></i>Desarrollador</h6>
                                     </a>
-                                    <p class="font-weight-bold dark-grey-text"><i class="fas fa-clock-o pr-2"></i>27/02/2018</p>
+                                    <p class="font-weight-bold dark-grey-text text-right"><i class="fas fa-clock-o pr-2"></i>27/02/2018</p>
                                 </div>
 
                                 <!-- Excerpt -->
@@ -78,7 +78,7 @@ require_once 'templates/header.php'; ?>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="row p-3">
-                                <div class="col-md-12  rounded-lg z-depth-4 ">
+                                <div class="col-md-12  rounded-lg z-depth-1-half ">
                                     <!--Section: Contact v.2-->
                                     <section class="mb-4">
 
@@ -92,53 +92,44 @@ require_once 'templates/header.php'; ?>
                                                 <form id="formPublicacion" name="contact-form" action="" method="POST">
                                                     <div class="row">
                                                         <!--Grid column-->
-                                                        <div class="col-md-6">
-                                                            <div class="md-form mb-0">
-                                                                <input type="text" id="titulo" name="titulo" class="form-control">
-                                                                <label for="titulo" class="">Título</label>
-                                                            </div>
-                                                        </div>
-                                                        <!--Grid column-->
-
-                                                        <!--Grid column-->
-                                                        <!-- <div class="col-md-6">
-                                                            <div class="md-form mb-0">
-                                                                <div class="input-group mb-3">
-                                                                    <select class="custom-select" id="inputGroupSelect03" aria-label="Example select with button addon">
-                                                                        <option selected>Selecciona la etiqueta</option>
-                                                                        <option value="1">Ejercicio</option>
-                                                                        <option value="2">Animación</option>
-                                                                        <option value="3">Desarrollo</option>
-                                                                    </select>
-                                                                </div>
-
-                                                            </div>
-                                                        </div> -->
-                                                        <!--Grid column-->
-
-                                                    </div>
-                                                    <div class="row">
-
-                                                        <!--Grid column-->
                                                         <div class="col-md-8">
-                                                            <div class="md-form">
-                                                                <textarea type="text" id="descripcion" name="descripcion" class="form-control md-textarea"></textarea>
-                                                                <label for="descripcion">Descripción</label>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="md-form mb-0">
+                                                                        <input type="text" id="titulo" name="titulo" class="form-control">
+                                                                        <label for="titulo" class="">Título</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 opciones oculta">
+                                                                    <div class="md-form">
+                                                                        <textarea type="text" id="descripcion" name="descripcion" class="form-control md-textarea"></textarea>
+                                                                        <label for="descripcion">Descripción</label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+
                                                         </div>
-                                                        <div class="col-4">
+
+                                                        <div class="col-4 opciones oculta">
                                                             <label class="label aqua-gradient rounded " data-toggle="tooltip" title="Agregar imagen" style="width: 100%; cursor: pointer;">
                                                                 <img class="rounded z-depth-3 mt-0 pt-0" id="avatar" src="<?php echo $ruta; ?>galeria/sistema/images/imgdefault.png" alt="avatar" style="width: 100%;">
                                                                 <input type="file" class="sr-only" id="input" name="image" accept="image/*">
                                                             </label>
-                                                            <div class="progress" style="display: none;">
-                                                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                                            <div class="progress" id="progresoPub">
+                                                                <div id="progresoPubBarra" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                                                             </div>
                                                             <div class="alert" role="alert"></div>
                                                         </div>
                                                     </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-8">
+                                                            <button class="btn btn-primary btn-block" type="submit">Publicar</button>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div id="cancelar" class="btn btn-danger btn-block text-center" type="submit"><i class="fas fa-window-close"></i></div>
+                                                        </div>
+                                                    </div>
                                                     <!--Grid row-->
-                                                    <button class="btn btn-primary btn-block" type="submit">Publicar</button>
                                                 </form>
                                                 <div class="status"></div>
                                             </div>
@@ -147,182 +138,12 @@ require_once 'templates/header.php'; ?>
                                     <!--Section: Contact v.2-->
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-12 mb-5">
-
-                                    <!-- Featured news -->
-                                    <div class="single-news mb-3">
-
-                                        <!-- Image -->
-                                        <div class="view overlay rounded z-depth-2 mb-4">
-                                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/86.jpg" alt="Sample image">
-                                            <a>
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
-                                        </div>
-
-                                        <!-- Title -->
-                                        <div class="d-flex justify-content-between">
-                                            <div class="col-11 text-center pl-0 mb-3 ">
-                                                <a class="font-weight-bold">Titulo de la publicación</a>
-                                            </div>
-                                        </div>
-                                        <!-- Grid row -->
-                                        <div class="row mb-3">
-
-                                            <!-- Grid column -->
-                                            <div class="col-12">
-                                                <a href="#!"><span class="badge deep-orange"><i class="fas fa-plane pr-2" aria-hidden="true"></i>Travel</span></a> </div>
-                                        </div>
-                                    </div>
-                                    <div class="single-news mb-3">
-
-                                        <!-- Title -->
-                                        <div class="d-flex justify-content-between">
-                                            <div class="col-12 pl-0 text-justify ">
-                                                <a>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae est
-                                                    accusamus
-                                                    optio minima ab odio obcaecati perspiciatis ea vero eaque
-                                                    repellendus, odit
-                                                    tempore eos laboriosam velit aut exercitationem, error nesciunt
-                                                    officia
-                                                    recusandae, asperiores impedit blanditiis id facilis. Unde, neque
-                                                    illo?</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12 mb-5">
-
-                                    <!-- Featured news -->
-                                    <div class="single-news mb-3">
-
-                                        <!-- Image -->
-                                        <div class="view overlay rounded z-depth-2 mb-4">
-                                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/31.jpg" alt="Sample image">
-                                            <a>
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
-                                        </div>
-
-                                        <!-- Title -->
-                                        <div class="d-flex justify-content-between">
-                                            <div class="col-11 text-center pl-0 mb-3 ">
-                                                <a class="font-weight-bold">Titulo de la publicación</a>
-                                            </div>
-                                        </div>
-                                        <!-- Grid row -->
-                                        <div class="row mb-3">
-
-                                            <!-- Grid column -->
-                                            <div class="col-12">
-                                                <a href="#!"><span class="badge pink"><i class="fas fa-camera pr-2" aria-hidden="true"></i>Adventure</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="single-news mb-3">
-
-                                        <!-- Title -->
-                                        <div class="d-flex justify-content-between">
-                                            <div class="col-12 pl-0 text-justify ">
-                                                <a>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae est
-                                                    accusamus
-                                                    optio minima ab odio obcaecati perspiciatis ea vero eaque
-                                                    repellendus, odit
-                                                    tempore eos laboriosam velit aut exercitationem, error nesciunt
-                                                    officia
-                                                    recusandae, asperiores impedit blanditiis id facilis. Unde, neque
-                                                    illo?</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12 mb-5">
-
-                                    <!-- Featured news -->
-                                    <div class="single-news mb-3">
-
-                                        <!-- Image -->
-                                        <div class="view overlay rounded z-depth-2 mb-4">
-                                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/86.jpg" alt="Sample image">
-                                            <a>
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
-                                        </div>
-
-                                        <!-- Title -->
-                                        <div class="d-flex justify-content-between">
-                                            <div class="col-11 text-center pl-0 mb-3 ">
-                                                <a class="font-weight-bold">Titulo de la publicación</a>
-                                            </div>
-                                        </div>
-                                        <!-- Grid row -->
-                                        <div class="row mb-3">
-
-                                            <!-- Grid column -->
-                                            <div class="col-12">
-                                                <a href="#!"><span class="badge deep-orange"><i class="fas fa-plane pr-2" aria-hidden="true"></i>Travel</span></a> </div>
-                                        </div>
-                                    </div>
-                                    <div class="single-news mb-3">
-
-                                        <!-- Title -->
-                                        <div class="d-flex justify-content-between">
-                                            <div class="col-12 pl-0 text-justify ">
-                                                <a>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae est
-                                                    accusamus
-                                                    optio minima ab odio obcaecati perspiciatis ea vero eaque
-                                                    repellendus, odit
-                                                    tempore eos laboriosam velit aut exercitationem, error nesciunt
-                                                    officia
-                                                    recusandae, asperiores impedit blanditiis id facilis. Unde, neque
-                                                    illo?</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12 mb-5">
-
-                                    <!-- Featured news -->
-                                    <div class="single-news mb-3">
-
-                                        <!-- Image -->
-                                        <div class="view overlay rounded z-depth-2 mb-4">
-                                            <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/31.jpg" alt="Sample image">
-                                            <a>
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
-                                        </div>
-
-                                        <!-- Title -->
-                                        <div class="d-flex justify-content-between">
-                                            <div class="col-11 text-center pl-0 mb-3 ">
-                                                <a class="font-weight-bold">Titulo de la publicación</a>
-                                            </div>
-                                        </div>
-                                        <!-- Grid row -->
-                                        <div class="row mb-3">
-
-                                            <!-- Grid column -->
-                                            <div class="col-12">
-                                                <a href="#!"><span class="badge pink"><i class="fas fa-camera pr-2" aria-hidden="true"></i>Adventure</span></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="single-news mb-3">
-
-                                        <!-- Title -->
-                                        <div class="d-flex justify-content-between">
-                                            <div class="col-12 pl-0 text-justify ">
-                                                <a>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae est
-                                                    accusamus
-                                                    optio minima ab odio obcaecati perspiciatis ea vero eaque
-                                                    repellendus, odit
-                                                    tempore eos laboriosam velit aut exercitationem, error nesciunt
-                                                    officia
-                                                    recusandae, asperiores impedit blanditiis id facilis. Unde, neque
-                                                    illo?</a>
-                                            </div>
+                            <div class="row mt-5" id="cuerpoPublicaciones">
+                                <div class="col">
+                                    <p>Cargando ... </p>
+                                    <div class="progress">
+                                        <div id="progressPub" class="progress-bar progress-bar-striped progress-bar-animated unique-color" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100" style="width: 3%">
+                                            3%
                                         </div>
                                     </div>
                                 </div>
@@ -354,7 +175,7 @@ require_once 'templates/header.php'; ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-0">
+                        <div class="col-lg-4 col-md-6 mb-0" id="cuerpoRigth">
                             <h2 class="">Más publicaciones</h2>
                             <div class="row mt-5">
                                 <div class="col-3">
@@ -490,13 +311,13 @@ require_once 'templates/header.php'; ?>
     </div>
     <?php require_once 'templates/footer.view.php'; ?>
     <?php require_once 'templates/footer.php'; ?>
-    <script src="<?php echo $ruta; ?>script/publicacion.js"></script>
     <script>
         new WOW().init();
         $(".wow").on('click', (e) => {
             e.preventDefault();
         });
     </script>
+    <script src="<?php echo $ruta; ?>script/publicacion.js"></script>
 </body>
 
 </html>

@@ -10,7 +10,7 @@ require_once 'templates/header.php';
   <!-- Main navigation -->
   <header>
     <!--Navbar-->
-    <?php require_once 'templates/header.view.php';?>
+    <?php require_once 'templates/header.view.php'; ?>
     <!-- Navbar -->
     <!-- Full Page Intro -->
     <div class="view" style="background-image: url('<?php echo $ruta; ?>recursos/img/servicios/slide-05.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
@@ -22,7 +22,7 @@ require_once 'templates/header.php';
           <div class="row pt-lg-5 mt-lg-5">
             <!--Grid column-->
             <div class="col-md-6 mb-5 mt-md-0 mt-5 white-text text-center text-md-left wow fadeInLeft" data-wow-delay="0.3s">
-              <h1 class="display-4 font-weight-bold"><?php echo $systemName;?></h1>
+              <h1 class="display-4 font-weight-bold"><?php echo $systemName; ?></h1>
               <hr class="hr-light">
               <h6 class="mb-3">Subscribete a las noticias y nuevas publicaciónes de nuestros Usuarios. Resuelve todas
                 tus inquietudes, envianos tus dudad y sugerencias! estamos para atenderte!
@@ -46,27 +46,27 @@ require_once 'templates/header.php';
                   <!--Body-->
                   <div class="md-form">
                     <i class="fas fa-user prefix grey-text"></i>
-                    <input type="text" id="form3" class="form-control">
-                    <label for="form3">Tu nombre</label>
+                    <input type="text" id="nombreCon" class="form-control">
+                    <label for="nombreCon">Tu nombre</label>
                   </div>
                   <div class="md-form">
                     <i class="fas fa-envelope prefix grey-text"></i>
-                    <input type="text" id="form2" class="form-control">
-                    <label for="form2">Tu correo</label>
+                    <input type="text" id="correoCon" class="form-control">
+                    <label for="correoCon">Tu correo</label>
                   </div>
                   <!--Textarea with icon prefix-->
                   <div class="md-form">
                     <i class="fas fa-pencil prefix grey-text"></i>
-                    <textarea type="text" id="form8" class="md-textarea form-control" rows="3"></textarea>
-                    <label for="form8">Tu mensaje</label>
+                    <textarea type="text" id="mensajeCon" class="md-textarea form-control" rows="3"></textarea>
+                    <label for="mensajeCon">Tu mensaje</label>
                   </div>
                   <div class="text-center mt-3">
-                    <button class="btn btn-indigo">Enviar</button>
+                    <button class="btn btn-indigo" id="btnContacto">Enviar</button>
                     <hr>
-                    <fieldset class="form-check">
-                      <input class="form-check-input" type="checkbox" id="checkbox1">
-                      <label class="form-check-label" for="checkbox1" class="dark-grey-text">Subscribirme</label>
-                    </fieldset>
+                    <div class="custom-control custom-checkbox mb-4">
+                      <input type="checkbox" class="custom-control-input" id="subscripcionCon">
+                      <label class="custom-control-label" for="subscripcionCon">Subscribirme</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -93,107 +93,7 @@ require_once 'templates/header.php';
           <h2>Nuevos perfiles!</h2>
         </div>
         <div class="col-md-12 mb-4">
-
-          <!-- Card group-->
-          <div class="card-group">
-
-            <!-- Card -->
-            <div class="card card-personal mb-md-0 mb-4">
-
-              <!-- Card image-->
-              <div class="view overlay">
-                <img class="card-img-top" src="<?php echo $ruta; ?>recursos/img/usuario/4.png" alt="Card image cap">
-                <a href="<?php echo $ruta;?>!">
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
-              <!-- Card image-->
-
-              <!-- Card content -->
-              <div class="card-body">
-
-                <!-- Title-->
-                <a>
-                  <h4 class="card-title">Leonardo Vázquez</h4>
-                </a>
-                <a class="card-meta">Desarrollador Web</a>
-                <!-- Text -->
-                <p class="card-text">Creación de Sitios Web, da a conocer tu marca de una distinta manera</p>
-                <hr>
-                <p class="card-meta float-right">Desarrollador web desde 2017</p>
-
-              </div>
-              <!-- Card content -->
-
-            </div>
-            <!-- Card -->
-
-            <!-- Card -->
-            <div class="card card-personal mb-md-0 mb-4">
-
-              <!-- Card image-->
-              <div class="view overlay">
-                <img class="card-img-top" src="<?php echo $ruta; ?>recursos/img/usuario/9.png" alt="Card image cap">
-                <a href="<?php echo $ruta;?>!">
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
-              <!-- Card image-->
-
-              <!-- Card content -->
-              <div class="card-body">
-
-                <!-- Title-->
-                <a>
-                  <h4 class="card-title">Estetica Kristy</h4>
-                </a>
-                <a class="card-meta">Estilista</a>
-                <!-- Text -->
-                <p class="card-text">Cambia tu look, sientete bien.</p>
-                <hr>
-                <p class="card-meta float-left" style="font-size: 1.75em;">
-                  <a target="_blank" href="https://m.me/EsthelaAngulo1.0" class="text-primary"><i class="fab fa-facebook-messenger"></i></a>
-                  <a target="_blank" href="https://api.whatsapp.com/send?phone=3313324053" class="text-success mx-5"><i class="fab fa-whatsapp"></i></a>
-                </p>
-
-                <p class="card-meta float-right">Agendar una Cita</p>
-
-              </div>
-              <!-- Card content -->
-
-            </div>
-            <!-- Card -->
-
-            <!-- Card -->
-            <div class="card card-personal mb-md-0 mb-4">
-
-              <!-- Card image-->
-              <div class="view overlay">
-                <img class="card-img-top" src="<?php echo $ruta; ?>recursos/img/usuario/6.png" alt="Card image cap">
-                <a href="<?php echo $ruta;?>!">
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
-              <!-- Card image-->
-
-              <!-- Card content -->
-              <div class="card-body">
-
-                <!-- Title-->
-                <a>
-                  <h4 class="card-title">Vázquez Construcción</h4>
-                </a>
-                <a class="card-meta">Albañil, Fontanero, electricista</a>
-                <!-- Text -->
-                <p class="card-text">Hacemos tus ideas y sueños realidad.</p>
-                <hr>
-                <p class="card-meta float-left" style="font-size: 1.60em;">
-                  <a href="tel:3313324053" class="text-success"> <i class="fa fa-phone"></i></a>
-                </p>
-                <p class="card-meta float-right">Trabajando contigo desde 1985</p>
-
-              </div>
-            </div>
+          <div class="row" id="cuerpoPerfiles">
           </div>
         </div>
       </div>
@@ -203,125 +103,7 @@ require_once 'templates/header.php';
       <div class="row">
         <h1>Ultimas Publicacione!</h1>
         <div class="col-md-12 mb-4">
-
-          <!-- Card group-->
-          <div class="card-group">
-
-
-            <div class="card card-personal mb-md-0 m-1">
-
-              <!-- Card image-->
-              <div class="view overlay">
-                <img class="card-img-top" src="<?php echo $ruta; ?>recursos/img/usuario/4.png" alt="Card image cap">
-                <a href="<?php echo $ruta;?>!">
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
-              <!-- Card image-->
-
-              <!-- Card content -->
-              <div class="card-body">
-
-                <!-- Title-->
-                <a>
-                  <h4 class="card-title">Anna</h4>
-                </a>
-                <a class="card-meta">Friends</a>
-                <!-- Text -->
-                <p class="card-text">Anna is a web designer living in New York.</p>
-                <hr>
-                <a class="card-meta"><span><i class="fas fa-user"></i>83 Friends</span></a>
-                <p class="card-meta float-right">Joined in 2012</p>
-
-              </div>
-              <!-- Card content -->
-
-            </div>
-            <div class="card card-personal mb-md-0 m-1">
-
-              <!-- Card image-->
-              <div class="view overlay">
-                <img class="card-img-top" src="<?php echo $ruta; ?>recursos/img/usuario/5.png" alt="Card image cap">
-                <a href="<?php echo $ruta;?>!">
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
-              <!-- Card image-->
-
-              <!-- Card content -->
-              <div class="card-body">
-
-                <!-- Title-->
-                <a>
-                  <h4 class="card-title">John</h4>
-                </a>
-                <a class="card-meta">Coworker</a>
-                <!-- Text -->
-                <p class="card-text">John is a copywriter living in Seattle.</p>
-                <hr>
-                <a class="card-meta"><span><i class="fas fa-user"></i>48 Friends</span></a>
-                <p class="card-meta float-right">Joined in 2015</p>
-
-              </div>
-              <!-- Card content -->
-
-            </div>
-            <div class="card card-personal mb-md-0 m-1">
-
-              <!-- Card image-->
-              <div class="view overlay">
-                <img class="card-img-top" src="<?php echo $ruta; ?>recursos/img/usuario/6.png" alt="Card image cap">
-                <a href="<?php echo $ruta;?>!">
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
-              <!-- Card image-->
-
-              <!-- Card content -->
-              <div class="card-body">
-
-                <!-- Title-->
-                <a>
-                  <h4 class="card-title">Anna</h4>
-                </a>
-                <a class="card-meta">Friends</a>
-                <!-- Text -->
-                <p class="card-text">Anna is a web designer living in New York.</p>
-                <hr>
-                <a class="card-meta"><span><i class="fas fa-user"></i>83 Friends</span></a>
-                <p class="card-meta float-right">Joined in 2012</p>
-
-              </div>
-              <!-- Card content -->
-
-            </div>
-            <div class="card card-personal mb-md-0 m-1">
-
-              <!-- Card image-->
-              <div class="view overlay">
-                <img class="card-img-top" src="<?php echo $ruta; ?>recursos/img/usuario/7.png" alt="Card image cap">
-                <a href="<?php echo $ruta;?>!">
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
-              <!-- Card image-->
-
-              <!-- Card content -->
-              <div class="card-body">
-
-                <!-- Title-->
-                <a>
-                  <h4 class="card-title">Sara</h4>
-                </a>
-                <a class="card-meta">Coworker</a>
-                <!-- Text -->
-                <p class="card-text">Sara is a video maker living in Tokyo.</p>
-                <hr>
-                <a class="card-meta"><span><i class="fas fa-user"></i>127 Friends</span></a>
-                <p class="card-meta float-right">Joined in 2014</p>
-
-              </div>
-            </div>
+          <div class="row" id="cuerpoPublicaciones">
           </div>
         </div>
       </div>
@@ -388,13 +170,13 @@ require_once 'templates/header.php';
     </section>
 
   </div>
-  
+
   <?php require_once 'templates/footer.view.php'; ?>
   <?php require_once 'templates/footer.php'; ?>
 
-  <script src="<?php echo $ruta;?>script/index.js"></script>
+  <script src="<?php echo $ruta; ?>script/index.js"></script>
 
-  
+
 </body>
 
 </html>

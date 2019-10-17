@@ -14,12 +14,16 @@ if (!isset($conexion)) {
 
 
 $rutas = (isset($_GET['ruta']) && !empty($_GET['ruta'])) ? explode("/", strtolower($_GET['ruta'])) : false; //validacion de la segmentacion
+$RUTAS0 = (isset($rutas[0]) && !empty($rutas[0])) ? $rutas[0] : false; //validacion de la RUTA CERO
+$RUTAS1 = (isset($rutas[1]) && !empty($rutas[1])) ? $rutas[1] : false; //validacion de la RUTA UNO
+$RUTAS2 = (isset($rutas[2]) && !empty($rutas[2])) ? $rutas[2] : false; //validacion de la RUTA DOS
+$RUTAS3 = (isset($rutas[3]) && !empty($rutas[3])) ? $rutas[3] : false; //validacion de la RUTA TRES
 
 $UserLogin = ((isset($_SESSION['snsanfrancisco']['validacion'])) ? $_SESSION['snsanfrancisco'] : false); //Validacion de la sesion
 if ($rutas) { //Ruta Vacia
-    if ($rutas[0] == 'error') {
-        if ((isset($rutas[1]) && !empty($rutas[1]))) {
-            if ($rutas[1] == '400' || $rutas[1] == '401' || $rutas[1] == '403' || $rutas[1] == '404' || $rutas[1] == '500' || $rutas[1] == '503') {
+    if ($RUTAS0 == 'error') {
+        if ($RUTAS1) {
+            if ($RUTAS1 == '400' || $RUTAS1 == '401' || $RUTAS1 == '403' || $RUTAS1 == '404' || $RUTAS1 == '500' || $RUTAS1 == '503') {
                 require_once 'views/error.php';
             } else {
                 header('Location: ' . $ruta . 'error/404');
@@ -27,61 +31,84 @@ if ($rutas) { //Ruta Vacia
         } else {
             header('Location: ' . $ruta . 'error/404');
         }
-    }
-    elseif ($rutas[0] == 'login') {
-        if($UserLogin){
+    } elseif ($RUTAS0 == 'login') {
+        if ($UserLogin) {
             header('Location: ' . $ruta . 'perfil');
-        }else{
+        } else {
             require_once 'views/login.view.php';
         }
-    }
-    elseif ($rutas[0] == 'desarrollador') {
+    } elseif ($RUTAS0 == 'desarrollador') {
         require_once 'account/master.view.php';
-    }
-    elseif ($rutas[0] == 'registro') {
+    } elseif ($RUTAS0 == 'registro') {
         require_once 'views/registro.view.php';
-    }
-    elseif ($rutas[0] == 'verificar' && !$UserLogin) {
+    } elseif ($RUTAS0 == 'verificar' && !$UserLogin) {
         require_once 'views/verificacionMail.view.php';
-    }
-    elseif ($rutas[0] == 'blog') {
-        if (isset($rutas[1]) && !empty($rutas[1])) {
-            if ($rutas[1] == 'publicacion') {
+    } elseif ($RUTAS0 == 'blog') {
+        if ($RUTAS1) {
+            if ($RUTAS1 == 'publicacion') {
                 require_once 'views/vistaPublicacion.view.php';
             }
         } else {
             require_once 'views/blog.view.php';
         }
-    }
-    elseif ($rutas[0] == 'servicios') {
+    } elseif ($RUTAS0 == 'servicios') {
         require_once 'views/servicios.view.php';
-    }
-    elseif ($rutas[0] == 'planes') {
-        if ((isset($rutas[1]) && !empty($rutas[1]))) {
+    } elseif ($RUTAS0 == 'planes') {
+        if ($RUTAS1) {
             require_once 'views/planesRegistro.view.php';
         } else {
             require_once 'views/planes.view.php';
         }
-    }
-    elseif ($rutas[0] == 'perfil') {
-        if($UserLogin){
-            if((isset($rutas[1]) && !empty($rutas[1]))){
-                if($rutas[1]=='config'){
+    } elseif ($RUTAS0 == 'perfil') {
+        $idUsuario = 0;
+        if ($UserLogin) { //Por si acaso hay algun usuario Logueado
+            $idUsuario = $UserLogin['idUsuario'];
+            if ($UserLogin['rol'] == 1) {
+                // >> < Apartado para el administrador > << 
+
+                if ($RUTAS1) {
+                    if ($RUTAS1 == 'config') {
+                        require_once 'account/perfilEdit.view.php';
+                    }
+                    elseif (is_numeric($RUTAS1)) {
+                        $idUsuario = (int) $RUTAS1;
+                        require_once 'views/perfilPublico.view.php';
+                    }
+                    elseif ($RUTAS1 == 'servicios') {
+                        require_once 'account/admin/servicios.php';
+                    }
+                     else {
+                        header('Location: ' . $ruta . 'error/404');
+                    }
+                } else {
+                    require_once 'account/perfil.view.php';
+                }
+                // >> < Apartado para el administrador > << 
+            } elseif ($RUTAS1) {
+                if ($RUTAS1 == 'config') {
                     require_once 'account/perfilEdit.view.php';
-                }else{
+                } elseif (is_numeric($RUTAS1)) {
+                    $idUsuario = (int) $RUTAS1;
+                    require_once 'views/perfilPublico.view.php';
+                } else {
                     header('Location: ' . $ruta . 'error/404');
                 }
-            }else{
+            } else {
                 require_once 'account/perfil.view.php';
             }
-        }else{
-            header('Location: ' . $ruta . 'login');
+        } else if ($RUTAS1) {
+            if (is_numeric($RUTAS1)) {
+                $idUsuario = (int) $RUTAS1;
+                require_once 'views/perfilPublico.view.php';
+            } else {
+                header('Location: ' . $ruta . 'login');
+            }
+        } else {
+            header('Location: ' . $ruta . 'error/404');
         }
-    }
-    elseif ($rutas[0] == 'acercade') {
-        require_once 'account/perfil.view.php';
-    }
-    else {
+    } elseif ($RUTAS0 == 'acercade') {
+        require_once 'views/acercade.view.php';
+    } else {
         header('Location: ' . $ruta . 'error/404');
     }
 } else {

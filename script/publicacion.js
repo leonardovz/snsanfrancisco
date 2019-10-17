@@ -1,13 +1,40 @@
 var ruta = ruta();
+var $publicacion = $('.oculta');
+$publicacion.hide();
+$("#cancelar").parent().hide();
 $(document).ready(function () {
     var avatar = document.getElementById('avatar');
     var image = document.getElementById('image');
     var input = document.getElementById('input');
-    var $progress = $('.progress');
-    var $progressBar = $('.progress-bar');
+    var $progress = $('#progresoPub');
+    var $progressBar = $('#progresoPubBarra');
     var $alert = $('.alert');
     var $modal = $('#modal');
     var cropper;
+
+    var $progressPub = $("#progressPub");
+    loading(50);
+    function loading(tiempo,limite=75){
+        // setTimeout(() => {
+            $progressPub.width(tiempo+'%').attr('aria-valuenow', tiempo).text(tiempo+'%');
+        //     console.log(tiempo);
+        //     tiempo++;
+        //     if(tiempo<=limite && false){
+        //         loading(tiempo);
+                
+        //     }
+        // }, 50);
+    }
+
+    $("#titulo").on('click', function (e) {
+        $publicacion.show();
+        $("#cancelar").parent().show();
+    });
+    $("#cancelar").on('click', function (e) {
+        // e.preventDefault()
+        $(this).parent().hide();
+        $publicacion.hide();
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
     $("#buscarImagen").on('click', function (e) {
@@ -41,7 +68,18 @@ $(document).ready(function () {
             }
         }
     });
-
+    $("#formPublicacion").on('submit', function (e) {
+        e.preventDefault();
+        // if(cropper == "" || cropper.length){
+        Swal.fire({
+            position: 'top-end',
+            type: 'error',
+            title: 'Debes de seleccionar una imagen',
+            showConfirmButton: false,
+            timer: 1500
+        })
+        // }
+    });
     $modal.on('shown.bs.modal', function () {
         cropper = new Cropper(image, {
             aspectRatio: 1.5,
@@ -54,19 +92,7 @@ $(document).ready(function () {
     $("#editarFoto").on('click', function () {
         $("#avatar").click();
     });
-    $("#formPublicacion").on('submit', function (e) {
-        e.preventDefault();
-        var imagen = $("#input").val();
-        if(imagen == ""){
-            Swal.fire({
-                position: 'top-end',
-                type: 'error',
-                title: 'Debes de seleccionar una imagen',
-                showConfirmButton: false,
-                timer: 1500
-              })
-        }
-    });
+
     document.getElementById('crop').addEventListener('click', function () {
         var initialAvatarURL;
         var canvas;
@@ -75,8 +101,8 @@ $(document).ready(function () {
 
         if (cropper) {
             canvas = cropper.getCroppedCanvas({
-                width: 500,
-                height: 500,
+                width: 1000,
+                height: 1000,
             });
             initialAvatarURL = avatar.src;
             avatar.src = canvas.toDataURL();
@@ -84,34 +110,21 @@ $(document).ready(function () {
             $alert.removeClass('alert-success alert-warning');
             canvas.toBlob(function (blob) {
                 var formData = new FormData();
-
                 formData.append('avatar', blob, 'avatar.jpg'); //envio de la imagen
                 formData.append('opcion', 'crearPublicacion'); //Añadir POST
-                // formData.append('opcion', 'modificarFotoPerfil'); //Añadir POST
                 $("#avatar").show();
-                $("#formPublicacion").on('submit', function (e) {
+                $("#formPublicacion").off().on('submit', function (e) {
                     e.preventDefault();
                     let titulo = $("#titulo").val();
                     let descripcion = $("#descripcion").val();
 
                     formData.append('titulo', titulo); //Añadir POST
                     formData.append('descripcion', descripcion); //Añadir POST
-                    if (titulo == "" || titulo.length < 12) {
-                        Swal.fire({
-                            position: 'top-end',
-                            type: 'error',
-                            title: 'Es titulo es demaciado corto',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    } else if (descripcion == "" || descripcion.length < 12) {
-                        Swal.fire({
-                            position: 'top-end',
-                            type: 'error',
-                            title: 'La descripción es demaciado corta',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
+                    if (titulo == "" || titulo.length < 3) {
+                        alerta('Es titulo es demaciado corto', 'error');
+                    } else if (descripcion == "" || descripcion.length < 4) {
+                        let texto = (descripcion.length > 250) ? "  larga" : " corta";
+                        alerta('La descripción es demaciado ' + texto, 'error');
                     } else {
                         $.ajax(ruta + 'php/usuariosFunciones.php', {
                             method: 'POST',
@@ -126,7 +139,7 @@ $(document).ready(function () {
                                     var percent = '0';
                                     var percentage = '0%';
                                     if (e.lengthComputable) {
-                                        percent = Math.round((e.loaded / e.total) * 100);
+                                        percent = Math.round((e.loaded / e.total) * 99);
                                         percentage = percent + '%';
                                         $progressBar.width(percentage).attr('aria-valuenow', percent).text(percentage);
                                     }
@@ -136,17 +149,29 @@ $(document).ready(function () {
                             },
 
                             success: function (response) {
-                                $alert.show().addClass('alert-success').text('Perfil actualizado');
-                                console.log(response);
+                                $progressBar.width('100%').attr('aria-valuenow', 100).text('100%');
+                                setTimeout(() => {
+                                    $alert.show().addClass('alert-success').text(response.Texto);
+                                    alerta('Publicación realizada','success');
+                                    setTimeout(() => {
+                                        $("#titulo").val("");
+                                        $("#descripcion").val("");
+                                        $progressBar.width('0%').attr('aria-valuenow', 0).text('0%');
+                                        $alert.hide().addClass('alert-primary');
+                                        $("#cancelar").parent().show();
+                                    }, 2000);
+                                }, 1000);
                             },
 
                             error: function (xhr, status) {
                                 console.log(xhr.responseText);
                                 avatar.src = initialAvatarURL;
-                                $alert.show().addClass('alert-warning').text('Error al realizar el cambio');
+                                $alert.show().addClass('alert-warning').text('Error al realizar la publicación');
                             },
                             complete: function () {
-                                $progress.hide();
+                                setTimeout(() => {
+                                    $progress.hide();
+                                }, 2000);
                             },
                         });
                     }
@@ -155,4 +180,152 @@ $(document).ready(function () {
             });
         }
     });
+    traerPosts();
+    function traerPosts() {
+        $.ajax({
+            type: "POST",
+            url: ruta + 'php/usuariosFunciones.php',
+            dataType: "json",
+            data: 'opcion=traerPostsPerfil',
+            error: function (xhr, resp) {
+                console.log(xhr.responseText);
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.respuesta == 'exito') {
+                    loading(75);
+                    setTimeout(() => {
+                        loading(100);
+                        setTimeout(() => {
+                            $progressPub.parent().parent().hide();
+                            let cuerpo="",
+                            cuerpoRigth="";
+                            for (let i in data.publicaciones) {
+                                if(i<6){
+                                    cuerpo+=(cuerpoPublicacion(data.publicaciones[i],ruta,data.rutaImagen));
+                                }else{
+                                    cuerpoRigth+=(cuerpoRigthPub(data.publicaciones[i],ruta,data.rutaImagen));
+                                }
+                            }
+                            $("#cuerpoPublicaciones").html(cuerpo);
+                            $("#cuerpoRigth").html(cuerpoRigth);
+
+                            wowElement();
+                            acciones();
+                        }, 1000);
+                    }, 1000);
+                } else {
+                  
+                }
+            }
+        });
+    }
+
+    function cuerpoPublicacion(publicacion,ruta,rutaImagen){
+        var cuerpo = ``;
+        // for (let i in publicaciones) {
+            let nombreMin =publicacion.nombre.replace(" ","-") ,
+                apellidoMin =publicacion.apellidos.replace(" ","-"),
+                nameUser= nombreMin+'-'+apellidoMin,
+                fecha = publicacion.fecha.split(" ");
+
+
+            cuerpo+=`
+            <div class="col-lg-6 col-md-12 mb-5">
+                <div class="single-news mb-3">
+                    <div class="view overlay rounded z-depth-2 mb-4">
+                        <img class="img-fluid" src="${ruta+rutaImagen+publicacion.imagen}" alt="Sample image">
+                        <a href="${ruta+'blog/publicacion/'+(publicacion.id)}">
+                            <div class="mask rgba-white-slight waves-effect waves-light"></div>
+                        </a>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div class="col-11 text-center pl-0 mb-3 ">
+                            <a class="font-weight-bold">${publicacion.titulo}</a>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                        <a href="${ruta}perfil/${rellenarCero(publicacion.iduser)}/${normalize(nameUser)}"><span class="badge deep-orange"><i class="fas fa-user mr-2"></i> ${publicacion.nombre} ${publicacion.apellidos}</span></a> 
+                        <br>
+                        <a><span class="badge info-color mr-4">Descripción: </span></a> 
+                        <a><span class="badge default-color mostrarTexto"><i class="fab fa-readme"></i> Mostrar</span></a> 
+                        </div>
+                    </div>
+                </div>
+                <div class="single-news mb-3 descripcionPub" style="display: none;">
+                    <div class="d-flex justify-content-between">
+                        <div class="col-12 pl-0 text-justify">
+                            <p class="text-right">${fecha[0]}</p>
+                            <p>${publicacion.descripcion}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+        //}
+        return cuerpo;
+    }
+    function cuerpoRigthPub(publicacion,ruta,rutaImagen){
+        var cuerpo = ``;
+            let nombreMin =publicacion.nombre.replace(" ","-") ,
+                apellidoMin =publicacion.apellidos.replace(" ","-"),
+                nameUser= nombreMin+'-'+apellidoMin,
+                fecha = publicacion.fecha.split(" ");
+
+
+            cuerpo+=`
+            <div class="row mt-5">
+                <div class="col-3">
+                    <div class="view overlay rounded mb-lg-0 mb-4 p-0">
+                        <img class="img-fluid" src="${ruta+rutaImagen+publicacion.imagen}" alt="Sample image">
+                        <a>
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="col-9">
+                    <p class="font-weight-bold dark-grey-text">
+                        <span>${fecha[0]}</span>
+                        <a href="${ruta+'blog/publicacion/'+(publicacion.id)}"><span class="ml-4 m-0 badge pink"> Visualizar </span></a>
+                    </p>
+
+                    <div class="d-flex justify-content-between">
+                        <div class="col-11 text-truncate pl-0 mb-lg-0 mb-3">
+                            <a href="${ruta+'blog/publicacion/'+(publicacion.id)}" class="dark-grey-text">${publicacion.descripcion.substr(0,32) +((publicacion.descripcion.length>32)?"... ":". ")}</a>
+                        </div>
+                        <a><i class="fas fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            `;
+        return cuerpo;
+    }
+    function acciones()
+    {
+        $(".mostrarTexto").on('click',function(e){
+            e.preventDefault();
+            let opcionMostrar = $(this);
+            let descripcion = $(this).parent().parent().parent().parent().siblings();
+            if (descripcion.is(':visible')) {
+                descripcion.hide();
+                opcionMostrar.html('Mostrar <i class="fas fa-arrow-circle-down"></i>').removeClass('warning-color').addClass('default-color');
+            } else {
+                opcionMostrar.html('Ocultar <i class="fas fa-arrow-circle-up"></i>').removeClass('default-color').addClass('warning-color');
+                descripcion.show();
+            }
+        });
+    }
+
+    function alerta(texto, tipo) {
+        Swal.fire({
+            position: 'top-end',
+            type: tipo,
+            title: texto,
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
 });

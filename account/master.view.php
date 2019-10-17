@@ -67,6 +67,22 @@
                             <a href="https://snsanfrancisco.com"  target="_blank" class="btn btn-indigo btn-sm"><i class="fas fa-clone left"></i> Ver Proyecto</a>
                         </div>
                     </div>
+                    <div class="col-lg-4 col-md-12  my-5">
+                        <!--Featured image-->
+                        <div class="view overlay rounded z-depth-1">
+                            <img src="<?php echo $ruta; ?>galeria/userMaster/ojodeagua.png" class="img-fluid" alt="Sample project image">
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                        <!--Excerpt-->
+                        <div class="card-body pb-0">
+                            <h4 class="font-weight-bold my-3">Cobro de Agua</h4>
+                            <p class="grey-text">Plataforma de Cobro de agua, y red publica de saneamiento
+                            </p>
+                            <a href="https://cobrodeagua.snsanfrancisco.com"  target="_blank" class="btn btn-indigo btn-sm"><i class="fas fa-clone left"></i> Ver Proyecto</a>
+                        </div>
+                    </div>
                     <div class="col-lg-4 col-md-6  my-5">
                         <!--Featured image-->
                         <div class="view overlay rounded z-depth-1">

@@ -63,57 +63,8 @@ require_once 'templates/header.php';
             <div class="col-md-12 mb-5 mt-5 bl-2">
                 <h2>Nuevos Servicios Registrados!</h2>
             </div>
-            <div class="col-md-4 mb-4 wow fadeInLeft">
-                <!-- Card -->
-                <div class="card card-image" style="background-image: url(<?php echo $ruta; ?>recursos/img/usuario/4.png);">
-
-                    <!-- Content -->
-                    <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-                        <div>
-                            <h5 class="pink-text"><i class="far fa-keyboard"></i></i> Desarrollo Web</h5>
-                            <h3 class="card-title pt-2"><strong>Crece tus proyectos</strong></h3>
-                            <p></p>
-                            <a class="btn btn-pink"><i class="fas fa-clone left"></i> View project</a>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Card -->
-            </div>
-            <div class="col-md-4 mb-4 wow fadeInDown">
-                <!-- Card -->
-                <div class="card card-image" style="background-image: url(<?php echo $ruta; ?>recursos/img/usuario/4.png);">
-
-                    <!-- Content -->
-                    <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-                        <div>
-                            <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Diseñador</h5>
-                            <h3 class="card-title pt-2"><strong>Mejora tu marca</strong></h3>
-                            <p></p>
-                            <a class="btn btn-pink"><i class="fas fa-clone left"></i> View project</a>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Card -->
-            </div>
-            <div class="col-md-4 mb-4 wow fadeInRight">
-                <!-- Card -->
-                <div class="card card-image " style="background-image: url(<?php echo $ruta; ?>recursos/img/usuario/8.png);">
-
-                    <!-- Content -->
-                    <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-                        <div>
-                            <h5 class="pink-text"><i class="fab fa-keybase"></i> Estilista</h5>
-                            <h3 class="card-title pt-2"><strong>Cambia tu look</strong></h3>
-                            <p></p>
-                            <a class="btn btn-pink"><i class="fas fa-clone left"></i> View project</a>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Card -->
-            </div>
+        </div>
+        <div class="row justify-content-center" id="serviciosSystem">
         </div>
         <section class="my-5">
 
@@ -417,6 +368,7 @@ require_once 'templates/header.php';
     </div>
     <?php require_once 'templates/footer.view.php'; ?>
     <?php require_once 'templates/footer.php'; ?>
+    <script src="<?php echo $ruta; ?>script/servicios.js"></script>
 </body>
 
 </html>
