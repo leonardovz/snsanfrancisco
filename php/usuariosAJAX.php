@@ -28,12 +28,6 @@ if (!isset($_POST['opcion'])) {
 
 switch ($_POST['opcion']) {
     case 'registro':
-    // $datos = array(
-    //     'correo' => $email,
-    //     'url' => 'https://snsanfrancisco.com/',
-    //     'validarCorreo' => md5($email),
-    // );
-    // $respuesta = enviarCorreo2($datos);
         $email     = (isset($_POST['email'])    && !empty($_POST['email']))    ? strtolower($_POST['email']) : false;
         $emailR    = (isset($_POST['emailR'])   && !empty($_POST['emailR']))   ? strtolower($_POST['emailR']) : false;
         $nombre    = (isset($_POST['nombre'])   && !empty($_POST['nombre']))   ? strtolower($_POST['nombre']) : false;
@@ -45,18 +39,17 @@ switch ($_POST['opcion']) {
         $mailEncrypt = md5($email);
         $validar = 0;
         $modo = 'dir';
-        // var_dump($resultado);
-        enviarCorreo2(false);
         if ($email && $emailR && $nombre && $apellidos && $password && $passwordR) {
             if ($email == $emailR) {
                 if ($password == $passwordR) {
-                    if (!correoExiste($conexion, $email)) {
+                    if (correoExiste($conexion, $email)) {
                         $sql = "INSERT INTO usuarios(nombre, apellidos, correo, password, tipoUser, validar, encriptado,modo) VALUES ('$nombre','$apellidos','$email','$password',$tipoUser,$validar,'$mailEncrypt','$modo')";
                         $resultado = $conexion->query($sql);
-                        // var_dump($resultado);
                         if ($resultado) {
                             $datos = array(
-                                'correo' => 'leonardovazquez81@gmail.com',
+                                'correo' => $email,
+                                'nombre' => $nombre,
+                                'apellido' => $apellidos,
                                 'url' => 'https://snsanfrancisco.com/',
                                 'validarCorreo' => md5($email),
                             );
@@ -118,8 +111,27 @@ switch ($_POST['opcion']) {
         break;
     case 'verificacion':
         $email          = (isset($_POST['email'])    && !empty($_POST['email']))    ? strtolower(htmlspecialchars($_POST['email'])) : false;
-        $codVerificacion = (isset($_POST['codVerificacion'])    && !empty($_POST['codVerificacion']))    ? strtolower(htmlspecialchars($_POST['codVerificacion'])) : false;
-        $respuesta = array('respuesta' => 'exito', 'Texto' => 'Verificacion Exitosa',);
+        $verificacion = (isset($_POST['codVerificacion'])    && !empty($_POST['codVerificacion']))    ? strtolower(htmlspecialchars($_POST['codVerificacion'])) : false;
+        $sql = "SELECT idUsuario,nombre,apellidos,encriptado,correo,validar FROM usuarios WHERE correo ='$email' AND encriptado='$verificacion'";
+        $resultado = $conexion->query($sql);
+        if ($resultado && $resultado->num_rows) {
+            $usuario = $resultado->fetch_assoc();
+            if($usuario['validar']!=1){
+                $sql = "UPDATE `usuarios` SET validar=1 WHERE idUsuario = ".$usuario['idUsuario'];
+                $resultado = $conexion->query($sql);
+                if($resultado && $conexion->affected_rows){
+                    $respuesta = array('respuesta' => 'exito', 'Texto' => 'Tu cuenta fue validada de manera exitosa!, Inicia Sesión y continua con la tu configuración');
+                }else{
+                    $respuesta = array('respuesta' => 'error', 'Texto' => 'Por el momento no es posible verificar tu cuenta');
+
+                }
+            }else{
+                $respuesta = array('respuesta' => 'error', 'Texto' => 'El correo ha sido validado con anterioridad, ya puedes ingresar a tu cuenta y continuar con su configuración');
+            }
+        } else {
+            $respuesta = array('respuesta' => 'error', 'Texto' => 'No se encontraron coincidencias, no fue posible realizar la activación de tu cuenta');
+        }
+
         die(json_encode($respuesta));
         break;
     case 'subscribirCuenta':
@@ -133,13 +145,13 @@ switch ($_POST['opcion']) {
 
 function enviarCorreo2($datos)
 {
+    $respuesta = array();
     $mail = new PHPMailer\PHPMailer\PHPMailer();
     $mail->CharSet = 'UTF-8';
-    $mail->SMTPDebug = 2;
+    // $mail->SMTPDebug = 1;
     $mail->Debugoutput = 'html';
-
     $mail->IsSMTP(); // enable SMTP
-    $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+    $mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
     $mail->SMTPAuth = true; // authentication enabled
     $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
     $mail->Host = "mx72.hostgator.mx";
@@ -152,12 +164,19 @@ function enviarCorreo2($datos)
     $mail->Body = "Prueba de envio de correos desde hostgator";
     $mail->AddAddress("leonardovazquez81@gmail.com");
     // $mail->AddAddress("blancaflore2305@gmail.com");
-    $mail->msgHTML('');
+    $mail->msgHTML('<h1>Holamundo</h1>');
     if (!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
+        $respuesta = array(
+            'respuesta' => 'error',
+            'Texto' => "Mailer Error: " . $mail->ErrorInfo
+        );
     } else {
-        echo "Mensaje enviado correctamente";
+        $respuesta = array(
+            'respuesta' => 'exito',
+            'Texto' => "Mensaje enviado correctamente"
+        );
     }
+    return $respuesta;
 }
 function enviarCorreo($datos)
 {

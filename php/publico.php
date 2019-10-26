@@ -118,6 +118,35 @@ switch ($_POST['opcion']) {
         die(json_encode($respuesta));
 
         break;
+    case 'traerPlanes':
+        $sql = "SELECT * FROM rango WHERE tipo ='mensual' OR tipo= 'anual'";
+        $resultado = $conexion->query($sql);
+        $PAQUETES = ($resultado && $resultado->num_rows) ? $resultado : false;
+        
+        if($PAQUETES){
+            $planesArray=[];
+            while ($PAQUETE = $PAQUETES->fetch_assoc()) {
+                $planesArray[] = array(
+                    'plan'=>$PAQUETE,
+                    'venefocios'=>'llorar'
+                );
+            }
+            $respuesta = array(
+                'respuesta'=>'exito',
+                'Texto'=>'Planes encontrados',
+                'planes'=>$planesArray
+            );
+        }else{
+            $respuesta = array(
+                'respuesta'=>'error',
+                'Texto'=>'No se encontraron coincidencias',
+                'planes'=>$planesArray
+            );
+        }
+        die(json_encode($respuesta));
+
+
+        break;
     default:
         break;
 }

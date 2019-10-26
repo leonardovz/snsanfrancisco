@@ -55,9 +55,9 @@ require_once 'templates/header.php'; ?>
                             <div class="single-news mb-lg-0 mb-5 pt-5 ">
                                 <div class="news-data d-flex justify-content">
                                     <a href="#!" class="deep-blue-text">
-                                        <h6 class="font-weight-bold"><i class="fas fa-code pr-2"></i>Desarrollador</h6>
+                                        <h6 class="font-weight-bold" id="servicioPerfil"><i class="fas fa-code pr-2"></i>Desarrollador</h6>
                                     </a>
-                                    <p class="font-weight-bold dark-grey-text text-right"><i class="fas fa-clock-o pr-2"></i>27/02/2018</p>
+                                    <p class="font-weight-bold dark-grey-text text-right"id="fechaPerfil"><i class="fas fa-clock-o pr-2"></i>27/02/2018</p>
                                 </div>
 
                                 <!-- Excerpt -->
@@ -291,7 +291,7 @@ require_once 'templates/header.php'; ?>
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Crop the image</h5>
+                        <h5 class="modal-title" id="modalLabel">Modifica tu imagen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -302,8 +302,8 @@ require_once 'templates/header.php'; ?>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="crop">Crop</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="crop">Guardar</button>
                     </div>
                 </div>
             </div>

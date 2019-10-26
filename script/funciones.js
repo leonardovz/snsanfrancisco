@@ -42,3 +42,12 @@ var normalize = (function() {
         anio = parseInt(fecha[0]);
     return [dia,mes,anio];
   }
+  function alertaSwal(texto,tipo,tiempo=1500) {
+    Swal.fire({
+        position: 'top-end',
+        type: tipo,
+        title: texto,
+        showConfirmButton: false,
+        timer: tiempo
+      })
+  }

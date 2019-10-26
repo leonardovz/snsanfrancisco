@@ -38,7 +38,7 @@ if ($rutas) { //Ruta Vacia
             require_once 'views/login.view.php';
         }
     } elseif ($RUTAS0 == 'desarrollador') {
-        require_once 'account/master.view.php';
+        require_once 'views/master.view.php';
     } elseif ($RUTAS0 == 'registro') {
         require_once 'views/registro.view.php';
     } elseif ($RUTAS0 == 'verificar' && !$UserLogin) {
@@ -104,7 +104,7 @@ if ($rutas) { //Ruta Vacia
                 header('Location: ' . $ruta . 'login');
             }
         } else {
-            header('Location: ' . $ruta . 'error/404');
+            header('Location: ' . $ruta . 'login');
         }
     } elseif ($RUTAS0 == 'acercade') {
         require_once 'views/acercade.view.php';

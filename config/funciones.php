@@ -109,7 +109,7 @@ function formatoHora($hora)
 
 function correoExiste($conexion, $correo)
 {
-    $sql = "SELECT `correo` FROM `usuarios` WHERE `correo` = '$correo'";
+    $sql = "SELECT correo FROM usuarios WHERE correo = '$correo'";
     $resultado = $conexion->query($sql);
     $resultado = ($resultado && $resultado->num_rows) ? true : false;
     return $resultado;
@@ -252,29 +252,52 @@ $EMAILCONFIG = array(
 
 );
 
+class AdminFunciones
+{
+    var $CONEXION = false;
 
-// function enviarCorreo($correo,$cuerpo,$SERVER)
-// {
-    // $mail = new PHPMailer\PHPMailer\PHPMailer();
-    // //$mail->SMTPDebug = 2;
-    // $mail->Debugoutput = 'html';
-
-    // $mail->IsSMTP(); // enable SMTP
-    // $mail->SMTPDebug = 2; // debugging: 1 = errors and messages, 2 = messages only
-    // $mail->SMTPAuth = true; // authentication enabled
-    // $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
-    // $mail->Host = "mx72.hostgator.mx";
-    // $mail->Port = 465; // or 587
-    // $mail->IsHTML(true);
-    // $mail->Username = "no-reply@snsanfrancisco.com";
-    // $mail->Password = ")L7l9h1y~keT";
-    // $mail->SetFrom("no-reply@snsanfrancisco.com");
-    // $mail->Subject = "Prueva Lvazquez";
-    // $mail->Body = "Prueba de envio de correos desde hostgator";
-    // $mail->AddAddress("leonardovazquez81@gmail.com");
-    // if (!$mail->Send()) {
-    //     echo "Mailer Error: " . $mail->ErrorInfo;
-    // } else {
-    //     echo "Mensaje enviado correctamente";
-    // }
-// }
+    function generarCodigo($longitud)
+    {
+        $key = "";
+        $pattern = "1234FAGS5F67N8N90ABC0DEF0GHIJ0KLMN70OPQR880S56TU1V01WXY1Z";
+        $max = strlen($pattern) - 1;
+        for ($i = 0; $i < $longitud; $i++) {
+            $key .= $pattern{
+                mt_rand(0, $max)};
+        }
+        return $key;
+    }
+    function verificarCodigo($codigo)
+    {
+        $conexion = $this->CONEXION;
+        $resultado = false;
+        if ($conexion) {
+            $sql = "SELECT C.*,R.tipo,R.duracion,R.costo FROM codigos AS C,rango AS R WHERE C.idRango = R.id AND C.codigo = '$codigo'";
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado && $resultado->num_rows) ? $resultado : false;
+        }
+        return $resultado;
+    }
+    function codigoUnico()
+    {
+        $ADMINFUN = new AdminFunciones(); //trae la clase, por que de lo contrario no puedes acceder a las funciones
+        $codigo = $ADMINFUN->generarCodigo(12); //Genera un codigo aleatorio
+        $codigoStatus = $ADMINFUN->verificarCodigo($codigo); //Es necesario comparar los registros y verificar que no exista
+        if ($codigoStatus) {
+            codigoUnico(); //Recursividad, si ya existe prueba otro, hasta que el sistema diga que ya no existe registro
+        } else {
+            return $codigo; //Devuelve el codigo final
+        }
+    }
+    function verificarPaquete($idRango)
+    {
+        $conexion = $this->CONEXION;
+        $resultado = false;
+        if ($conexion) {
+            $sql = "SELECT * FROM rango WHERE id = $idRango  AND tipo !='Privado'";
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado && $resultado->num_rows) ? $resultado : false;
+        }
+        return $resultado;
+    }
+}

@@ -14,14 +14,14 @@ $(document).ready(function () {
 
     var $progressPub = $("#progressPub");
     loading(50);
-    function loading(tiempo,limite=75){
+    function loading(tiempo, limite = 75) {
         // setTimeout(() => {
-            $progressPub.width(tiempo+'%').attr('aria-valuenow', tiempo).text(tiempo+'%');
+        $progressPub.width(tiempo + '%').attr('aria-valuenow', tiempo).text(tiempo + '%');
         //     console.log(tiempo);
         //     tiempo++;
         //     if(tiempo<=limite && false){
         //         loading(tiempo);
-                
+
         //     }
         // }, 50);
     }
@@ -152,7 +152,7 @@ $(document).ready(function () {
                                 $progressBar.width('100%').attr('aria-valuenow', 100).text('100%');
                                 setTimeout(() => {
                                     $alert.show().addClass('alert-success').text(response.Texto);
-                                    alerta('Publicación realizada','success');
+                                    alerta('Publicación realizada', 'success');
                                     setTimeout(() => {
                                         $("#titulo").val("");
                                         $("#descripcion").val("");
@@ -198,13 +198,13 @@ $(document).ready(function () {
                         loading(100);
                         setTimeout(() => {
                             $progressPub.parent().parent().hide();
-                            let cuerpo="",
-                            cuerpoRigth="";
+                            let cuerpo = "",
+                                cuerpoRigth = "";
                             for (let i in data.publicaciones) {
-                                if(i<6){
-                                    cuerpo+=(cuerpoPublicacion(data.publicaciones[i],ruta,data.rutaImagen));
-                                }else{
-                                    cuerpoRigth+=(cuerpoRigthPub(data.publicaciones[i],ruta,data.rutaImagen));
+                                if (i < 6) {
+                                    cuerpo += (cuerpoPublicacion(data.publicaciones[i], ruta, data.rutaImagen));
+                                } else {
+                                    cuerpoRigth += (cuerpoRigthPub(data.publicaciones[i], ruta, data.rutaImagen));
                                 }
                             }
                             $("#cuerpoPublicaciones").html(cuerpo);
@@ -215,37 +215,41 @@ $(document).ready(function () {
                         }, 1000);
                     }, 1000);
                 } else {
-                  
+                    setTimeout(() => {
+                        $("#cuerpoPublicaciones").html("");
+                        $("#cuerpoRigth").html("");
+                    }, 3000);
                 }
             }
         });
     }
 
-    function cuerpoPublicacion(publicacion,ruta,rutaImagen){
+    function cuerpoPublicacion(publicacion, ruta, rutaImagen) {
         var cuerpo = ``;
         // for (let i in publicaciones) {
-            let nombreMin =publicacion.nombre.replace(" ","-") ,
-                apellidoMin =publicacion.apellidos.replace(" ","-"),
-                nameUser= nombreMin+'-'+apellidoMin,
-                fecha = publicacion.fecha.split(" ");
+        let nombreMin = publicacion.nombre.replace(" ", "-"),
+            apellidoMin = publicacion.apellidos.replace(" ", "-"),
+            nameUser = nombreMin + '-' + apellidoMin,
+            fecha = publicacion.fecha.split(" ");
 
 
-            cuerpo+=`
-            <div class="col-lg-6 col-md-12 mb-5">
-                <div class="single-news mb-3">
+        cuerpo += `
+            <div class="col-lg-6 col-md-12 mb-5 ">
+                <div class="single-news mb-3 z-depth-2">
                     <div class="view overlay rounded z-depth-2 mb-4">
-                        <img class="img-fluid" src="${ruta+rutaImagen+publicacion.imagen}" alt="Sample image">
-                        <a href="${ruta+'blog/publicacion/'+(publicacion.id)}">
+                        <img class="img-fluid" src="${ruta + rutaImagen + publicacion.imagen}" alt="Sample image">
+                        <a href="${ruta + 'blog/publicacion/' + (publicacion.id)}">
                             <div class="mask rgba-white-slight waves-effect waves-light"></div>
                         </a>
                     </div>
 
+                    <p class="text-right px-3 m-0 py-0">${fecha[0]}</p>
                     <div class="d-flex justify-content-between">
-                        <div class="col-11 text-center pl-0 mb-3 ">
+                        <div class="col-11 text-center pl-0 mb-2 ">
                             <a class="font-weight-bold">${publicacion.titulo}</a>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-3 p-2">
                         <div class="col-12">
                         <a href="${ruta}perfil/${rellenarCero(publicacion.iduser)}/${normalize(nameUser)}"><span class="badge deep-orange"><i class="fas fa-user mr-2"></i> ${publicacion.nombre} ${publicacion.apellidos}</span></a> 
                         <br>
@@ -267,19 +271,19 @@ $(document).ready(function () {
         //}
         return cuerpo;
     }
-    function cuerpoRigthPub(publicacion,ruta,rutaImagen){
+    function cuerpoRigthPub(publicacion, ruta, rutaImagen) {
         var cuerpo = ``;
-            let nombreMin =publicacion.nombre.replace(" ","-") ,
-                apellidoMin =publicacion.apellidos.replace(" ","-"),
-                nameUser= nombreMin+'-'+apellidoMin,
-                fecha = publicacion.fecha.split(" ");
+        let nombreMin = publicacion.nombre.replace(" ", "-"),
+            apellidoMin = publicacion.apellidos.replace(" ", "-"),
+            nameUser = nombreMin + '-' + apellidoMin,
+            fecha = publicacion.fecha.split(" ");
 
 
-            cuerpo+=`
+        cuerpo += `
             <div class="row mt-5">
                 <div class="col-3">
                     <div class="view overlay rounded mb-lg-0 mb-4 p-0">
-                        <img class="img-fluid" src="${ruta+rutaImagen+publicacion.imagen}" alt="Sample image">
+                        <img class="img-fluid" src="${ruta + rutaImagen + publicacion.imagen}" alt="Sample image">
                         <a>
                             <div class="mask rgba-white-slight"></div>
                         </a>
@@ -289,12 +293,12 @@ $(document).ready(function () {
                 <div class="col-9">
                     <p class="font-weight-bold dark-grey-text">
                         <span>${fecha[0]}</span>
-                        <a href="${ruta+'blog/publicacion/'+(publicacion.id)}"><span class="ml-4 m-0 badge pink"> Visualizar </span></a>
+                        <a href="${ruta + 'blog/publicacion/' + (publicacion.id)}"><span class="ml-4 m-0 badge pink"> Visualizar </span></a>
                     </p>
 
                     <div class="d-flex justify-content-between">
                         <div class="col-11 text-truncate pl-0 mb-lg-0 mb-3">
-                            <a href="${ruta+'blog/publicacion/'+(publicacion.id)}" class="dark-grey-text">${publicacion.descripcion.substr(0,32) +((publicacion.descripcion.length>32)?"... ":". ")}</a>
+                            <a href="${ruta + 'blog/publicacion/' + (publicacion.id)}" class="dark-grey-text">${publicacion.descripcion.substr(0, 32) + ((publicacion.descripcion.length > 32) ? "... " : ". ")}</a>
                         </div>
                         <a><i class="fas fa-angle-double-right"></i></a>
                     </div>
@@ -303,9 +307,8 @@ $(document).ready(function () {
             `;
         return cuerpo;
     }
-    function acciones()
-    {
-        $(".mostrarTexto").on('click',function(e){
+    function acciones() {
+        $(".mostrarTexto").on('click', function (e) {
             e.preventDefault();
             let opcionMostrar = $(this);
             let descripcion = $(this).parent().parent().parent().parent().siblings();

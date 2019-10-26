@@ -158,7 +158,7 @@ switch ($_POST['opcion']) {
         $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
         $directorio = 'galeria/usuario/' . rellenarCero($idUser) . '/';
         if ($idUser) {
-            $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND P.iduser = " . $idUser.' ORDER BY P.fecha DESC ';
+            $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND P.iduser = " . $idUser . ' ORDER BY P.fecha DESC ';
             $resultado = $conexion->query($sql);
             $resultado = ($resultado  && $resultado->num_rows) ? $resultado : false;
             if ($resultado) {
@@ -223,21 +223,21 @@ switch ($_POST['opcion']) {
                 $meses = $diff->m;
                 $dias = $diff->d;
                 //Diferencia
-                $comparacion =false;
+                $comparacion = false;
 
                 if ($dateHoy < $dateFinal) {
-                    $comparacion =true;
+                    $comparacion = true;
                 } else {
                     $comparacion = false;
                 }
                 $respuesta = array(
-                    'respuesta'=>'exito',
-                    'Texto'=>'Consulta de membresia exitosa',
-                    'ultimaMembresia'=>$MEMBRESIA,
-                    'planActivo'=>$comparacion,
-                    'anio'=>$anios,
-                    'meses'=>$meses,
-                    'dias'=>$dias,
+                    'respuesta' => 'exito',
+                    'Texto' => 'Consulta de membresia exitosa',
+                    'ultimaMembresia' => $MEMBRESIA,
+                    'planActivo' => $comparacion,
+                    'anio' => $anios,
+                    'meses' => $meses,
+                    'dias' => $dias,
                 );
             } else {
                 $respuesta = array(
@@ -261,13 +261,13 @@ switch ($_POST['opcion']) {
             $resultado = $conexion->query($sql);
             if ($resultado && $resultado->num_rows) {
                 $MEMBRESIAS = [];
-                while($MEMBRESIA = $resultado->fetch_assoc()){
-                    $MEMBRESIAS[]=$MEMBRESIA;
+                while ($MEMBRESIA = $resultado->fetch_assoc()) {
+                    $MEMBRESIAS[] = $MEMBRESIA;
                 }
                 $respuesta = array(
-                    'respuesta'=>'exito',
-                    'Texto'=>'Aquí se encontro el historial de membresias',
-                    'membresias'=>$MEMBRESIAS
+                    'respuesta' => 'exito',
+                    'Texto' => 'Aquí se encontro el historial de membresias',
+                    'membresias' => $MEMBRESIAS
                 );
             } else {
                 $respuesta = array(
@@ -283,7 +283,207 @@ switch ($_POST['opcion']) {
         }
         die(json_encode($respuesta));
         break;
-    case 'consultar':
+    case 'registroServicio':
+        $ADMINFUNC = new AdminFunciones();
+        $ADMINFUNC->CONEXION = $conexion;
+
+        $nombreServicio   = isset($_POST['nombreServicio'])  && !empty($_POST['nombreServicio'])  ? $conexion->real_escape_string($_POST['nombreServicio'])  : false;
+        $telefonoOficina  = isset($_POST['telefonoOficina']) && !empty($_POST['telefonoOficina']) ? $conexion->real_escape_string($_POST['telefonoOficina']) : false;
+        $correoServicio   = isset($_POST['correoServicio'])  && !empty($_POST['correoServicio'])  ? $conexion->real_escape_string($_POST['correoServicio'])  : false;
+        $domicilio        = isset($_POST['domicilio'])       && !empty($_POST['domicilio'])       ? $conexion->real_escape_string($_POST['domicilio'])       : false;
+        $codigoPostal     = isset($_POST['codigoPostal'])    && !empty($_POST['codigoPostal'])    ? (int) ($_POST['codigoPostal'])    : false;
+        $colonia          = isset($_POST['colonia'])         && !empty($_POST['colonia'])         ? $conexion->real_escape_string($_POST['colonia'])         : false;
+        $coloniaText      = isset($_POST['coloniaText'])     && !empty($_POST['coloniaText'])     ? $conexion->real_escape_string($_POST['coloniaText'])     : false;
+        $servicio         = isset($_POST['servicio'])        && !empty($_POST['servicio'])        ? $conexion->real_escape_string($_POST['servicio'])        : false;
+
+        $activacionCode   = isset($_POST['activacionCode'])  && !empty($_POST['activacionCode'])  ? $conexion->real_escape_string($_POST['activacionCode'])  : false;
+        $idRango          = isset($_POST['idPaquete'])       && !empty($_POST['idPaquete'])       ? (int) ($_POST['idPaquete'])       : false;
+
+
+        $colonia = (($colonia != 0) || !$coloniaText) ? $colonia : $coloniaText; //Obtenemos la colonia que nos dio el usuario
+
+
+        if (!$USERLOGIN) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'El usuario con el que intentas hacer el registro no puede continuar, reinicia tu sesión',)));
+        }
+
+        $idUsuario = $USERLOGIN['idUsuario'];
+        $codigoServicio = false;
+
+        //Apartado de validacion de codigo de activación
+        if (valTextNum($activacionCode)) {
+            $codigo = $ADMINFUNC->verificarCodigo($activacionCode);
+            if ($codigo) {
+                $codigoServicio = $codigo = $codigo->fetch_assoc();
+                if (($codigo['idUsuario'] == 0 || $codigo['idUsuario'] == $idUsuario) && $codigo['estado'] == 'disponible') {
+                    if ($codigo['idRango'] != $idRango) {
+                        die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código no concuerda con el paquete que quieres comprar')));
+                    }
+                } else if ($codigo['idUsuario'] != 0 && $codigo['idUsuario'] != $idUsuario) {
+                    die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que has ingresado no es válido para tu cuenta')));
+                } else {
+                    die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar ya ha sido activado',)));
+                }
+            } else {
+                die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar no es válido',)));
+            }
+        } else {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar no tiene el formato correcto',)));
+        } //fin del apardado de codigo de verificación
+
+        if (!$nombreServicio) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'Complete el nombre de su servicio',)));
+        }
+        if (!$domicilio) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'Complete de forma correctamente el domicilio')));
+        }
+        if (!$colonia) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'Los datos de la colonia no son correctos')));
+        }
+
+        // Calculo para realizar la activación de la membresia
+        $idCodigo = (int) $codigoServicio['id'];
+        $cantPagos = (int) $codigoServicio['cantidad'];
+        $cobro = (int) $codigoServicio['costo'] * (int) $codigoServicio['cantidad'];
+        $tipoPago = 'codigo';
+        $mesesMembresia = (int) $codigoServicio['cantidad'] * (int) $codigoServicio['duracion'];
+        $fechaInicio = date("Y-m-d");
+        $fechaFinal =  date("Y-m-d", strtotime($fechaInicio . "+ $mesesMembresia month"));
+        // FIN Calculo para realizar la activación de la membresia
+
+        $sql = "INSERT INTO usersinfo(iduser, nombreServicio, telefono,correoServicio,domicilio, idServicio, CP, colonia) VALUES ($idUsuario,'$nombreServicio','$telefonoOficina','$correoServicio','$domicilio','$servicio',$codigoPostal,'$colonia')";
+        $resultado = $conexion->query($sql);
+        if ($resultado) {
+            $MEMBRESIA = "INSERT INTO membresias(idUser,fechaInicio ,fechaFinal, cantPagos, cobro, tipoPago, idcodigo, idRango) VALUES ($idUsuario,'$fechaInicio','$fechaFinal','$cantPagos','$cobro','$tipoPago',$idCodigo,$idRango)";
+            if ($conexion->query($MEMBRESIA)) {
+                $conexion->query("UPDATE codigos SET idUsuario = $idUsuario ,estado = 'activo' WHERE id = $idCodigo");
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'tu servicio ha sido registrado de manera exitosa'
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No fue posible registrar su membresia'
+                );
+            }
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'no fue posible realizar el registro'
+            );
+        }
+        // $respuesta = array();
+
+        die(json_encode($respuesta));
+
+        break;
+
+    case 'activarPaquete':
+
+        $ADMINFUNC = new AdminFunciones();
+        $ADMINFUNC->CONEXION = $conexion;
+
+        $activacionCode   = isset($_POST['activacionCode'])  && !empty($_POST['activacionCode'])  ? $conexion->real_escape_string($_POST['activacionCode'])  : false;
+        $idRango          = isset($_POST['idPaquete'])       && !empty($_POST['idPaquete'])       ? (int) ($_POST['idPaquete'])       : false;
+
+        if (!$USERLOGIN) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'El usuario con el que intentas hacer el registro no puede continuar, reinicia tu sesión',)));
+        }
+
+        $idUsuario = $USERLOGIN['idUsuario'];
+        $codigoServicio = false;
+
+        //Apartado de validacion de codigo de activación
+        if (valTextNum($activacionCode)) {
+            $codigo = $ADMINFUNC->verificarCodigo($activacionCode);
+            if ($codigo) {
+                $codigoServicio = $codigo = $codigo->fetch_assoc();
+                if (($codigo['idUsuario'] == 0 || $codigo['idUsuario'] == $idUsuario) && $codigo['estado'] == 'disponible') {
+                    if ($codigo['idRango'] != $idRango) {
+                        die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código no concuerda con el paquete que quieres comprar')));
+                    }
+                } else if ($codigo['idUsuario'] != 0 && $codigo['idUsuario'] != $idUsuario) {
+                    die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que has ingresado no es válido para tu cuenta')));
+                } else {
+                    die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar ya ha sido activado',)));
+                }
+            } else {
+                die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar no es válido',)));
+            }
+        } else {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar no tiene el formato correcto',)));
+        } //fin del apardado de codigo de verificación
+
+
+        // Calculo para realizar la activación de la membresia
+        $idCodigo = (int) $codigoServicio['id'];
+        $cantPagos = (int) $codigoServicio['cantidad'];
+        $cobro = (int) $codigoServicio['costo'] * (int) $codigoServicio['cantidad'];
+        $tipoPago = 'codigo';
+        $mesesMembresia = (int) $codigoServicio['cantidad'] * (int) $codigoServicio['duracion'];
+        $fechaInicio = date("Y-m-d");
+        $fechaFinal =  date("Y-m-d", strtotime($fechaInicio . "+ $mesesMembresia month"));
+        // FIN Calculo para realizar la activación de la membresia
+
+        $MEMBRESIA = "INSERT INTO membresias(idUser,fechaInicio ,fechaFinal, cantPagos, cobro, tipoPago, idcodigo, idRango) VALUES ($idUsuario,'$fechaInicio','$fechaFinal','$cantPagos','$cobro','$tipoPago',$idCodigo,$idRango)";
+        if ($conexion->query($MEMBRESIA)) {
+            $conexion->query("UPDATE codigos SET idUsuario = $idUsuario ,estado = 'activo' WHERE id = $idCodigo");
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'Texto' => 'tu servicio ha sido registrado de manera exitosa'
+            );
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'No fue posible registrar su membresia'
+            );
+        }
+
+        // $respuesta = array();
+
+        die(json_encode($respuesta));
+
+        break;
+
+    case 'generarCodigo':
+        $ADMINFUNC = new AdminFunciones();
+        $ADMINFUNC->CONEXION = $conexion;
+
+        $idRango = isset($_POST['rango']) && !empty($_POST['rango']) ? $_POST['rango'] : false;
+        $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false; //Obtener el id de el usuario de la Sesión activa
+
+        if ($idUser && $USERLOGIN['rol'] == 1) {
+            if ($idRango && $ADMINFUNC->verificarPaquete($idRango)) {
+                $codigo = $ADMINFUNC->codigoUnico();
+                $sql = "INSERT INTO codigos(codigo, idRango, idUser_Creador) VALUES ('$codigo',$idRango,$idUser)";
+
+                if ($conexion->query($sql)) {
+                    $respuesta = array(
+                        'respuesta' => 'exito',
+                        'Texto' => 'Peticion Exito',
+                        'codigo' => $codigo
+                    );
+                } else {
+                    $respuesta = array(
+                        'respuesta' => 'error',
+                        'Texto' => 'No fue Posible el Registro de el código',
+                    );
+                }
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'El paquete que has seleccionado no es correcto'
+                );
+            }
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'La peticion no esta realizada de manera correcta'
+            );
+        }
+        die(json_encode($respuesta));
+        break;
 
         break;
     default:

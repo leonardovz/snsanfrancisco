@@ -63,7 +63,7 @@ require_once 'templates/header.php'; ?>
                                                                         <label for="descripcion" class="">Descripción</label>
                                                                     </div>
                                                                 </div>
-                                                               
+
                                                             </div>
 
                                                         </div>
@@ -137,6 +137,22 @@ require_once 'templates/header.php'; ?>
         });
     </script>
     <script src="<?php echo $ruta; ?>account/admin/servicios.js"></script>
+    <script>
+        function crearCodigo() {
+            $.ajax({
+                type: "POST",
+                url: ruta + 'php/usuariosFunciones.php',
+                dataType: "json",
+                data: 'opcion=generarCodigo',
+                error: function(xhr, resp) {
+                    console.log(xhr.responseText);
+                },
+                success: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

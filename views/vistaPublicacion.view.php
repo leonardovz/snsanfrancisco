@@ -4,7 +4,6 @@
     <header class="mb-5">
         <!--Navbar-->
         <?php require_once 'templates/header.view.php';?>
-
         <br><br>
     </header>
     <div class="container mt-5">
@@ -258,11 +257,7 @@
         <h1>Relación de servicios!</h1>
         <div class="row">
             <div class="col-md-4 mb-4 rubberBand">
-                <!-- Card -->
-                <div class="card card-image"
-                    style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
-
-                    <!-- Content -->
+                <div class="card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
                     <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
                         <div>
                             <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Desarrollo Web</h5>
@@ -271,16 +266,10 @@
                             <a class="btn btn-pink"><i class="fas fa-clone left"></i> View project</a>
                         </div>
                     </div>
-
                 </div>
-                <!-- Card -->
             </div>
             <div class="col-md-4 mb-4">
-                <!-- Card -->
-                <div class="card card-image"
-                    style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
-
-                    <!-- Content -->
+                <div class="card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
                     <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
                         <div>
                             <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Diseñador</h5>
@@ -289,16 +278,11 @@
                             <a class="btn btn-pink"><i class="fas fa-clone left"></i> View project</a>
                         </div>
                     </div>
-
                 </div>
-                <!-- Card -->
             </div>
             <div class="col-md-4 mb-4">
-                <!-- Card -->
                 <div class="card card-image"
                     style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
-
-                    <!-- Content -->
                     <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
                         <div>
                             <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Estilistas</h5>

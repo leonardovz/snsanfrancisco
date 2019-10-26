@@ -26,17 +26,18 @@
                             <div class="col-xl-7 pb-2">
 
                                 <p class="card-text">Para asegurarnos de que seas tu, es necesario que ingreses nuevamente tu correo electronico Registrado</p>
-                                <p><b>Tu código es: </b> <?php echo $rutas[1];?></p>
+                                <p><b>Tu código es: </b> <?php echo $rutas[1]; ?></p>
                             </div>
                             <div class="col-md-7">
-                                <form id="formVerificar"class="text-center" style="color: #757575;" action="#!">
+                                <form id="formVerificar" class="text-center" style="color: #757575;" action="#!">
 
                                     <!-- Email -->
                                     <div class="md-form">
-                                        <input type="email" id="materialLoginFormEmail" class="form-control">
-                                        <label for="materialLoginFormEmail">Ingresa tu correo</label>
+                                        <input type="hidden" id="codVerificacion" value="<?php echo $rutas[1]; ?>" style="display:none;">
+                                        <input type="email" id="correoVerificar" class="form-control">
+                                        <label for="correoVerificar">Ingresa tu correo</label>
                                     </div>
-                                    <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Validar Correo Electronico</button>
+                                    <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id=>Validar Correo Electronico</button>
                                 </form>
                             </div>
                             <!-- Grid column -->
@@ -76,7 +77,7 @@
                                 <p class="card-text">¿Aún no recibes tu código?</p>
                             </div>
                             <div class="col-md-7">
-                                <form id="formSendVerificar"class="text-center" style="color: #757575;" action="#!">
+                                <form id="formSendVerificar" class="text-center" style="color: #757575;" action="#!">
 
                                     <!-- Email -->
                                     <div class="md-form">
@@ -106,6 +107,48 @@
     <?php } ?>
     <?php require_once 'templates/footer.view.php'; ?>
     <?php require_once 'templates/footer.php'; ?>
+
+    <script>
+        var ruta= ruta();
+        $(document).ready(function() {
+            $("#formVerificar").on('submit', function(e) {
+                e.preventDefault();
+                let correo = $("#correoVerificar").val();
+                let codVerificacion = $("#codVerificacion").val();
+                if (correo != "") {
+                    var expresion = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+                    if (expresion.test(correo)) {
+                        $.ajax({
+                            type: 'POST',
+                            url: ruta+'php/usuariosAJAX.php',
+                            data: 'opcion=verificacion&email='+correo+'&codVerificacion='+codVerificacion,
+                            dataType: 'json',
+                            error: function(xhr, status) {
+                                console.log(JSON.stringify(xhr));
+                            },
+                            success: function(data) {
+                                console.log(data);
+                                if (data.respuesta == 'exito') {
+                                    alertaSwal(data.Texto,'success');
+                                    location.reload();
+                                } else {
+                                    alertaSwal(data.Texto,'error',3000);
+
+                                }
+                                // console.log(data);
+                            }
+
+                        });
+                    } else {
+                        alertaSwal('El correo electronico que has ingresado no esta escrito de forma correcta', 'error');
+                    }
+                } else {
+                    alertaSwal('Es necesario que introduzcas tu correo electronico', 'error');
+                }
+                // alert("HOLA que hace");
+            })
+        });
+    </script>
 </body>
 
 </html>
