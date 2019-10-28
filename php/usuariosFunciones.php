@@ -201,7 +201,7 @@ switch ($_POST['opcion']) {
         $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
         if ($idUser) {
             // Siempre te arrojara la membresia con la ultima fecha de finalizacion
-            $sql = "SELECT M.*,R.nombre AS rol,R.imagen,R.tag,R.duracion FROM membresias AS M,rango AS R WHERE M.idRango = R.id AND M.idUser = $idUser ORDER BY M.fechaFinal DESC LIMIT 1 ";
+            $sql = "SELECT M.*,R.nombre AS rol,R.imagen,R.tag,R.duracion,R.iconColor,R.icono FROM membresias AS M,rango AS R WHERE M.idRango = R.id AND M.idUser = $idUser ORDER BY M.fechaFinal DESC LIMIT 1 ";
             $resultado = $conexion->query($sql);
             if ($resultado && $resultado->num_rows) {
                 $MEMBRESIA = $resultado->fetch_assoc();
@@ -257,7 +257,7 @@ switch ($_POST['opcion']) {
         $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
         if ($idUser) {
             // Siempre te arrojara la membresia con la ultima fecha de finalizacion
-            $sql = "SELECT M.*,R.nombre AS rol,R.imagen,R.tag,R.duracion FROM membresias AS M,rango AS R WHERE M.idRango = R.id AND M.idUser = $idUser ORDER BY M.fechaFinal DESC";
+            $sql = "SELECT M.*,R.nombre AS rol,R.imagen,R.tag,R.duracion,R.iconColor,R.icono FROM membresias AS M,rango AS R WHERE M.idRango = R.id AND M.idUser = $idUser ORDER BY M.fechaFinal DESC";
             $resultado = $conexion->query($sql);
             if ($resultado && $resultado->num_rows) {
                 $MEMBRESIAS = [];
@@ -384,7 +384,7 @@ switch ($_POST['opcion']) {
         $ADMINFUNC = new AdminFunciones();
         $ADMINFUNC->CONEXION = $conexion;
 
-        $activacionCode   = isset($_POST['activacionCode'])  && !empty($_POST['activacionCode'])  ? $conexion->real_escape_string($_POST['activacionCode'])  : false;
+        $activacionCode   = isset($_POST['codigoActivacionPaquete'])  && !empty($_POST['codigoActivacionPaquete'])  ? $conexion->real_escape_string($_POST['codigoActivacionPaquete'])  : false;
         $idRango          = isset($_POST['idPaquete'])       && !empty($_POST['idPaquete'])       ? (int) ($_POST['idPaquete'])       : false;
 
         if (!$USERLOGIN) {
@@ -409,7 +409,7 @@ switch ($_POST['opcion']) {
                     die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar ya ha sido activado',)));
                 }
             } else {
-                die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar no es válido',)));
+                die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar no es válido', $_POST)));
             }
         } else {
             die(json_encode(array('respuesta' => 'error', 'Texto' => 'El código que intentas ingresar no tiene el formato correcto',)));
@@ -431,12 +431,12 @@ switch ($_POST['opcion']) {
             $conexion->query("UPDATE codigos SET idUsuario = $idUsuario ,estado = 'activo' WHERE id = $idCodigo");
             $respuesta = array(
                 'respuesta' => 'exito',
-                'Texto' => 'tu servicio ha sido registrado de manera exitosa'
+                'Texto' => 'Tu paquete ha sido registrado de manera exitosa'
             );
         } else {
             $respuesta = array(
                 'respuesta' => 'error',
-                'Texto' => 'No fue posible registrar su membresia'
+                'Texto' => 'No fue posible registrar su código'
             );
         }
 
@@ -485,6 +485,107 @@ switch ($_POST['opcion']) {
         die(json_encode($respuesta));
         break;
 
+        break;
+
+    case 'modificarPerfil':
+        if ($USERLOGIN) {
+            $idUsuario = $USERLOGIN['idUsuario'];
+            $nombre = isset($_POST['nombre']) && !empty($_POST['nombre']) ? $_POST['nombre'] : false;
+            $apellidos = isset($_POST['apellidos']) && !empty($_POST['apellidos']) ? $_POST['apellidos'] : false;
+
+            $resultado = $conexion->query("UPDATE usuarios SET nombre='$nombre',apellidos='$apellidos' WHERE idUsuario = $idUsuario ");
+            if ($resultado && $conexion->affected_rows) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'Perfil actualizado'
+                );
+                $_SESSION['snsanfrancisco']['nombre'] =  $nombre;
+                $_SESSION['snsanfrancisco']['apellidos'] =  $apellidos;
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No fue posible cambiar los datos de su perfil'
+                );
+            }
+        }
+        die(json_encode($respuesta));
+        break;
+    case 'misDatos':
+        if ($USERLOGIN) {
+            $idUsuario = $USERLOGIN['idUsuario'];
+            $nombre = isset($_POST['nombre']) && !empty($_POST['nombre']) ? $_POST['nombre'] : false;
+            $apellidos = isset($_POST['apellidos']) && !empty($_POST['apellidos']) ? $_POST['apellidos'] : false;
+
+            $resultado = $conexion->query("SELECT * FROM usersinfo WHERE iduser = $idUsuario ");
+            if ($resultado && $resultado->num_rows) {
+                $info = $resultado->fetch_assoc();
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'Toma tu perfil',
+                    'perfil' => $info
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'Datos erroneos'
+                );
+            }
+        }
+        die(json_encode($respuesta));
+        break;
+    case 'editarPerfilInfo':
+        $ADMINFUNC = new AdminFunciones();
+        $ADMINFUNC->CONEXION = $conexion;
+
+        $nombreServicio   = isset($_POST['nombreServicio'])  && !empty($_POST['nombreServicio'])  ? $conexion->real_escape_string($_POST['nombreServicio'])  : false;
+        $telefonoOficina  = isset($_POST['telefonoOficina']) && !empty($_POST['telefonoOficina']) ? $conexion->real_escape_string($_POST['telefonoOficina']) : false;
+        $telefonoCelular  = isset($_POST['telefonoCelular']) && !empty($_POST['telefonoCelular']) ? $conexion->real_escape_string($_POST['telefonoCelular']) : false;
+        $correoServicio   = isset($_POST['correoServicio'])  && !empty($_POST['correoServicio'])  ? $conexion->real_escape_string($_POST['correoServicio'])  : false;
+        $domicilio        = isset($_POST['domicilio'])       && !empty($_POST['domicilio'])       ? $conexion->real_escape_string($_POST['domicilio'])       : false;
+        $codigoPostal     = isset($_POST['codigoPostal'])    && !empty($_POST['codigoPostal'])    ? (int) ($_POST['codigoPostal'])    : false;
+        $colonia          = isset($_POST['colonia'])         && !empty($_POST['colonia'])         ? $conexion->real_escape_string($_POST['colonia'])         : false;
+        $coloniaText      = isset($_POST['coloniaText'])     && !empty($_POST['coloniaText'])     ? $conexion->real_escape_string($_POST['coloniaText'])     : false;
+        $servicio         = isset($_POST['servicio'])        && !empty($_POST['servicio'])        ? $conexion->real_escape_string($_POST['servicio'])        : false;
+        $descripcion      = isset($_POST['descripcion'])     && !empty($_POST['descripcion'])     ? $conexion->real_escape_string($_POST['descripcion'])     : false;
+
+        $colonia = (($colonia != 0) || !$coloniaText) ? $colonia : $coloniaText; //Obtenemos la colonia que nos dio el usuario
+
+        if (!$USERLOGIN) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'El usuario con el que intentas hacer el registro no puede continuar, reinicia tu sesión',)));
+        }
+
+        $idUsuario = $USERLOGIN['idUsuario'];
+
+
+        if (!$nombreServicio) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'Complete el nombre de su servicio', $_POST)));
+        }
+        if (!$domicilio) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'Complete de forma correctamente el domicilio')));
+        }
+        if (!$colonia) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'Los datos de la colonia no son correctos')));
+        }
+
+        $sql = "UPDATE usersinfo SET nombreServicio='$nombreServicio',telefono='$telefonoOficina',celular='$telefonoCelular',correoServicio='$correoServicio',descripcion='$descripcion',domicilio='$domicilio',idServicio=$servicio,CP=$codigoPostal,colonia='$colonia' WHERE iduser = $idUsuario";
+        $resultado = $conexion->query($sql);
+        if ($resultado) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'Texto' => 'Tu servicio ha sido actualizado de manera exitosa', $_POST, $sql
+            );
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'No fue posible realizar el registro'
+            );
+        }
+
+        die(json_encode($respuesta));
+
+
+        break;
+    case 'extra':
         break;
     default:
         break;

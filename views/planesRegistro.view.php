@@ -12,11 +12,17 @@ if ($conexion->connect_errno) {
     );
     die(json_encode($respuesta));
 }
+
+$FUNCIONES = new AdminFunciones();
+$FUNCIONES->CONEXION = $conexion;
+
 $PAQUETE = ($RUTAS1 && (int) ($RUTAS1)) ? $RUTAS1 : 0;
 $sql = "SELECT * FROM rango WHERE id=$PAQUETE AND (tipo ='mensual' OR tipo= 'anual')";
 $resultado = $conexion->query($sql);
 $PAQUETE = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
 
+$USERLOGIN = ((isset($_SESSION['snsanfrancisco']['validacion'])) ? $_SESSION['snsanfrancisco'] : false); //Validacion de la sesion
+$PERFIL = $FUNCIONES->verificarPerfil($USERLOGIN['idUsuario']); //configuraci[on del perfil]
 require_once 'templates/header.php';
 
 ?>
@@ -51,136 +57,176 @@ require_once 'templates/header.php';
                             <p class="grey-text"><i class="fas fa-star text-warning"></i> Registro de Servicio</p>
                         </div>
                     </div>
-                    <div class="card my-4">
-                        <div class="card-body">
+                    <?php if (!$PERFIL) { ?>
+                        <div class="card my-4">
+                            <div class="card-body">
 
-                            <div class="text-center" style="color: #757575;">
-                                <div class="form-row">
-                                    <h4 class="text-dark">Ingresa un código de activación</h4>
-                                    <div class="col">
-                                        <!-- First name -->
-                                        <div class="md-form">
-                                            <input type="text" id="registroCode" class="form-control">
-                                            <label for="registroCode">Código de activación</label>
+                                <div class="text-center" style="color: #757575;">
+                                    <div class="form-row">
+                                        <h4 class="text-dark">Ingresa un código de activación</h4>
+                                        <div class="col">
+                                            <!-- First name -->
+                                            <div class="md-form">
+                                                <input type="text" id="registroCode" class="form-control">
+                                                <label for="registroCode">Código de activación</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col" id="errorCode">
+                                    <div class="form-row">
+                                        <div class="col" id="errorCode">
+                                        </div>
                                     </div>
+                                    <a href="#" id="modalHelp">Ayuda</a>
                                 </div>
-                                <a href="#" id="modalHelp">Ayuda</a>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
                 </div>
                 <div class="col-md-8 my-4">
-                    <div class="card">
+                    <?php
 
-                        <h5 class="card-header <?php echo $PAQUETE['bgColor'] . ' ' . $PAQUETE['textColor']; ?>  text-center py-4">
-                            <strong>¡En hora buena! Continua con el registro de tu servicio</strong>
-                        </h5>
+                        if (!$PERFIL) {
+                            ?>
+                        <div class="card">
 
-                        <!--Card content-->
-                        <div class="card-body px-lg-5 pt-0">
+                            <h5 class="card-header <?php echo $PAQUETE['bgColor'] . ' ' . $PAQUETE['textColor']; ?>  text-center py-4">
+                                <strong>¡En hora buena! Continua con el registro de tu servicio</strong>
+                            </h5>
 
-                            <!-- Form -->
-                            <form id="formRegistroServicio" class="text-center" style="color: #757575;">
+                            <!--Card content-->
+                            <div class="card-body px-lg-5 pt-0">
+                                <!-- Form -->
+                                <form id="formRegistroServicio" class="text-center" style="color: #757575;">
 
-                                <div class="form-row">
-                                    <div class="col">
-                                        <!-- First name -->
-                                        <div class="md-form">
-                                            <input type="text" id="nombreServicio" name="nombreServicio" class="form-control">
-                                            <label for="nombreServicio">Nombre de tu empresa, o compañia</label>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <!-- First name -->
+                                            <div class="md-form">
+                                                <input type="text" id="nombreServicio" name="nombreServicio" class="form-control">
+                                                <label for="nombreServicio">Nombre de tu empresa, o compañia</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- E-mail -->
-                                <div class="md-form mt-0">
-                                    <input type="email" id="correoServicio" name="correoServicio" class="form-control">
-                                    <label for="correoServicio">Correo de contacto</label>
-                                </div>
-                                <!-- Phone number -->
-                                <div class="md-form">
-                                    <input type="number" id="telefonoOficina" name="telefonoOficina" class="form-control" aria-describedby="telefonoOficinaTogle">
-                                    <label for="telefonoOficina">Telefono oficina</label>
-                                    <small id="telefonoOficinaTogle" class="form-text text-muted mb-4">
-                                        Opcional - Contacto directo
-                                    </small>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="md-form mt-0">
-                                            <input type="text" id="domicilio" name="domicilio" class="form-control">
-                                            <label for="domicilio">Domicilio</label>
+                                    <!-- E-mail -->
+                                    <div class="md-form mt-0">
+                                        <input type="email" id="correoServicio" name="correoServicio" class="form-control">
+                                        <label for="correoServicio">Correo de contacto</label>
+                                    </div>
+                                    <!-- Phone number -->
+                                    <div class="md-form">
+                                        <input type="number" id="telefonoOficina" name="telefonoOficina" class="form-control" aria-describedby="telefonoOficinaTogle">
+                                        <label for="telefonoOficina">Telefono oficina</label>
+                                        <small id="telefonoOficinaTogle" class="form-text text-muted mb-4">
+                                            Opcional - Contacto directo
+                                        </small>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="md-form mt-0">
+                                                <input type="text" id="domicilio" name="domicilio" class="form-control">
+                                                <label for="domicilio">Domicilio</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="md-form mt-0">
+                                                <input type="number" id="codigoPostal" name="codigoPostal" class="form-control">
+                                                <label for="codigoPostal">C.P.</label>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col">
-                                        <div class="md-form mt-0">
-                                            <input type="number" id="codigoPostal" name="codigoPostal" class="form-control">
-                                            <label for="codigoPostal">C.P.</label>
+                                    <div class="form-row" id="errorCP">
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <div class="md-form mt-0">
+                                                <input type="text" id="estado" class="form-control disabled" style="display:none">
+                                                <!-- <label for="estado">Estado</label> -->
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="md-form mt-0">
+                                                <input type="text" id="municipio" class="form-control disabled" style="display:none">
+                                                <!-- <label for="municipio">municipio</label> -->
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-row" id="errorCP">
+                                    <div class="form-row my-3">
+                                        <div class="col" id="coloniasCont">
+                                            <!-- select nombre de la colonia -->
+                                        </div>
+                                        <div class="col" id="coloniasVal">
+                                            <!-- imput colonia no existe -->
 
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="md-form mt-0">
-                                            <input type="text" id="estado" class="form-control disabled" style="display:none">
-                                            <!-- <label for="estado">Estado</label> -->
                                         </div>
                                     </div>
-                                    <div class="col">
-                                        <div class="md-form mt-0">
-                                            <input type="text" id="municipio" class="form-control disabled" style="display:none">
-                                            <!-- <label for="municipio">municipio</label> -->
+                                    <div class="form-row my-3">
+                                        <div class="col" id="servicioContent">
+
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-row my-3">
-                                    <div class="col" id="coloniasCont">
-                                        <!-- select nombre de la colonia -->
+                                    <div class="form-row my-3">
+                                        <div class="col" id="servicioErrores">
+
+                                        </div>
                                     </div>
-                                    <div class="col" id="coloniasVal">
-                                        <!-- imput colonia no existe -->
-
+                                    <!-- Newsletter -->
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="materialRegisterFormNewsletter">
+                                        <label class="form-check-label" for="materialRegisterFormNewsletter">Recibir actualizaciónes</label>
                                     </div>
-                                </div>
-                                <div class="form-row my-3">
-                                    <div class="col" id="servicioContent">
 
-                                    </div>
-                                </div>
-                                <div class="form-row my-3">
-                                    <div class="col" id="servicioErrores">
+                                    <!-- Sign up button -->
+                                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Registrar mi Servicio</button>
 
-                                    </div>
-                                </div>
-                                <!-- Newsletter -->
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="materialRegisterFormNewsletter">
-                                    <label class="form-check-label" for="materialRegisterFormNewsletter">Recibir actualizaciónes</label>
-                                </div>
+                                    <hr>
 
-                                <!-- Sign up button -->
-                                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Registrar mi Servicio</button>
-
-                                <hr>
-
-                                <!-- Terms of service -->
-                                <p>Por SnSanfrancisco
-                                    <em> revisa tu registro </em> y configura tu perfil
-                                    <a href="<?php echo $ruta; ?>terminosdeuso" target="_blank">Terminos del servicio</a>
-                            </form>
-                            <!-- Form -->
+                                    <!-- Terms of service -->
+                                    <p>Por SnSanfrancisco
+                                        <em> revisa tu registro </em> y configura tu perfil
+                                        <a href="<?php echo $ruta; ?>terminosdeuso" target="_blank">Terminos del servicio</a>
+                                    </p>
+                                </form>
+                                <!-- Form -->
+                            </div>
 
                         </div>
+                    <?php
+                        } else {
+                            ?>
+                        <div class="card">
 
-                    </div>
+                            <h5 class="card-header <?php echo $PAQUETE['bgColor'] . ' ' . $PAQUETE['textColor']; ?>  text-center py-4">
+                                <strong>Tu perfil ya fue configurado, ingresa el código y activa tu nuevo paquete</strong>
+                            </h5>
+
+                            <!--Card content-->
+                            <div class="card-body px-lg-5 pt-0">
+                                <!-- Form -->
+                                <form id="formRegistroServicio" class="text-center" style="color: #757575;">
+
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <!-- First name -->
+                                            <div class="md-form">
+                                                <input type="text" id="codigoActivacionPaquete" name="codigoActivacionPaquete" class="form-control">
+                                                <label for="codigoActivacionPaquete">Código de activacion</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col" id="errorCode">
+
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-info">Activar</button>
+                                </form>
+                            </div>
+                        </div>
+                    <?php
+                        }
+                        ?>
                 </div>
             </div>
         </div>
@@ -220,173 +266,67 @@ require_once 'templates/header.php';
     <script>
         var ruta = ruta();
         var paquete = <?php echo $PAQUETE['id']; ?>;
-        $(document).ready(function() {
-            var statusCP = false;
-            var estado = $("#estado");
-            var municipio = $("#municipio");
-            var colonias = $("#coloniasCont");
-            var coloniasImp = $("#coloniasVal");
-            $("#codigoPostal").change(function() {
-                traerDireccion($(this).val());
-            });
-            $("#formRegistroServicio").on('submit', function(e) {
-                e.preventDefault();
-                var formulario = $(this);
-                registroServicio(formulario);
-            });
-            traerServicios();
+    </script>
+    <?php
+    if (!$PERFIL) { ?>
+        <script src="<?php echo $ruta; ?>/script/registroServicio.js"></script>
+    <?php } else { ?>
+        <script>
+            $(document).ready(function() {
 
-
-            function traerDireccion(codigoPostal) {
-                $.ajax({
-                    type: "GET",
-                    url: 'https://api-codigos-postales.herokuapp.com/v2/codigo_postal/' + codigoPostal,
-                    dataType: "json",
-                    error: function(xhr, resp) {
-                        console.log(xhr.responseText);
-                    },
-                    success: function(data) {
-                        if (data.estado != "" && data.municipio != "") {
-                            statusCP = true;
-                            $("#errorCP").html("");
-                            estado.val(data.estado).show();
-                            municipio.val(data.municipio).show();
-                            if (data.colonias.length > 0) {
-                                let opciones = "";
-                                for (const i in data.colonias) {
-                                    opciones += `<option value="${data.colonias[i]}" >${data.colonias[i]}</option>`;
-                                }
-                                colonias.html(`<label>Colonia</label>
-                                <select class="browser-default custom-select select2" id="colonia"name="colonia">
-                                ${opciones}
-                                    <option value="0">Otra</option>
-                                </select>`);
-                                $("#colonia").change(function() {
-                                    let colonia = $(this).val();
-                                    console.log(colonia);
-                                    if (colonia == 0) {
-                                        coloniasImp.html(`<div class="col">
-                                        <div class="md-form mt-3">
-                                            <input type="text" id="coloniaText" name="coloniaText" class="form-control">
-                                            <label for="coloniaText">Colonia</label>
-                                        </div>
-                                    </div>`);
-                                    } else {
-                                        coloniasImp.html("");
-                                    }
-                                });
-                            } else if (data.colonias.length == 0) {
-                                coloniasImp.html(`<div class="col">
-                                        <div class="md-form mt-3">
-                                            <input type="text" id="coloniaText" name="coloniaText" class="form-control">
-                                            <label for="coloniaText">Colonia</label>
-                                        </div>
-                                    </div>`);
-                            }
-                        } else {
-                            statusCP = false;
-                            $("#errorCP").html(`
-                                <div class="alert alert-danger" role="alert">
-                                    El código postal que ingresaste no se encuentra en nuestra base de datos
-                                </div>
-                            `);
-                            estado.val(data.estado).hide();
-                            municipio.val(data.municipio).hide();
-                            colonias.html("");
-                            coloniasImp.html("");
-                        }
-                        console.log(data);
-                    }
+                $("#formRegistroServicio").on('submit', function(e) {
+                    e.preventDefault();
+                    var formulario = $(this).serialize();
+                    registroServicio(formulario);
                 });
-            }
 
-            function traerServicios(codigoPostal) {
-                $.ajax({
-                    type: "POST",
-                    url: ruta + 'php/publicacionesAJAX.php',
-                    dataType: "json",
-                    data: 'opcion=traerServicios',
-                    error: function(xhr, resp) {
-                        console.log(xhr.responseText);
-                    },
-                    success: function(data) {
-                        if (data.respuesta == "exito") {
-                            let opciones = "";
-                            for (const i in data.servicios) {
-                                opciones += `<option value="${data.servicios[i].id}" >${data.servicios[i].nombre}</option>`;
-                            }
+                function registroServicio(formulario) {
+                    var errorCodigo = $("#errorCode");
+                    errorCodigo.html("");
+                    var $activacionCode = $("#codigoActivacionPaquete").val();
+                    var colonia = $("#colonia").val();
+                    var coloniaText = $("#coloniaText").val();
 
-                            $("#servicioContent").html(`<label>Servicios</label>
-                                <select class="browser-default custom-select" id="servicio"name="servicio">
-                                ${opciones}
-                                    <option value="0">Otra</option>
-                                </select>`);
-                            $('#servicio').select2();
-                        }
-                        console.log(data);
-                    }
-                });
-            }
-
-            function registroServicio(formulario) {
-                var errorCodigo = $("#errorCode");
-                var errorForm = $("#servicioErrores");
-                errorCodigo.html("");
-                errorForm.html("");
-
-                var $formulario = formulario.serialize();
-                var $activacionCode = $("#registroCode").val();
-                var colonia = $("#colonia").val();
-                var coloniaText = $("#coloniaText").val();
-
-                var errores = 0;
-                if ($activacionCode != "") {
-                    var expresion = /^[a-zA-Z0-9]*$/;
-                    if (!expresion.test($activacionCode)) {
-                        errorCodigo.append('<div class="alert alert-warning" role="alert"> No se permiten caracteres especiales solo números y letras </div>');
-                        errores++;
-                    }
-                } else {
-                    errorCodigo.append('<div class="alert alert-warning" role="alert">Necesitas de ingresar un código </div>');
-                    errores++;
-                }
-                if (statusCP) {
-                    if (colonia == 0) {
-                        if (coloniaText == "" || coloniaText.length < 5) {
-                            errorForm.append('<div class="alert alert-warning" role="alert">La colonia que ingreso no es correcta </div>');
+                    var errores = 0;
+                    if ($activacionCode != "") {
+                        var expresion = /^[a-zA-Z0-9]*$/;
+                        if (!expresion.test($activacionCode)) {
+                            errorCodigo.append('<div class="alert alert-warning" role="alert"> No se permiten caracteres especiales solo números y letras </div>');
                             errores++;
                         }
+                    } else {
+                        errorCodigo.append('<div class="alert alert-warning" role="alert">Necesitas de ingresar un código </div>');
+                        errores++;
                     }
 
-                } else {
-                    errorForm.append('<div class="alert alert-warning" role="alert">Necesitas de ingresar un código postal valido </div>');
-                    errores++;
-
-                }
-
-                if (errores == 0) {
-                    $.ajax({
-                        type: "POST",
-                        url: ruta + 'php/usuariosFunciones.php',
-                        dataType: "json",
-                        data: 'opcion=registroServicio&' + $formulario + '&activacionCode=' + $activacionCode + '&idPaquete=' + paquete,
-                        error: function(xhr, resp) {
-                            console.log(xhr.responseText);
-                        },
-                        success: function(data) {
-                            console.log(data);
-                            if (data.respuesta == 'exito') {
-
-                            } else {
-                                errorForm.append('<div class="alert alert-warning" role="alert">' + data.Texto + ' </div>');
+                    if (errores == 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: ruta + 'php/usuariosFunciones.php',
+                            dataType: "json",
+                            data: 'opcion=activarPaquete&' + formulario + '&idPaquete=' + paquete,
+                            error: function(xhr, resp) {
+                                console.log(xhr.responseText);
+                            },
+                            success: function(data) {
+                                console.log(data);
+                                if (data.respuesta == 'exito') {
+                                    alertaSwal(data.Texto, 'success');
+                                    setTimeout(() => {
+                                        window.location = ruta + 'perfil';
+                                    }, 4000);
+                                } else {
+                                    alertaSwal(data.Texto, 'error')
+                                    errorCodigo.append('<div class="alert alert-warning" role="alert">' + data.Texto + ' </div>');
+                                }
                             }
-                        }
-                    });
-                }
+                        });
+                    }
 
-            }
-        });
-    </script>
+                }
+            });
+        </script>
+    <?php } ?>
 </body>
 
 </html>

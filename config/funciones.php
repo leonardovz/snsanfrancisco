@@ -300,4 +300,15 @@ class AdminFunciones
         }
         return $resultado;
     }
+    function verificarPerfil($idUsuario)
+    {
+        $conexion = $this->CONEXION;
+        $resultado = false;
+        if ($conexion) {
+            $sql = "SELECT * FROM usersinfo WHERE iduser = $idUsuario";
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado && $resultado->num_rows) ? $resultado : false;
+        }
+        return $resultado;
+    }
 }

@@ -29,67 +29,6 @@ require_once 'templates/header.php'; ?>
     </header>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="md-form form-sm text-center">
-                            <input type="text" id="nombreEmpresa" class="form-control form-control-sm">
-                            <label for="nombreEmpresa">Nombre de tu empresa, o compañia</label>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="md-form form-sm">
-                                    <i class="fas fa-tty prefix"></i>
-                                    <input type="text" id="telOficina" class="form-control form-control-sm">
-                                    <label for="telOficina">Telefono oficina</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="md-form form-sm">
-                                    <i class="fas fa-phone-square prefix text-success"></i>
-                                    <input type="text" id="celContacto" class="form-control form-control-sm">
-                                    <label for="celContacto">No. Celular de Contacto</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="md-form form-sm">
-                            <i class="fas fa-home prefix"></i>
-                            <input type="password" id="domicilio" class="form-control form-control-sm">
-                            <label for="domicilio">Domicilio</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Selecciona tu servicio</label>
-                            <select class="pl-5 browser-default custom-select form-control select2">
-                                <option value="0" selected>Selecciona...</option>
-                                <option value="1">Panaderia</option>
-                                <option value="2">Licoreria</option>
-                                <option value="3">Estilista</option>
-                                <option value="4">Peloqueria</option>
-                                <option value="5">Peloqueria</option>
-                            </select>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="whatsapp">
-                                    <label class="custom-control-label" for="whatsapp"> <i class="fab fa-whatsapp text-success"></i> Activar whatsApp</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="md-form form-sm">
-                            <i class="fa fa-pencil-alt prefix"></i>
-                            <textarea type="text" id="materialFormMessageModalEx1" class="md-textarea form-control"></textarea>
-                            <label for="materialFormMessageModalEx1">Aquí describe el trabajo que realizas (descripcion)</label>
-                        </div>
-                        <div class="text-center mt-4 mb-2">
-                            <button class="btn btn-primary">Guardar mi configuración
-                                <i class="fa fa-send ml-2"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
             <div class="col-md-12">
                 <section class="magazine-section my-5">
                     <div class="row">
@@ -116,16 +55,27 @@ require_once 'templates/header.php'; ?>
                             <!-- Card Dark -->
                         </div>
                         <div class="col-md-8">
-                            <form id="formEditPerfil" class="text-center border border-light p-5" action="#!">
+                            <form id="formEditPerfil" class="text-center border border-light p-5">
 
                                 <p class="h4 mb-4"><?php echo $UserLogin['nombre'] . ' ' . $UserLogin['apellidos']; ?></p>
 
                                 <p>Aquí puedes modificar los datos de tu perfil.</p>
                                 <!-- Nombre -->
-                                <input type="text" id="nombre" class="form-control mb-4" placeholder="Nombre" value="<?php echo $UserLogin['nombre']; ?>">
+                                <input type="text" name="nombre" id="nombre" class="form-control mb-4" placeholder="Nombre" value="<?php echo $UserLogin['nombre']; ?>">
                                 <!-- Apellidos -->
-                                <input type="text" id="apellidos" class="form-control mb-4" placeholder="Apellidos" value="<?php echo $UserLogin['apellidos']; ?>">
+                                <input type="text" name="apellidos" id="apellidos" class="form-control mb-4" placeholder="Apellidos" value="<?php echo $UserLogin['apellidos']; ?>">
                                 <!-- Sign in button -->
+                                <button class="btn btn-info btn-block" type="submit">Guardar Cambios</button>
+                            </form>
+                            <button class="btn btn-info" id="cambioPassword" type="submit">Cambiar Contraseña</button>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-md-6" style="display:none;">
+                            <form id="formCambiarPass" class="text-center border border-light p-5">
+                                <input type="text" name="password" id="password" class="form-control mb-4" placeholder="Contraseña Actual">
+                                <input type="text" name="passwordNew" id="passwordNew" class="form-control mb-4" placeholder="Nueva Contraseña">
+                                <input type="text" name="passwordNewR" id="passwordNewR" class="form-control mb-4" placeholder="Repite tu nueva Contraseña">
                                 <button class="btn btn-info btn-block" type="submit">Guardar Cambios</button>
                             </form>
                         </div>
@@ -182,6 +132,7 @@ require_once 'templates/header.php'; ?>
     <script src="<?php echo $ruta; ?>/script/perfil.js"></script>
     <script>
         $(document).ready(function() {
+            var statusCP = false;
             $.ajax({
                 type: "POST",
                 url: ruta + 'php/usuariosFunciones.php',
@@ -211,7 +162,6 @@ require_once 'templates/header.php'; ?>
                     console.log(xhr.responseText);
                 },
                 success: function(data) {
-                    console.log(data);
                     if (data.respuesta == 'exito') {
                         if (data.membresias.length > 0) {
                             var titulo = `<h2>Tu historial de membresias</h2>`;
@@ -225,6 +175,30 @@ require_once 'templates/header.php'; ?>
                     }
                 }
             });
+            $("#formEditPerfil").on('submit', function(e) {
+                e.preventDefault();
+                var formulario = $(this).serialize();
+                $.ajax({
+                    type: "POST",
+                    url: ruta + 'php/usuariosFunciones.php',
+                    dataType: "json",
+                    data: 'opcion=modificarPerfil&' + formulario,
+                    error: function(xhr, resp) {
+                        console.log(xhr.responseText);
+                    },
+                    success: function(data) {
+                        if (data.respuesta == "exito") {
+                            alertaSwal(data.Texto, 'success');
+                        } else {
+                            alertaSwal(data.Texto, 'error');
+                        }
+                    }
+                });
+            });
+            $("#cambioPassword").on('submit', function(e) {
+                e.preventDefault();
+
+            });
 
             function configurarPerfilEmpresa() {
                 var formulario = $("#formEditPerfil");
@@ -232,21 +206,165 @@ require_once 'templates/header.php'; ?>
                 <div class="row justify-content-center" id="contenedorConfig">
                     <div class="col-md-6">
                          <button id="configurarCuenta" class="btn btn-primary btn-block "> <i class="fas fa-cog mx-3"></i> Configurar mi cuenta</button>
-                         
                     </div>
                 </div>
                `);
                 $("#configurarCuenta").on('click', function() {
+                    $.ajax({
+                        type: "POST",
+                        url: ruta + 'php/usuariosFunciones.php',
+                        dataType: "json",
+                        data: 'opcion=misDatos',
+                        error: function(xhr, resp) {
+                            console.log(xhr.responseText);
+                        },
+                        success: function(data) {
+                            if (data.respuesta == 'exito') {
+                                let cuerpo =
+                                    `
+                                        <div class="row justify-content-center" >
+                                            <div class="col-md-8">
+                                                <form id="formRegistroServicio" class="text-center" style="color: #757575;">
+                                                    <div class="form-row">
+                                                        <div class="col">
+                                                            <!-- First name -->
+                                                            <div class="md-form">
+                                                                <input type="text" id="nombreServicio" name="nombreServicio" class="form-control" value="${data.perfil.nombreServicio}">
+                                                                <label for="nombreServicio" class="active">Nombre de tu empresa, o compañia</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- E-mail -->
+                                                    <div class="md-form mt-0">
+                                                        <input type="email" id="correoServicio" name="correoServicio" class="form-control" value="${data.perfil.correoServicio}">
+                                                        <label for="correoServicio" class="active" >Correo de contacto</label>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <!-- Phone number -->
+                                                        <div class="col md-form">
+                                                            <input type="number" id="telefonoOficina" name="telefonoOficina" class="form-control" aria-describedby="telefonoOficinaTogle" value="${data.perfil.telefono}" >
+                                                            <label for="telefonoOficina" class="active">Telefono oficina</label>
+                                                            <small id="telefonoOficinaTogle" class="form-text text-muted mb-4">
+                                                                Opcional - Contacto directo
+                                                            </small>
+                                                        </div>
+                                                        <!-- Phone number -->
+                                                        <div class="col md-form">
+                                                            <input type="number" id="telefonoCelular" name="telefonoCelular" class="form-control" aria-describedby="telefonoOficinaTogle" value="${data.perfil.celular}" >
+                                                            <label for="telefonoCelular" class="active">Telefono oficina</label>
+                                                            <small id="telefonoOficinaTogle" class="form-text text-muted mb-4">
+                                                                Opcional - Contacto directo
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="col">
+                                                            <div class="md-form mt-0">
+                                                                <input type="text" id="domicilio" name="domicilio" class="form-control" value="${data.perfil.domicilio}">
+                                                                <label for="domicilio" class="active">Domicilio</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="md-form mt-0">
+                                                                <input type="number" id="codigoPostal" name="codigoPostal" class="form-control" value="${data.perfil.CP}">
+                                                                <label for="codigoPostal" class="active">C.P.</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row" id="errorCP">
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="col">
+                                                            <div class="md-form mt-0">
+                                                                <input type="text" id="estado" class="form-control disabled" style="display:none">
+                                                                <!-- <label for="estado">Estado</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="md-form mt-0">
+                                                                <input type="text" id="municipio" class="form-control disabled" style="display:none">
+                                                                <!-- <label for="municipio">municipio</label> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row my-3">
+                                                        <div class="col" id="coloniasCont">
+                                                            <!-- select nombre de la colonia -->
+                                                        </div>
+                                                        <div class="col" id="coloniasVal">
+                                                            <!-- imput colonia no existe -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row my-3">
+                                                        <div class="col">
+                                                            <div class="md-form">
+                                                                <textarea id="descripcion" name="descripcion"  class="md-textarea form-control" rows="3">${data.perfil.descripcion}</textarea>
+                                                                <label for="descripcion" class="active">Descripción del servicio que ofreces</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row my-3">
+                                                        <div class="col" id="servicioContent">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row my-3">
+                                                        <div class="col" id="servicioErrores">
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Guardar Cambios</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    `;
+                                $("#contenedorConfig").removeClass('row');
+                                $("#contenedorConfig").html(cuerpo);
+
+
+                                traerServicios();
+                                traerDireccion($("#codigoPostal").val(), data.perfil.colonia);
+                                $("#codigoPostal").change(function() {
+                                    traerDireccion($(this).val());
+                                });
+
+                                $("#formRegistroServicio").on('submit', function(e) {
+                                    e.preventDefault();
+                                    let formularioSer = $(this).serialize();
+                                    registroServicio(formularioSer);
+                                });
+                            } else {}
+                        }
+                    });
 
                 });
-                // let descripcion = $(this).parent().parent().parent().parent().siblings();
-                // if (descripcion.is(':visible')) {
-                //     descripcion.hide();
-                //     opcionMostrar.html('Mostrar <i class="fas fa-arrow-circle-down"></i>').removeClass('warning-color').addClass('default-color');
-                // } else {
-                //     opcionMostrar.html('Ocultar <i class="fas fa-arrow-circle-up"></i>').removeClass('default-color').addClass('warning-color');
-                //     descripcion.show();
-                // }
+            }
+
+            function traerServicios() {
+                $.ajax({
+                    type: "POST",
+                    url: ruta + 'php/publicacionesAJAX.php',
+                    dataType: "json",
+                    data: 'opcion=traerServicios',
+                    error: function(xhr, resp) {
+                        console.log(xhr.responseText);
+                    },
+                    success: function(data) {
+                        if (data.respuesta == "exito") {
+                            let opciones = "";
+                            for (const i in data.servicios) {
+                                opciones += `<option value="${data.servicios[i].id}" >${data.servicios[i].nombre}</option>`;
+                            }
+
+                            $("#servicioContent").html(`<label>Servicios</label>
+                                <select class="browser-default custom-select" id="servicio"name="servicio">
+                                ${opciones}
+                                    <option value="0">Otra</option>
+                                </select>`);
+                            $('#servicio').select2();
+                        }
+                        // console.log(data);
+                    }
+                });
             }
 
 
@@ -272,7 +390,7 @@ require_once 'templates/header.php'; ?>
                 var cuerpo = `
                     <div class="card z-depth-1 mb-3">
                         <div class="card-body primary-color text-white">
-                            <h5 class="card-title">Ultimo plan activado: <span>${data.ultimaMembresia.rol}</span></h5>
+                            <h5 class="card-title">Ultimo plan activado: <span>${data.ultimaMembresia.rol} <i class="${data.ultimaMembresia.icono} mx-3"> </i></span></h5>
                             <p class="card-text text-white">Este paquete se tendrá que renovar cada ${data.ultimaMembresia.duracion} mes${((data.ultimaMembresia.duracion>1)?"es":"")}</p>
                             <p class="card-text text-white">Estado del plan:  <b>${((data.planActivo)? "Activo": "Inactivo")} <span class="${((data.planActivo)? "text-success": "text-danger")}"><i class="fas fa-map-marker"></i></span> </b></p>
                             <p class="card-text text-white">Tiempo restante:  <b>${tiempoRestante} </b></p>
@@ -296,7 +414,7 @@ require_once 'templates/header.php'; ?>
                     cuerpo += `
                    <div class="card z-depth-1 mb-3">
                         <div class="card-body default-color-dark text-white">
-                            <p class="card-text text-white"><span class="h6 mr-2">Plan: </span> <i class="fas fa-money-bill-wave"> </i> ${membresias[i].rol} <span class="ml-3"></span></p>
+                            <p class="card-text text-white"><span class="h6 mr-2">Plan: </span> <i class="${membresias[i].icono} mx-3"> </i>${membresias[i].rol} <span class="ml-3"></span></p>
                             <p class="card-text text-white"><span class="h6 mr-2">Duración: </span> ${membresias[i].duracion} mes${((membresias[i].duracion>1)?"es":"")} <i class="fas fa-hourglass-end ml-3"></i></p>
                             <p class="card-text text-white"><span class="h6 mr-2">Costo: </span> $ ${membresias[i].cobro}.00 MXN </p>
                             <a class="card-link">${fechaInicio}</a>
@@ -310,10 +428,133 @@ require_once 'templates/header.php'; ?>
                 return cuerpo;
             }
 
-            function listadoPlanes() {
-
+            function traerDireccion(codigoPostal, coloniaActiva = false) {
+                var estado = $("#estado");
+                var municipio = $("#municipio");
+                var colonias = $("#coloniasCont");
+                var coloniasImp = $("#coloniasVal");
+                $.ajax({
+                    type: "GET",
+                    url: 'https://api-codigos-postales.herokuapp.com/v2/codigo_postal/' + codigoPostal,
+                    dataType: "json",
+                    error: function(xhr, resp) {
+                        console.log(xhr.responseText);
+                    },
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.estado != "" && data.municipio != "") {
+                            statusCP = true;
+                            $("#errorCP").html("");
+                            estado.val(data.estado);
+                            estado.show();
+                            municipio.val(data.municipio).show();
+                            if (data.colonias.length > 0) {
+                                let opciones = "";
+                                for (const i in data.colonias) {
+                                    opciones += `<option value="${data.colonias[i]}" >${data.colonias[i]}</option>`;
+                                }
+                                colonias.html(`<label>Colonia</label>
+                                <select class="browser-default custom-select select2" id="colonia"name="colonia">
+                                <option value="0">Otra</option>
+                                ${opciones}
+                                </select>`);
+                                if (coloniaActiva) {
+                                    coloniasImp.html(`<div class="col">
+                                        <div class="md-form mt-3">
+                                            <input type="text" id="coloniaText" name="coloniaText" class="form-control" value="${((coloniaActiva)?coloniaActiva:"")}">
+                                            <label for="coloniaText" ${((coloniaActiva)?' class="active" ':"")}>Colonia</label>
+                                        </div>
+                                    </div>`);
+                                }
+                                $("#colonia").change(function() {
+                                    let colonia = $(this).val();
+                                    if (colonia == 0 || coloniaActiva) {
+                                        coloniasImp.html(`<div class="col">
+                                        <div class="md-form mt-3">
+                                            <input type="text" id="coloniaText" name="coloniaText" class="form-control" value="${((coloniaActiva)?coloniaActiva:"")}">
+                                            <label for="coloniaText" ${((coloniaActiva)?' class="active" ':"")}>Colonia</label>
+                                        </div>
+                                    </div>`);
+                                    } else {
+                                        coloniasImp.html("");
+                                    }
+                                });
+                            } else if (data.colonias.length == 0 || coloniaActiva) {
+                                coloniasImp.html(`<div class="col">
+                                        <div class="md-form mt-3">
+                                            <input type="text" id="coloniaText" name="coloniaText" class="form-control" value="${((coloniaActiva)?coloniaActiva:"")}">
+                                            <label for="coloniaText" ${((coloniaActiva)?' class="active" ':"")}>Colonia</label>
+                                        </div>
+                                    </div>`);
+                            }
+                        } else {
+                            statusCP = false;
+                            $("#errorCP").html(`
+                                <div class="alert alert-danger" role="alert">
+                                    El código postal que ingresaste no se encuentra en nuestra base de datos
+                                </div>
+                            `);
+                            estado.val(data.estado).hide();
+                            municipio.val(data.municipio).hide();
+                            colonias.html("");
+                            coloniasImp.html("");
+                        }
+                        // console.log(data);
+                    }
+                });
             }
             $(".select2").select2();
+
+            function registroServicio(formulario) {
+                var errorForm = $("#servicioErrores");
+                errorForm.html("");
+                var $activacionCode = $("#registroCode").val();
+                var colonia = $("#colonia").val();
+                var coloniaText = 0;
+
+                var estado = $("#estado");
+                var municipio = $("#municipio");
+                var colonias = $("#coloniasCont");
+                var coloniasImp = $("#coloniasVal");
+
+                var errores = 0;
+                if (statusCP) {
+                    if (colonia == 0) {
+                        coloniaText = $("#coloniaText").val();
+                        if (coloniaText == "" || coloniaText.length < 5) {
+                            errorForm.append('<div class="alert alert-warning" role="alert">La colonia que ingreso no es correcta </div>');
+                            errores++;
+                            alertaSwal('La colonia que ingreso no es correcta', 'error');
+                        }
+                    }
+                } else {
+                    errorForm.append('<div class="alert alert-warning" role="alert">Necesitas de ingresar un código postal valido </div>');
+                    errores++;
+                    alertaSwal('Necesitas de ingresar un código postal valido', 'error');
+
+                }
+                errorForm.children().show();
+                if (errores == 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: ruta + 'php/usuariosFunciones.php',
+                        dataType: "json",
+                        data: 'opcion=editarPerfilInfo&' + formulario,
+                        error: function(xhr, resp) {
+                            console.log(xhr.responseText);
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data.respuesta == 'exito') {
+                                alertaSwal(data.Texto, 'success');
+                            } else {
+                                errorForm.append('<div class="alert alert-warning" role="alert">' + data.Texto + ' </div>');
+                            }
+                        }
+                    });
+                }
+
+            }
         });
     </script>
 

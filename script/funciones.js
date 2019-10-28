@@ -1,4 +1,4 @@
-var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var MESES = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 
 function rellenarCero(numero,ceros=5) {
     let cadena = "";
@@ -51,3 +51,4 @@ var normalize = (function() {
         timer: tiempo
       })
   }
+  

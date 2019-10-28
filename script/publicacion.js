@@ -224,7 +224,7 @@ $(document).ready(function () {
         });
     }
 
-    function cuerpoPublicacion(publicacion, ruta, rutaImagen) {
+    function cuerpoPublicacion1(publicacion, ruta, rutaImagen) {
         var cuerpo = ``;
         // for (let i in publicaciones) {
         let nombreMin = publicacion.nombre.replace(" ", "-"),
@@ -269,6 +269,36 @@ $(document).ready(function () {
             </div>
             `;
         //}
+        return cuerpo;
+    }
+    function cuerpoPublicacion(publicacion, ruta, rutaImagen) {
+        var cuerpo = ``;
+        let nombreMin = publicacion.nombre.replace(" ", "-"),
+            apellidoMin = publicacion.apellidos.replace(" ", "-"),
+            nameUser = nombreMin + '-' + apellidoMin,
+            fecha = publicacion.fecha.split(" "),
+            numDesc = publicacion.descripcion.length;
+        cuerpo += `
+              <div class="col-lg-6 col-md-12 mb-5">
+                <div class="card card-personal mb-md-0 mb-4" style="height:100%;">
+                  <div class="overlay">
+                  <a href="${ruta + 'blog/publicacion/' + (publicacion.id)}">
+                  <div class="mask"></div>
+                  <img class="card-img-top" src="${ruta}${rutaImagen}${publicacion.imagen}" alt="Card image cap">
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <a href="${ruta}perfil/${rellenarCero(publicacion.iduser)}/${normalize(nameUser)}" class="text-dark">
+                      <h4 class="card-title">${publicacion.nombre} ${publicacion.apellidos}</h4>
+                    </a>
+                    <a class="card-meta">${publicacion.titulo}</a>
+                    <p class="card-text">${publicacion.descripcion.substr(0, 55)}${((numDesc > 55) ? `<span class="" style="display:none;">${publicacion.descripcion.substr(55, numDesc)}</span> <a class="text-info mostrarTexto"> ... más </a> ` : "")}</p>
+                    <hr>
+                    <p class="card-meta float-right">${fecha[0]}</p>
+                  </div>
+                </div>
+              </div>
+              `;
         return cuerpo;
     }
     function cuerpoRigthPub(publicacion, ruta, rutaImagen) {
