@@ -1,5 +1,25 @@
 <?php
 $CROOPER = true;
+$FUNCIONES = new AdminFunciones();
+$FUNCIONES->CONEXION = $conexion;
+$conexion = conexion($bd_config);
+
+if ($conexion->connect_errno) {
+    $respuesta = array(
+        'respuesta' => 'error',
+        'Texto' => 'Hay un problema al conectar con el servidor'
+    );
+    die(json_encode($respuesta));
+}
+$PERFIL = $FUNCIONES->verificarPerfil($UserLogin['idUsuario']); //configuraci[on del perfil]
+$SERVICIO = false;
+if ($PERFIL) {
+    $PERFIL = $PERFIL->fetch_assoc();
+    $SERVICIO = $FUNCIONES->verificarServicio($PERFIL['idServicio']);
+    if ($SERVICIO) {
+        $SERVICIO = $SERVICIO->fetch_assoc();
+    }
+}
 require_once 'templates/header.php'; ?>
 
 
@@ -49,27 +69,51 @@ require_once 'templates/header.php'; ?>
                             <!-- Featured news -->
 
                         </div>
-                        <div class="col-md-6">
+                        <?php if ($PERFIL) { ?>
 
-                            <!-- Featured news -->
-                            <div class="single-news mb-lg-0 mb-5 pt-5 ">
-                                <div class="news-data d-flex justify-content">
-                                    <a href="#!" class="deep-blue-text">
-                                        <h6 class="font-weight-bold" id="servicioPerfil"><i class="fas fa-code pr-2"></i>Desarrollador</h6>
-                                    </a>
-                                    <p class="font-weight-bold dark-grey-text text-right"id="fechaPerfil"><i class="fas fa-clock-o pr-2"></i>27/02/2018</p>
+
+                            <div class="col-md-6">
+
+                                <!-- Featured news -->
+                                <div class="single-news mb-lg-0 mb-5 pt-5 ">
+                                    <div class="news-data d-flex justify-content">
+                                        <a href="#!" class="deep-blue-text">
+                                            <h6 class="font-weight-bold" id="servicioPerfil"><i class="<?php echo $SERVICIO['icono']; ?> pr-2"></i><?php echo $SERVICIO['nombre']; ?></h6>
+                                        </a>
+                                    </div>
+
+                                    <!-- Excerpt -->
+                                    <h3 class="font-weight-bold dark-grey-text mb-3"><a><?php echo $PERFIL['nombreServicio']; ?></a></h3>
+                                    <p class="dark-grey-text mb-lg-0 mb-md-5 mb-4">
+                                        <?php echo $PERFIL['descripcion']; ?>
+                                    </p>
+
                                 </div>
-
-                                <!-- Excerpt -->
-                                <h3 class="font-weight-bold dark-grey-text mb-3"><a>Freelancer</a></h3>
-                                <p class="dark-grey-text mb-lg-0 mb-md-5 mb-4">Anexo una descripción con un lorem de lo que se escribir y redarcar muchas gracias por su atención <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt sed ullam ea.</p>
-                                </p>
+                                <!-- Featured news -->
 
                             </div>
-                            <!-- Featured news -->
+                        <?php } else { ?>
+                            <div class="col-md-6">
 
-                        </div>
+                                <!-- Featured news -->
+                                <div class="single-news mb-lg-0 mb-5 pt-5 ">
+                                    <div class="news-data d-flex justify-content">
+                                        <a href="#!" class="deep-blue-text">
+                                            <h6 class="font-weight-bold" id="servicioPerfil">Termina de configurar tu Perfil</h6>
+                                        </a>
+                                    </div>
 
+                                    <!-- Excerpt -->
+                                    <h3 class="font-weight-bold dark-grey-text mb-3"><a>Para poder continuar con las publicaciónes es necesario que configures el perfil de tu servicio</a></h3>
+                                    <p class="dark-grey-text mb-lg-0 mb-md-5 mb-4">
+                                        <a href="<?php echo $ruta; ?>planes" class="btn btn-info">Activar mi plan</a>
+                                    </p>
+
+                                </div>
+                                <!-- Featured news -->
+
+                            </div>
+                        <?php } ?>
                     </div>
                 </section>
             </div>

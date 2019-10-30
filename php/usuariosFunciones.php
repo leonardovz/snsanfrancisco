@@ -436,7 +436,7 @@ switch ($_POST['opcion']) {
         } else {
             $respuesta = array(
                 'respuesta' => 'error',
-                'Texto' => 'No fue posible registrar su código'
+                'Texto' => 'No fue posible registrar su código',$MEMBRESIA
             );
         }
 
@@ -467,7 +467,7 @@ switch ($_POST['opcion']) {
                 } else {
                     $respuesta = array(
                         'respuesta' => 'error',
-                        'Texto' => 'No fue Posible el Registro de el código',
+                        'Texto' => 'No fue posible el registro del código',
                     );
                 }
             } else {

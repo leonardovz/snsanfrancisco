@@ -6,6 +6,8 @@ global $SystemName;
 global $EMAILCONFIG;
 
 $systemName = "Servicios y Noticias San Francisco de Asís";
+$keyWords = "Trabajos y Servicios, Construcción, Estilistas en San Francisco ,Albañiles, Troqueros, Papeleria, Arquitectos, San Francisco de Asís, Servicios y Noticias";
+$descripcionServ = "Aquí encontraras los servicios que ofrece San Francisco se Asís, municipio de Atotonilco el alto, Jalisco. Entra y encuentra lo que necesitas";
 $mesesAnio = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 
 $EMAILCONFIG = array(
@@ -144,6 +146,10 @@ function optimizar_imagen($origen, $destino, $calidad)
 function fotoPerfil($UserLogin, $ruta)
 {
     return  $ruta . (($UserLogin['imagen'] == 'default.png') ? "galeria/sistema/images/" : "galeria/usuario/" . rellenarCero($UserLogin['idUsuario']) . '/') . $UserLogin['imagen'];
+}
+function fotoPerfilPublico($imagen,$idUser, $ruta)
+{
+    return  $ruta . (($imagen == 'default.png') ? "galeria/sistema/images/" : "galeria/usuario/" . rellenarCero($idUser) . '/') . $imagen;
 }
 
 function validarImagen($imagen)
@@ -305,7 +311,18 @@ class AdminFunciones
         $conexion = $this->CONEXION;
         $resultado = false;
         if ($conexion) {
-            $sql = "SELECT * FROM usersinfo WHERE iduser = $idUsuario";
+            $sql = "SELECT usersinfo.*,usuarios.nombre,usuarios.apellidos,usuarios.fecha,usuarios.img FROM usersinfo,usuarios WHERE usersinfo.iduser = usuarios.idUsuario AND usuarios.idUsuario = $idUsuario";
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado && $resultado->num_rows) ? $resultado : false;
+        }
+        return $resultado;
+    }
+    function verificarServicio($idServicio)
+    {
+        $conexion = $this->CONEXION;
+        $resultado = false;
+        if ($conexion) {
+            $sql = "SELECT * FROM servicios WHERE id = ".(int)$idServicio;
             $resultado = $conexion->query($sql);
             $resultado = ($resultado && $resultado->num_rows) ? $resultado : false;
         }

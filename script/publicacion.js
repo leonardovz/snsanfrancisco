@@ -223,54 +223,6 @@ $(document).ready(function () {
             }
         });
     }
-
-    function cuerpoPublicacion1(publicacion, ruta, rutaImagen) {
-        var cuerpo = ``;
-        // for (let i in publicaciones) {
-        let nombreMin = publicacion.nombre.replace(" ", "-"),
-            apellidoMin = publicacion.apellidos.replace(" ", "-"),
-            nameUser = nombreMin + '-' + apellidoMin,
-            fecha = publicacion.fecha.split(" ");
-
-
-        cuerpo += `
-            <div class="col-lg-6 col-md-12 mb-5 ">
-                <div class="single-news mb-3 z-depth-2">
-                    <div class="view overlay rounded z-depth-2 mb-4">
-                        <img class="img-fluid" src="${ruta + rutaImagen + publicacion.imagen}" alt="Sample image">
-                        <a href="${ruta + 'blog/publicacion/' + (publicacion.id)}">
-                            <div class="mask rgba-white-slight waves-effect waves-light"></div>
-                        </a>
-                    </div>
-
-                    <p class="text-right px-3 m-0 py-0">${fecha[0]}</p>
-                    <div class="d-flex justify-content-between">
-                        <div class="col-11 text-center pl-0 mb-2 ">
-                            <a class="font-weight-bold">${publicacion.titulo}</a>
-                        </div>
-                    </div>
-                    <div class="row mb-3 p-2">
-                        <div class="col-12">
-                        <a href="${ruta}perfil/${rellenarCero(publicacion.iduser)}/${normalize(nameUser)}"><span class="badge deep-orange"><i class="fas fa-user mr-2"></i> ${publicacion.nombre} ${publicacion.apellidos}</span></a> 
-                        <br>
-                        <a><span class="badge info-color mr-4">Descripción: </span></a> 
-                        <a><span class="badge default-color mostrarTexto"><i class="fab fa-readme"></i> Mostrar</span></a> 
-                        </div>
-                    </div>
-                </div>
-                <div class="single-news mb-3 descripcionPub" style="display: none;">
-                    <div class="d-flex justify-content-between">
-                        <div class="col-12 pl-0 text-justify">
-                            <p class="text-right">${fecha[0]}</p>
-                            <p>${publicacion.descripcion}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
-        //}
-        return cuerpo;
-    }
     function cuerpoPublicacion(publicacion, ruta, rutaImagen) {
         var cuerpo = ``;
         let nombreMin = publicacion.nombre.replace(" ", "-"),
@@ -338,17 +290,12 @@ $(document).ready(function () {
         return cuerpo;
     }
     function acciones() {
-        $(".mostrarTexto").on('click', function (e) {
+        $(".mostrarTexto").off().on('click', function (e) {
             e.preventDefault();
             let opcionMostrar = $(this);
-            let descripcion = $(this).parent().parent().parent().parent().siblings();
-            if (descripcion.is(':visible')) {
-                descripcion.hide();
-                opcionMostrar.html('Mostrar <i class="fas fa-arrow-circle-down"></i>').removeClass('warning-color').addClass('default-color');
-            } else {
-                opcionMostrar.html('Ocultar <i class="fas fa-arrow-circle-up"></i>').removeClass('default-color').addClass('warning-color');
-                descripcion.show();
-            }
+            let descripcion = $(this).siblings();
+            descripcion.show();
+            opcionMostrar.remove();
         });
     }
 

@@ -9,8 +9,8 @@
   <meta http-equiv="Cache-control" content="no-cache">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" Content="0">
-  <meta name="keywords" content="Trabajos y Servicios, Construcción, Estilistas en San Francisco ,Albañiles, Troqueros, Papeleria, Arquitectos, San Francisco de Asís, Servicios y Noticias">
-  <meta name="description" content="Aquí encontraras los servicios que ofrece San Francisco se Asís, municipio de Atotonilco el alto, Jalisco. Entra y encuentra lo que necesitas">
+  <meta name="keywords" content="<?php echo $keyWords;?>">
+  <meta name="description" content="<?php echo $descripcionServ;?>">
   <meta name="robots" content="all">
   <meta name="author" content="Ingeniero - Leonardo Vázquez Angulo">
   <!-- Open Graph protocol -->
@@ -22,7 +22,7 @@
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="200" />
   <meta property="og:image:height" content="200" />
-  <meta property="og:description" content="Trabajos y Servicios, Construcción, Estilistas en San Francisco ,Albañiles, Troqueros, Papeleria, Arquitectos, San Francisco de Asís, Servicios y Noticias" />
+  <meta property="og:description" content="<?php echo $keyWords;?>" />
   <meta name="twitter:title" content="Servicios y Noticias | San Francisco de Asis  | Jalisco" />
   <meta name="twitter:image" content="" />
   <meta name="twitter:url" content="https://snsanfrancisco.com" />

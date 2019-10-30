@@ -122,29 +122,142 @@ switch ($_POST['opcion']) {
         $sql = "SELECT * FROM rango WHERE tipo ='mensual' OR tipo= 'anual'";
         $resultado = $conexion->query($sql);
         $PAQUETES = ($resultado && $resultado->num_rows) ? $resultado : false;
-        
-        if($PAQUETES){
-            $planesArray=[];
+
+        if ($PAQUETES) {
+            $planesArray = [];
             while ($PAQUETE = $PAQUETES->fetch_assoc()) {
                 $planesArray[] = array(
-                    'plan'=>$PAQUETE,
-                    'venefocios'=>'llorar'
+                    'plan' => $PAQUETE,
+                    'venefocios' => 'llorar'
                 );
             }
             $respuesta = array(
-                'respuesta'=>'exito',
-                'Texto'=>'Planes encontrados',
-                'planes'=>$planesArray
+                'respuesta' => 'exito',
+                'Texto' => 'Planes encontrados',
+                'planes' => $planesArray
             );
-        }else{
+        } else {
             $respuesta = array(
-                'respuesta'=>'error',
-                'Texto'=>'No se encontraron coincidencias',
-                'planes'=>$planesArray
+                'respuesta' => 'error',
+                'Texto' => 'No se encontraron coincidencias',
+                'planes' => $planesArray
             );
         }
         die(json_encode($respuesta));
 
+
+        break;
+
+    case 'traerPostsPerfil':
+        $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
+        $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
+        //Verificar el perfil del Usuario
+        $ADMINFUNC = new AdminFunciones();
+        $ADMINFUNC->CONEXION = $conexion;
+
+        $sql = "SELECT M.*,R.nombre AS rol,R.imagen,R.tag,R.duracion,R.iconColor,R.icono, R.publicacion FROM membresias AS M,rango AS R WHERE M.idRango = R.id AND M.idUser = $idUser ORDER BY M.fechaFinal DESC LIMIT 1 ";
+        $resultado = $conexion->query($sql);
+        $MEMBRESIA = '';
+        $comparacion = false;
+        if ($resultado && $resultado->num_rows) {
+            $MEMBRESIA = $resultado->fetch_assoc();
+
+            $hoy = getdate();
+
+            $fHoy = $hoy['year'] . '-' . (($hoy['mon'] > 9) ? $hoy['mon'] : '0' . $hoy['mon']) . '-' . $hoy['mday'];
+
+            $fechaInicio = $MEMBRESIA['fechaInicio'];
+            $fechaFinal  = $MEMBRESIA['fechaFinal'];
+
+            $dateHoy = new DateTime($fHoy);
+            $dateInicio = new DateTime($fechaInicio);
+            $dateFinal = new DateTime($fechaFinal);
+
+            //Diferencia
+            $diff = $dateHoy->diff($dateFinal);
+            $anios = $diff->y;
+            $meses = $diff->m;
+            $dias = $diff->d;
+            //Diferencia
+            if ($dateHoy < $dateFinal) {
+                $comparacion = true;
+            } else {
+                $comparacion = false;
+            }
+        }
+        $LIMITE = ($comparacion) ? $MEMBRESIA['publicacion'] : 1;
+
+        $directorio = 'galeria/usuario/' . rellenarCero($idUser) . '/';
+        if ($idUser) {
+            $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND P.iduser = " . $idUser . ' ORDER BY P.fecha DESC LIMIT ' . $LIMITE;
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado  && $resultado->num_rows) ? $resultado : false;
+            if ($resultado) {
+                $publicaciones = [];
+                while ($publicacion = $resultado->fetch_assoc()) {
+                    $publicaciones[] = $publicacion;
+                }
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'Aqui te envio algunas de las publicaciones',
+                    'publicaciones' => $publicaciones,
+                    'rutaImagen' => $directorio
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No cuenta con publicaciones',
+                    'POST' => $_POST,
+                );
+            }
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'El usuario seleccionado o perfil es incorrecto',
+                'POST' => $_POST,
+            );
+        }
+        die(json_encode($respuesta));
+
+        break;
+    case 'traerPostsRelacion':
+        $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
+        $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
+
+
+        if ($idUser) {
+            $sql = "SELECT P.*,U.nombre,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id   GROUP BY U.idUsuario ORDER BY P.fecha DESC";
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado  && $resultado->num_rows) ? $resultado : false;
+            if ($resultado) {
+                $publicaciones = [];
+                while ($publicacion = $resultado->fetch_assoc()) {
+                    $directorio = 'galeria/usuario/' . rellenarCero($publicacion['idUsuario']) . '/';
+                    $publicaciones[] = array(
+                        'publicacion' => $publicacion,
+                        'directorio' => $directorio
+                    );
+                }
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'Aqui te envio algunas de las publicaciones',
+                    'publicaciones' => $publicaciones,
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No cuenta con publicaciones',
+                    'POST' => $_POST,
+                );
+            }
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'El usuario seleccionado o perfil es incorrecto',
+                'POST' => $_POST,
+            );
+        }
+        die(json_encode($respuesta));
 
         break;
     default:
