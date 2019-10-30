@@ -150,6 +150,11 @@ require_once 'templates/header.php'; ?>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row" >
+                                <div class="col text-center">
+                                    <a class="btn btn-info" id="verMasPosts" style="display:none;"> Ver más</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-4 col-md-6 mb-0">
                             <div class="row mb-5">

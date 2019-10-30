@@ -25,12 +25,20 @@ $(document).ready(function () {
                             // $progressPub.parent().parent().hide();
                             let cuerpo = "",
                                 cuerpoRigth = "";
+
                             for (let i in data.publicaciones) {
                                 if (i < 6) {
-                                cuerpo += (cuerpoPublicacion(data.publicaciones[i], ruta, data.rutaImagen));
+                                    cuerpo += (cuerpoPublicacion(data.publicaciones[i], ruta, data.rutaImagen));
                                 }
                             }
+                            var actual = (data.publicaciones.length > 6) ? 6 : 0;
+
+
                             $("#cuerpoPublicaciones").html(cuerpo);
+                            if (data.publicaciones.length > 6) {
+                                $("#verMasPosts").show();
+                                verMasPost(data, actual, 2, ruta);
+                            }
                             wowElement();
                             acciones();
                         }, 1000);
@@ -44,6 +52,29 @@ $(document).ready(function () {
             }
         });
     }
+    function verMasPost(data, actual, nImpresiones, rutaAC) {
+        if (actual < data.publicaciones.length) {
+            $("#verMasPosts").off().on('click', function (e) {
+                e.preventDefault();
+                $("#cuerpoPublicaciones").append(imprimir);
+                verMasPost(data, actual + nImpresiones, nImpresiones, rutaAC);
+            });
+            console.log(actual);
+            console.log(nImpresiones);
+        } else {
+            $("#verMasPosts").off();
+            $("#verMasPosts").hide();
+        }
+        function imprimir() {
+            let cuerpo = "";
+            for (let i = actual; i < data.publicaciones.length && i < parseInt(actual) + nImpresiones; i++) {
+                // console.log(parseInt(data.publicaciones.length) + nImpresiones);
+                cuerpo += (cuerpoPublicacion(data.publicaciones[i], rutaAC, data.rutaImagen));
+            }
+            return cuerpo;
+        }
+    }
+
     function traerPostsDerecha() {
         $.ajax({
             type: "POST",
