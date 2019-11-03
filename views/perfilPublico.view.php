@@ -150,7 +150,7 @@ require_once 'templates/header.php'; ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" >
+                            <div class="row">
                                 <div class="col text-center">
                                     <a class="btn btn-info" id="verMasPosts" style="display:none;"> Ver más</a>
                                 </div>
@@ -201,7 +201,7 @@ require_once 'templates/header.php'; ?>
                                 </div>
                             </div>
                             <h2 class="">Más publicaciones</h2>
-                            <div class="row mt-5">
+                            <div class="row my-5">
                                 <div class="col" id="cuerpoRigth">
 
                                 </div>

@@ -518,8 +518,8 @@ require_once 'templates/header.php'; ?>
                 var coloniasImp = $("#coloniasVal");
 
                 var errores = 0;
-                if (statusCP) {
-                    if (colonia == 0) {
+                if (true ) { //|| statusCP
+                    if (colonia == 0 && false) {
                         coloniaText = $("#coloniaText").val();
                         if (coloniaText == "" || coloniaText.length < 5) {
                             errorForm.append('<div class="alert alert-warning" role="alert">La colonia que ingreso no es correcta </div>');

@@ -6,12 +6,13 @@ var ruta = ruta();
 $(document).ready(function () {
   traerPosts();
   traerUsuarios();
+  traerServicios();
   function traerPosts() {
     $.ajax({
       type: "POST",
       url: ruta + 'php/publico.php',
       dataType: "json",
-      data: 'opcion=traerPostsPublicos',
+      data: 'opcion=traerPostsInicio',
       error: function (xhr, resp) {
         console.log(xhr.responseText);
       },
@@ -21,8 +22,7 @@ $(document).ready(function () {
           cuerpoRigth = "";
         if (data.respuesta == "exito") {
           for (let i in data.publicaciones) {
-            let rutaImagen = data.rutaImagen + rellenarCero(data.publicaciones[i].iduser) + '/';
-            cuerpo += (cuerpoPublicacion(data.publicaciones[i], ruta, rutaImagen));
+            cuerpo += (cuerpoPublicacion(data.publicaciones[i].publicacion, ruta, data.publicaciones[i].rutaImagen));
           }
           $("#cuerpoPublicaciones").html(cuerpo);
           $("#cuerpoRigth").html(cuerpoRigth);
@@ -34,7 +34,7 @@ $(document).ready(function () {
       }
     });
   }
-  
+
   function traerUsuarios() {
     $.ajax({
       type: "POST",
@@ -45,7 +45,7 @@ $(document).ready(function () {
         console.log(xhr.responseText);
       },
       success: function (data) {
-        console.log(data);
+        // console.log(data);
         let cuerpo = "",
           cuerpoRigth = "";
         if (data.respuesta == "exito") {
@@ -103,7 +103,7 @@ $(document).ready(function () {
         <div class="card card-personal mb-md-0 mb-4">
           <div class="overlay"> 
             <a href="${ruta}perfil/${rellenarCero(perfil.idUsuario)}/${normalize(nameUser)}"">
-              <img class="card-img-top" src="${ruta}${ (perfil.img == 'default.png') ? "galeria/sistema/images/" : rutaImagen }${perfil.img}"" alt="Card image cap">
+              <img class="card-img-top" src="${ruta}${(perfil.img == 'default.png') ? "galeria/sistema/images/" : rutaImagen}${perfil.img}"" alt="Card image cap">
             </a>
           </div>
           <div class="card-body">
@@ -115,13 +115,58 @@ $(document).ready(function () {
             <hr>
             <p class="card-meta float-left" style="font-size: 1.75em;">
               <a target="_blank" href="https://m.me/EsthelaAngulo1.0" class="text-primary"><i class="fab fa-facebook-messenger"></i></a>
-              ${((perfil.whatsapp==perfil.celular)? '<a target="_blank" href="https://api.whatsapp.com/send?phone=' + ruta + ' class="text-success mx-5"><i class="fab fa-whatsapp"></i></a>':"")}
+              ${((perfil.whatsapp == perfil.celular) ? '<a target="_blank" href="https://api.whatsapp.com/send?phone=' + ruta + ' class="text-success mx-5"><i class="fab fa-whatsapp"></i></a>' : "")}
             </p>
             <p class="card-meta float-right">Agendar una Cita</p>
           </div>
         </div>
       </div>
           `;
+    return cuerpo;
+  }
+  function traerServicios() {
+    $.ajax({
+      type: "POST",
+      url: ruta + 'php/publico.php',
+      dataType: "json",
+      data: 'opcion=serviciosInicio',
+      error: function (xhr, resp) {
+        console.log(xhr.responseText);
+      },
+      success: function (data) {
+        console.log(data);
+        if (data.respuesta == 'exito') {
+          var cuerpo = '';
+          for (let i in data.servicios) {
+            cuerpo += (cuerpoServicios(data.servicios[i], ruta, data.rutaImagen));
+          }
+          $("#contServicios").html(cuerpo);
+          new WOW().init();
+          // wowElement();
+        } else {
+
+        }
+      }
+    });
+  }
+
+  function cuerpoServicios(servicio, ruta, rutaImagen) {
+    var cuerpo = ``;
+    cuerpo += `
+      <div class="col-md-6 col-sm-6 col-12 mb-4 wow fadeInDown">
+          <div class="card card-image" style="background-image: url(${ruta + rutaImagen + servicio.imagen}); background-repeat: no-repeat; background-size: cover;">
+              <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+                  <div>
+                      <h5 class="pink-text"><i class="${servicio.icono} mx-3"></i> ${servicio.nombre}</h5>
+                      <h3 class="card-title pt-2"><strong>${servicio.descripcion}</strong></h3>
+                      <p></p>
+                      <a href="${ruta}servicios/${servicio.id}/${normalize(servicio.nombre).replace(" ", "-")}" class="btn ${servicio.color}"><i class="fas fa-clone left"></i> Ver</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+          `;
+    //}
     return cuerpo;
   }
   function acciones() {

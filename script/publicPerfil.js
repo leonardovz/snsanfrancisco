@@ -68,13 +68,11 @@ $(document).ready(function () {
         function imprimir() {
             let cuerpo = "";
             for (let i = actual; i < data.publicaciones.length && i < parseInt(actual) + nImpresiones; i++) {
-                // console.log(parseInt(data.publicaciones.length) + nImpresiones);
                 cuerpo += (cuerpoPublicacion(data.publicaciones[i], rutaAC, data.rutaImagen));
             }
             return cuerpo;
         }
     }
-
     function traerPostsDerecha() {
         $.ajax({
             type: "POST",

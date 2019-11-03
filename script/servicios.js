@@ -43,7 +43,7 @@ $(document).ready(function () {
                         <h5 class="pink-text"><i class="${servicio.icono} mx-3"></i> ${servicio.nombre}</h5>
                         <h3 class="card-title pt-2"><strong>${servicio.descripcion}</strong></h3>
                         <p></p>
-                        <a class="btn ${servicio.color}"><i class="fas fa-clone left"></i> Ver</a>
+                        <a href="${ruta}servicios/${servicio.id}/${normalize(servicio.nombre).replace(" ","-")}" class="btn ${servicio.color}"><i class="fas fa-clone left"></i> Ver</a>
                     </div>
                 </div>
             </div>

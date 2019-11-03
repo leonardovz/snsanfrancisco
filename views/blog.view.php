@@ -29,7 +29,7 @@
                                 <img class="card-img-top"
                                     src="https://mdbootstrap.com/img/Photos/Avatars/img%20(26).jpg"
                                     alt="Card image cap">
-                                <a href="#!">
+                                <a >
                                     <div class="mask rgba-white-slight"></div>
                                 </a>
                             </div>

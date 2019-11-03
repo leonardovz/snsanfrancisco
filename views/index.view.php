@@ -98,74 +98,36 @@ require_once 'templates/header.php';
         </div>
       </div>
       <div class="row p-3">
-        <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
+        <div class="col">
+          <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
+            <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
+          </a>
+        </div>
       </div>
       <div class="row">
-        <h1>Ultimas Publicacione!</h1>
+        <h1 class="ml-3">Más recientes publicaciones!</h1>
         <div class="col-md-12 mb-4">
           <div class="row" id="cuerpoPublicaciones">
           </div>
         </div>
       </div>
       <div class="row p-3">
-        <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
+        <div class="col-md-12 bg-secondary">
+          <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
+            <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
+          </a>
+        </div>
       </div>
       <h1>Nuevos Servicios Registrados!</h1>
-      <div class="row">
-        <div class="col-md-4 mb-4 rubberBand">
-          <!-- Card -->
-          <div class="card card-image" style="background-image: url(<?php echo $ruta; ?>recursos/img/usuario/4.png);">
+      <div class="row justify-content-center" id="contServicios">
 
-            <!-- Content -->
-            <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-              <div>
-                <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Desarrollo Web</h5>
-                <h3 class="card-title pt-2"><strong>Crece tus proyectos</strong></h3>
-                <p></p>
-                <a class="btn btn-pink"><i class="fas fa-clone left"></i> Ver más</a>
-              </div>
-            </div>
-
-          </div>
-          <!-- Card -->
-        </div>
-        <div class="col-md-4 mb-4">
-          <!-- Card -->
-          <div class="card card-image" style="background-image: url(<?php echo $ruta; ?>recursos/img/usuario/8.png);">
-
-            <!-- Content -->
-            <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-              <div>
-                <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Diseñador</h5>
-                <h3 class="card-title pt-2"><strong>Mejora tu marca</strong></h3>
-                <p></p>
-                <a class="btn btn-pink"><i class="fas fa-clone left"></i> Ver más</a>
-              </div>
-            </div>
-
-          </div>
-          <!-- Card -->
-        </div>
-        <div class="col-md-4 mb-4">
-          <!-- Card -->
-          <div class="card card-image" style="background-image: url(<?php echo $ruta; ?>recursos/img/usuario/4.png);">
-
-            <!-- Content -->
-            <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-              <div>
-                <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Estilistas</h5>
-                <h3 class="card-title pt-2"><strong>Cambia tu look</strong></h3>
-                <p></p>
-                <a class="btn btn-pink"><i class="fas fa-clone left"></i> Ver más</a>
-              </div>
-            </div>
-
-          </div>
-          <!-- Card -->
-        </div>
       </div>
       <div class="row p-3">
-        <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
+        <div class="col-md-12 bg-secondary">
+          <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
+            <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
+          </a>
+        </div>
       </div>
     </section>
 

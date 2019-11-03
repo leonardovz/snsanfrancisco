@@ -172,8 +172,12 @@ require_once 'templates/header.php';
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col">
+                    <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
+                        <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
+                    </a>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12 p-4">
@@ -302,8 +306,12 @@ require_once 'templates/header.php';
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col">
+                    <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
+                        <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
+                    </a>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12 p-5">
@@ -361,8 +369,12 @@ require_once 'templates/header.php';
                     <!-- Card -->
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col">
+                    <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
+                        <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
+                    </a>
+                </div>
             </div>
         </section>
     </div>

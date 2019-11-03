@@ -45,14 +45,24 @@ if ($rutas) { //Ruta Vacia
         require_once 'views/verificacionMail.view.php';
     } elseif ($RUTAS0 == 'blog') {
         if ($RUTAS1) {
-            if ($RUTAS1 == 'publicacion') {
+            if ($RUTAS1 == 'publicacion' && $RUTAS2) {
                 require_once 'views/vistaPublicacion.view.php';
+            } else {
+                header('Location: ' . $ruta . 'error/404');
             }
         } else {
             require_once 'views/blog.view.php';
         }
     } elseif ($RUTAS0 == 'servicios') {
-        require_once 'views/servicios.view.php';
+        if ($RUTAS1) {
+            if((int)$RUTAS1){
+                require_once 'views/serviciosBuscar.view.php';
+            }else{
+                header('Location: ' . $ruta . 'error/404');
+            }
+         } else {
+            require_once 'views/servicios.view.php';
+        }
     } elseif ($RUTAS0 == 'planes') {
         if ($RUTAS1) {
             require_once 'views/planesRegistro.view.php';
@@ -69,15 +79,12 @@ if ($rutas) { //Ruta Vacia
                 if ($RUTAS1) {
                     if ($RUTAS1 == 'config') {
                         require_once 'account/perfilEdit.view.php';
-                    }
-                    elseif (is_numeric($RUTAS1)) {
+                    } elseif (is_numeric($RUTAS1)) {
                         $idUsuario = (int) $RUTAS1;
                         require_once 'views/perfilPublico.view.php';
-                    }
-                    elseif ($RUTAS1 == 'servicios') {
+                    } elseif ($RUTAS1 == 'servicios') {
                         require_once 'account/admin/servicios.php';
-                    }
-                     else {
+                    } else {
                         header('Location: ' . $ruta . 'error/404');
                     }
                 } else {

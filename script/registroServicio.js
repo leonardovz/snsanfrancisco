@@ -22,6 +22,12 @@ $(document).ready(function () {
             dataType: "json",
             error: function (xhr, resp) {
                 console.log(xhr.responseText);
+                coloniasImp.html(`<div class="col">
+                                <div class="md-form mt-3">
+                                    <input type="text" id="coloniaText" name="coloniaText" class="form-control">
+                                    <label for="coloniaText">Colonia</label>
+                                </div>
+                            </div>`);
             },
             success: function (data) {
                 if (data.estado != "" && data.municipio != "") {
@@ -128,8 +134,8 @@ $(document).ready(function () {
             errorCodigo.append('<div class="alert alert-warning" role="alert">Necesitas de ingresar un código </div>');
             errores++;
         }
-        if (statusCP) {
-            if (colonia == 0) {
+        if (true || statusCP) {
+            if (false && colonia == 0) {
                 if (coloniaText == "" || coloniaText.length < 5) {
                     errorForm.append('<div class="alert alert-warning" role="alert">La colonia que ingreso no es correcta </div>');
                     errores++;
@@ -154,7 +160,7 @@ $(document).ready(function () {
                 success: function (data) {
                     console.log(data);
                     if (data.respuesta == 'exito') {
-                        alertaSwal('asd','success')
+                        alertaSwal(data.Texto,'success')
                     } else {
                         errorForm.append('<div class="alert alert-warning" role="alert">' + data.Texto + ' </div>');
                     }
