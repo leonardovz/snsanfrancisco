@@ -49,6 +49,9 @@
     function ruta() {
       return "<?php echo $ruta; ?>";
     }
+    function rutaFILES() {
+      return "<?php echo $ruta; ?>";
+    }
   </script>
 
   <link rel="stylesheet" href="<?php echo $ruta; ?>recursos/js/addons/cropper.js">

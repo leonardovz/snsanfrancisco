@@ -9,10 +9,10 @@
       <div class="col-md-6 mb-4">
 
         <!-- Form -->
-        <form class="form-inline">
-          <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Buscar" aria-label="Search">
+        <div class="form-inline">
+          <input class="form-control form-control-sm mr-3 w-75 inBusqueda" type="text" placeholder="Buscar" aria-label="Buscar">
           <i class="fas fa-search" aria-hidden="true"></i>
-        </form>
+        </div>
         <!-- Form -->
 
       </div>

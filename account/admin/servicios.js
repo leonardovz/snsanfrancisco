@@ -194,6 +194,56 @@ $(document).ready(function () {
             });
         }
     });
+
+
+    //Apartado de servicios y tabla 
+
+    traerServicios();
+    function traerServicios() {
+        $.ajax({
+            type: "POST",
+            url: ruta + 'php/publicacionesAJAX.php',
+            dataType: "json",
+            data: 'opcion=traerServicios',
+            error: function (xhr, resp) {
+                console.log(xhr.responseText);
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.respuesta == 'exito') {
+                    var cuerpo = '';
+                    for (let i in data.servicios) {
+                        cuerpo += (cuerpoServicios(data.servicios[i], ruta, data.rutaImagen));
+                    }
+                    $("#tablaServicios").html(cuerpo);
+                    new WOW().init();
+                    // wowElement();
+                } else {
+
+                }
+            }
+        });
+    }
+
+    function cuerpoServicios(servicio, ruta, rutaImagen) {
+        var cuerpo = ``;
+        cuerpo += `
+        <tr>
+            <td>${servicio.nombre}</td>
+            <td>${ruta + rutaImagen + servicio.imagen}</td>
+            <td>
+                <a href="${ruta}servicios/${servicio.id}/${normalize(servicio.nombre).replace(" ", "-")}" class="btn ${servicio.color} text-white"><i class="fas fa-clone left"></i> Ver</a>
+            </td>
+            <td>${servicio.descripcion}</td>
+            <td><i class="${servicio.icono} mx-3"></i></td>
+            <td><button class="btn btn-danger"><i class="far fa-edit"></i></button></td>
+        </tr>
+            `;
+        //}
+        return cuerpo;
+    }
+
+
     function alerta(texto, tipo) {
         Swal.fire({
             position: 'top-end',

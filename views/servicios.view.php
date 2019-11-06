@@ -173,7 +173,7 @@ require_once 'templates/header.php';
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-md-8 col">
+                <div class="col-md-8 col my-5">
                     <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
                         <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
                     </a>
@@ -307,7 +307,7 @@ require_once 'templates/header.php';
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-md-8 col">
+                <div class="col-md-8 col my-5">
                     <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
                         <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
                     </a>
@@ -370,7 +370,7 @@ require_once 'templates/header.php';
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-md-8 col">
+                <div class="col-md-8 col my-5">
                     <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
                         <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
                     </a>

@@ -389,12 +389,72 @@ switch ($_POST['opcion']) {
                 'respuesta' => 'exito',
                 'Texto' => 'Aqui te envio algunas de las publicaciones',
                 'servicios' => $SERVICIOS,
-                'rutaImagen'=>'galeria/sistema/servicios/',
+                'rutaImagen' => 'galeria/sistema/servicios/',
             );
         } else {
             $respuesta = array(
                 'respuesta' => 'error',
                 'Texto' => 'No se encontraron servicios registrados',
+            );
+        }
+        die(json_encode($respuesta));
+        break;
+
+    case 'busqueda':
+        $buscar = isset($_POST['buscar']) && !empty($_POST['buscar']) ? $_POST['buscar'] : "";
+
+
+        $sqlPerfil = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.whatsapp,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio AND (U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%'  OR UI.nombreServicio LIKE '%$buscar%' OR UI.descripcion LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%')";
+        $sqlPublicacion = "SELECT P.*,U.nombre,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND (P.titulo LIKE '%$buscar%' OR P.descripcion LIKE '%$buscar%' OR U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%' OR UI.nombreServicio LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%') ";
+        $sqlServicio = "SELECT * FROM servicios WHERE nombre LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' ";
+
+        $respuestaPerfil = $conexion->query($sqlPerfil);
+        $respuestaServicio = $conexion->query($sqlServicio);
+        $respuestaPublicacion = $conexion->query($sqlPublicacion);
+
+        $ARRAYPerfil = false;
+        $ARRAYServicio = false;
+        $ARRAYPublicacion = false;
+
+        if ($respuestaPerfil && $respuestaPerfil->num_rows) {
+            while ($resultPerfil = $respuestaPerfil->fetch_assoc()) {
+                $ARRAYPerfil[] = array(
+                    'Perfil' => $resultPerfil,
+                    'rutaImagen' => 'galeria/usuario/' . rellenarCero($resultPerfil['idUsuario']).'/',
+                );
+            }
+        }
+        if ($respuestaPublicacion && $respuestaPublicacion->num_rows) {
+            while ($resultPublicacion = $respuestaPublicacion->fetch_assoc()) {
+                $ARRAYPublicacion[] = array(
+                    'Publicacion' => $resultPublicacion,
+                    'rutaImagen' => 'galeria/usuario/' . rellenarCero($resultPublicacion['idUsuario']).'/',
+
+                );
+            }
+        }
+
+        if ($respuestaServicio && $respuestaServicio->num_rows) {
+            while ($resultServicio = $respuestaServicio->fetch_assoc()) {
+                $ARRAYServicio[] = array(
+                    'Servicio' => $resultServicio,
+                    'rutaImagen' => 'galeria/sistema/servicios/',
+                );
+            }
+        }
+
+        if ($respuestaPerfil || $respuestaServicio || $respuestaPublicacion) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'Texto' => 'Alguno de los resultados',
+                'Perfil' => $ARRAYPerfil,
+                'Servicio' => $ARRAYServicio,
+                'Publicacion' => $ARRAYPublicacion,
+            );
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'No se encontro ninguna coincidencia'
             );
         }
         die(json_encode($respuesta));

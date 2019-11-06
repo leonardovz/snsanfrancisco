@@ -55,13 +55,23 @@ if ($rutas) { //Ruta Vacia
         }
     } elseif ($RUTAS0 == 'servicios') {
         if ($RUTAS1) {
-            if((int)$RUTAS1){
+            if ((int) $RUTAS1) {
                 require_once 'views/serviciosBuscar.view.php';
-            }else{
+            } else {
                 header('Location: ' . $ruta . 'error/404');
             }
-         } else {
+        } else {
             require_once 'views/servicios.view.php';
+        }
+    } elseif ($RUTAS0 == 'buscar') {
+        if ($RUTAS1) {
+            if ($RUTAS1) {
+                require_once 'views/busqueda.view.php';
+            } else {
+                header('Location: ' . $ruta . 'error/404');
+            }
+        } else {
+            header('Location: ' . $ruta . 'servicios');
         }
     } elseif ($RUTAS0 == 'planes') {
         if ($RUTAS1) {

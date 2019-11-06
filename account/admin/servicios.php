@@ -104,6 +104,24 @@ require_once 'templates/header.php'; ?>
                 </section>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="th-sm">Nombre</th>
+                            <th class="th-sm">Imagen</th>
+                            <th class="th-sm">Color</th>
+                            <th class="th-sm">Descripcion</th>
+                            <th class="th-sm">Icono</th>
+                            <th class="th-sm">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaServicios">
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="container">
         <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

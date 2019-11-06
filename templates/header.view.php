@@ -23,11 +23,11 @@
                     <a class="nav-link" href="<?php echo $ruta; ?>planes">Planes</a>
                 </li>
             </ul>
-            <form class="form-inline">
+            <div class="form-inline">
                 <div class="md-form mt-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <input class="form-control mr-sm-2 inBusqueda" type="text" id="inBusqueda" placeholder="Buscar" aria-label="Buscar">
                 </div>
-            </form>
+            </div>
             <?php if ($UserLogin) { ?>
                 <div class="btn-group responsive font-weight-bold text-center">
                     <button class="btn-floating btn-lg btn-outline-white ml-4 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

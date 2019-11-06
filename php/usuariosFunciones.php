@@ -446,46 +446,7 @@ switch ($_POST['opcion']) {
 
         break;
 
-    case 'generarCodigo':
-        $ADMINFUNC = new AdminFunciones();
-        $ADMINFUNC->CONEXION = $conexion;
-
-        $idRango = isset($_POST['rango']) && !empty($_POST['rango']) ? $_POST['rango'] : false;
-        $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false; //Obtener el id de el usuario de la Sesión activa
-
-        if ($idUser && $USERLOGIN['rol'] == 1) {
-            if ($idRango && $ADMINFUNC->verificarPaquete($idRango)) {
-                $codigo = $ADMINFUNC->codigoUnico();
-                $sql = "INSERT INTO codigos(codigo, idRango, idUser_Creador) VALUES ('$codigo',$idRango,$idUser)";
-
-                if ($conexion->query($sql)) {
-                    $respuesta = array(
-                        'respuesta' => 'exito',
-                        'Texto' => 'Peticion Exito',
-                        'codigo' => $codigo
-                    );
-                } else {
-                    $respuesta = array(
-                        'respuesta' => 'error',
-                        'Texto' => 'No fue posible el registro del código',
-                    );
-                }
-            } else {
-                $respuesta = array(
-                    'respuesta' => 'error',
-                    'Texto' => 'El paquete que has seleccionado no es correcto'
-                );
-            }
-        } else {
-            $respuesta = array(
-                'respuesta' => 'error',
-                'Texto' => 'La peticion no esta realizada de manera correcta'
-            );
-        }
-        die(json_encode($respuesta));
-        break;
-
-        break;
+    
 
     case 'modificarPerfil':
         if ($USERLOGIN) {

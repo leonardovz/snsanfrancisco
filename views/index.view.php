@@ -98,32 +98,32 @@ require_once 'templates/header.php';
         </div>
       </div>
       <div class="row p-3">
-        <div class="col">
+        <div class="col my-5">
           <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
             <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
           </a>
         </div>
       </div>
-      <div class="row">
-        <h1 class="ml-3">Más recientes publicaciones!</h1>
+      <div class="row py-3">
+        <h2 class="ml-3 my-4">Más recientes publicaciones</h2>
         <div class="col-md-12 mb-4">
           <div class="row" id="cuerpoPublicaciones">
           </div>
         </div>
       </div>
       <div class="row p-3">
-        <div class="col-md-12 bg-secondary">
+        <div class="col-md-12 bg-secondary my-5">
           <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
             <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
           </a>
         </div>
       </div>
-      <h1>Nuevos Servicios Registrados!</h1>
+      <h2>Nuevos Servicios Registrados!</h2>
       <div class="row justify-content-center" id="contServicios">
 
       </div>
       <div class="row p-3">
-        <div class="col-md-12 bg-secondary">
+        <div class="col-md-12 bg-secondary my-5">
           <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
             <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
           </a>
