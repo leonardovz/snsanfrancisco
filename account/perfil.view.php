@@ -215,7 +215,8 @@ require_once 'templates/header.php'; ?>
                                         <br>
                                         <br>
                                         <br>
-                                        <br></div>
+                                        <br>
+                                    </div>
                                 </div>
                             </div>
                         </div>

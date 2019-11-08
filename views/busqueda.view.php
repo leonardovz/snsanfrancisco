@@ -92,24 +92,30 @@ require_once 'templates/header.php';
                 <h1></h1>
                 <h3>Personas encontradas</h3>
             </div>
-        </div>
-        <div class="row" id="contPersonas">
+            <div class="col">
+                <div class="row" id="contPersonas">
+
+                </div>
+            </div>
 
         </div>
         <div class="row">
             <div class="col-md-12 p-4">
                 <h3>Ultimas Publicaciones!</h3>
             </div>
-        </div>
-        <div class="row" id="contPersonasPub">
-            <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 p-5">
-                <h3>Nuevos Servicios Registrados!</h3>
+            <div class="col">
+                <div class="row" id="contPersonasPub"></div>
+
             </div>
         </div>
-        <div class="row justify-content-center" id="contServicios"></div>
+        <div class="row">
+            <div class="col-md-12 p-4">
+                <h3>Nuevos Servicios Registrados!</h3>
+            </div>
+            <div class="col">
+                <div class="row justify-content-center" id="contServicios"></div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>

@@ -212,6 +212,7 @@ $(document).ready(function () {
 
                             wowElement();
                             acciones();
+                            accionesPublicacion();
                         }, 1000);
                     }, 1000);
                 } else {
@@ -240,13 +241,19 @@ $(document).ready(function () {
                     </a>
                   </div>
                   <div class="card-body">
-                    <a href="${ruta}perfil/${rellenarCero(publicacion.iduser)}/${normalize(nameUser)}" class="text-dark">
-                      <h4 class="card-title">${publicacion.nombre} ${publicacion.apellidos}</h4>
-                    </a>
-                    <a class="card-meta">${publicacion.titulo}</a>
-                    <p class="card-text">${publicacion.descripcion.substr(0, 55)}${((numDesc > 55) ? `<span class="" style="display:none;">${publicacion.descripcion.substr(55, numDesc)}</span> <a class="text-info mostrarTexto"> ... más </a> ` : "")}</p>
-                    <hr>
-                    <p class="card-meta float-right">${fecha[0]}</p>
+                    <div>
+                        <a href="${ruta}perfil/${rellenarCero(publicacion.iduser)}/${normalize(nameUser)}" class="text-dark">
+                        <h4 class="card-title">${publicacion.nombre} ${publicacion.apellidos}</h4>
+                        </a>
+                        <a class="card-meta">${publicacion.titulo}</a>
+                        <p class="card-text">${publicacion.descripcion.substr(0, 55)}${((numDesc > 55) ? `<span class="" style="display:none;">${publicacion.descripcion.substr(55, numDesc)}</span> <a class="text-info mostrarTexto"> ... más </a> ` : "")}</p>
+                        <hr>
+                        <p class="card-meta float-right">${fecha[0]}</p>
+                        <div data-idPub="${publicacion.id}" data-titulo="${publicacion.titulo}" data-descripcion="${publicacion.descripcion}">
+                            <button type="button" class="btn btn-info btn-sm editarPub"><i class="fas fa-edit mx-2"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm eliminarPub"><i class="fas fa-trash-alt mx-2"></i></button>
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -296,6 +303,75 @@ $(document).ready(function () {
             let descripcion = $(this).siblings();
             descripcion.show();
             opcionMostrar.remove();
+        });
+    }
+    function accionesPublicacion() {
+        var contador = 0;
+        var BotonMaster = false;
+        $(".editarPub").off().on('click', function (e) {
+            e.preventDefault();
+            let Button = $(this);
+            if (contador == 0) {
+                modificar(Button);
+
+            } else {
+                Swal.fire({
+                    title: 'Ya estas modificando una publicación',
+                    text: "¿Deceas cancelar y modificar la seleccionada?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, modificar la seleccionada'
+                }).then((result) => {
+                    if (result.value) {
+                        if (BotonMaster) {
+                            cerrarForm(BotonMaster);
+                        }
+                        modificar(Button);
+                    }
+                })
+            }
+            function modificar(Button) {
+                BotonMaster = Button;
+                let idPublicacion = Button.parent().attr('data-idPub');
+                let titulo = Button.parent().attr('data-titulo');
+                let descripcion = Button.parent().attr('data-descripcion');
+                contador = 1;
+                Button.parent().parent().hide();//Ocultamos la información
+                Button.parent().parent().parent().append(`
+                    <form id="formularioPublicacion" class="text-center">
+                    <input type="hidden" name="idPublicacion" class="form-control" value="${idPublicacion}">
+                        <div class="md-form mt-3">
+                            <input type="text" id="titulo" class="form-control" value="${titulo}">
+                            <label class="active" for="titulo">Titulo</label>
+                        </div>
+                        <div class="md-form">
+                            <textarea id="descripcion" class="form-control md-textarea" rows="3">${descripcion}</textarea>
+                            <label class="active" for="descripcion">Descripcion</label>
+                        </div>
+                        <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Guardar</button>
+                        <a id="cancelarForm" class="btn btn-outline-danger btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Cancelar</a>
+            
+                    </form>
+                `);//Concatenamos el formulario
+                $("#cancelarForm").on('click', function (e) {
+                    e.preventDefault();
+                    cerrarForm(BotonMaster);
+                })
+            }
+            function cerrarForm(Button) {
+                formularioPublicacion.remove();
+                contador = 0;
+                Button.parent().parent().show();
+            }
+
+        });
+        $(".eliminarPub").off().on('click', function (e) {
+            e.preventDefault();
+            let Button = $(this);
+            let idPublicacion = Button.parent().attr('data-idPub');
+            console.log(idPublicacion);
         });
     }
 

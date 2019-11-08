@@ -3,8 +3,8 @@ var $publicacion = $('.oculta');
 $publicacion.hide();
 $("#cancelar").parent().hide();
 $(document).ready(function () {
-    traerPosts();
     traerPostsDerecha();
+    traerPosts();
     var $progressPub = $("#progressPub");
     function traerPosts() {
         $.ajax({
@@ -16,13 +16,12 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                // console.log(data);
+                console.log(data);
                 if (data.respuesta == 'exito') {
                     loading(75);
                     setTimeout(() => {
                         loading(100);
                         setTimeout(() => {
-                            // $progressPub.parent().parent().hide();
                             let cuerpo = "",
                                 cuerpoRigth = "";
 
@@ -31,6 +30,7 @@ $(document).ready(function () {
                                     cuerpo += (cuerpoPublicacion(data.publicaciones[i], ruta, data.rutaImagen));
                                 }
                             }
+                            console.log(cuerpo);
                             var actual = (data.publicaciones.length > 6) ? 6 : 0;
 
 
@@ -44,10 +44,20 @@ $(document).ready(function () {
                         }, 1000);
                     }, 1000);
                 } else {
+
                     setTimeout(() => {
-                        $("#cuerpoPublicaciones").html("");
-                        $("#cuerpoRigth").html("");
-                    }, 3000);
+                        $("#cuerpoPublicaciones").html(`
+                        <div class="card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Others/forest2.jpg);">
+                          <div class="text-white text-center rgba-stylish-strong py-5 px-4">
+                            <div class="py-5">
+                            <h5 class="h5 orange-text"><i class="fas fa-camera-retro"></i> Sin publicaciones</h5>
+                              <h2 class="card-title h2 my-4 py-2">No se encontraron publicaciones</h2>
+                              <p class="mb-4 pb-2 px-md-5 mx-md-5">Si este es tu perfil ve y crea tu nueva publicación</p>
+                              <a href="${ruta}/perfil" class="btn peach-gradient"><i class="fas fa-clone left"></i> Crear publicación</a>
+                            </div>
+                          </div>
+                        </div>`);
+                    }, 2000);
                 }
             }
         });

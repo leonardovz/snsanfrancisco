@@ -25,7 +25,7 @@
             </ul>
             <div class="form-inline">
                 <div class="md-form mt-0">
-                    <input class="form-control mr-sm-2 inBusqueda" type="text" id="inBusqueda" placeholder="Buscar" aria-label="Buscar">
+                    <input class="form-control mr-sm-2 inBusqueda text-white" type="text" id="inBusqueda" placeholder="Buscar" aria-label="Buscar">
                 </div>
             </div>
             <?php if ($UserLogin) { ?>

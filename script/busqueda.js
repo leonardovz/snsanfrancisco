@@ -1,61 +1,66 @@
 new WOW().init();
 var ruta = ruta();
 $(document).ready(function () {
-    var BUSQUEDA = (window.location.pathname).split("/")[3].replace(/-/g, " ");//Cacha la ruta y separa los datos para enviar a SQL
-    traerPosts();
-    function traerPosts() {
-        $.ajax({
-            type: "POST",
-            url: ruta + 'php/publico.php',
-            dataType: "json",
-            data: 'opcion=busqueda&buscar=' + BUSQUEDA,
-            error: function (xhr, resp) {
-                console.log(xhr.responseText);
-            },
-            success: function (data) {
-                console.log(BUSQUEDA);
-                console.log(data);
+  var BUSQUEDA = (window.location.pathname).split("/")[3].replace(/-/g, " ");//Cacha la ruta y separa los datos para enviar a SQL
+  traerPosts();
+  $("#inBusqueda").val(BUSQUEDA);
+  function traerPosts() {
+    var contPersonas = $("#contPersonas");
+    var contServicios = $("#contServicios");
+    var contPersonasPub = $("#contPersonasPub");
+    $.ajax({
+      type: "POST",
+      url: ruta + 'php/publico.php',
+      dataType: "json",
+      data: 'opcion=busqueda&buscar=' + BUSQUEDA,
+      error: function (xhr, resp) {
+        console.log(xhr.responseText);
+      },
+      success: function (data) {
+        console.log(BUSQUEDA);
+        console.log(data);
 
-                if (data.respuesta == "exito") {
-                    let cuerpoPub = "";
-                    let cuerpoUser = "";
-                    let cuerpoServ = "";
-                    if (data.Perfil) {
-                        for (let i in data.Perfil) {
-                            cuerpoPub += (cuerpoPerfil(data.Perfil[i].Perfil, ruta, data.Perfil[i].rutaImagen));
-                        }
-                        $("#contPersonas").html(cuerpoPub);
-
-                    }
-                    if (data.Servicio) {
-                        for (let i in data.Servicio) {
-                            cuerpoUser += (cuerpoServicios(data.Servicio[i].Servicio, ruta, data.Servicio[i].rutaImagen));
-                        }
-                        $("#contServicios").html(cuerpoUser);
-
-                    }
-                    if (data.Publicacion) {
-                        for (let i in data.Publicacion) {
-                            cuerpoServ += (cuerpoPublicacion(data.Publicacion[i].Publicacion, ruta, data.Publicacion[i].rutaImagen));
-                        }
-                        $("#contPersonasPub").html(cuerpoServ);
-                    }
-                    acciones();
-                } else {
-                    alerta(data.Texto, 'error');
-                }
-
+        if (data.respuesta == "exito") {
+          let cuerpoPub = "";
+          let cuerpoUser = "";
+          let cuerpoServ = "";
+          if (data.Perfil) {
+            for (let i in data.Perfil) {
+              cuerpoPub += (cuerpoPerfil(data.Perfil[i].Perfil, ruta, data.Perfil[i].rutaImagen));
             }
-        });
-    }
-    function cuerpoPublicacion(publicacion, ruta, rutaImagen) {
-        var cuerpo = ``;
-        let nombreMin = publicacion.nombre.replace(" ", "-"),
-            apellidoMin = publicacion.apellidos.replace(" ", "-"),
-            nameUser = nombreMin + '-' + apellidoMin,
-            fecha = publicacion.fecha.split(" "),
-            numDesc = publicacion.descripcion.length;
-        cuerpo += `
+            contPersonas.html(cuerpoPub);
+
+          }
+          if (data.Servicio) {
+            for (let i in data.Servicio) {
+              cuerpoUser += (cuerpoServicios(data.Servicio[i].Servicio, ruta, data.Servicio[i].rutaImagen));
+            }
+            contServicios.html(cuerpoUser);
+          } else {
+            contServicios.hide();
+          }
+          if (data.Publicacion) {
+            for (let i in data.Publicacion) {
+              cuerpoServ += (cuerpoPublicacion(data.Publicacion[i].Publicacion, ruta, data.Publicacion[i].rutaImagen));
+            }
+            contPersonasPub.html(cuerpoServ);
+          }
+          acciones();
+        } else {
+          alerta(data.Texto, 'error');
+        }
+
+      }
+    });
+  }
+  function cuerpoPublicacion(publicacion, ruta, rutaImagen) {
+    var cuerpo = ``;
+    let nombreMin = publicacion.nombre.replace(" ", "-"),
+      apellidoMin = publicacion.apellidos.replace(" ", "-"),
+      nameUser = nombreMin + '-' + apellidoMin,
+      fecha = publicacion.fecha.split(" "),
+      numDesc = publicacion.descripcion.length;
+    cuerpo += `
           <div class="col-xl-4 col-lg-4 col-md-6 mb-5">
             <div class="card card-personal mb-md-0 mb-4" style="height:100%;">
               <div class="overlay">
@@ -76,15 +81,15 @@ $(document).ready(function () {
             </div>
           </div>
           `;
-        return cuerpo;
-    }
-    function cuerpoPerfil(perfil, ruta, rutaImagen) {
-        var cuerpo = ``;
-        let nombreMin = perfil.nombre.replace(" ", "-"),
-            apellidoMin = perfil.apellidos.replace(" ", "-"),
-            nameUser = nombreMin + '-' + apellidoMin,
-            fecha = perfil.fecha.split(" ");
-        cuerpo += `
+    return cuerpo;
+  }
+  function cuerpoPerfil(perfil, ruta, rutaImagen) {
+    var cuerpo = ``;
+    let nombreMin = perfil.nombre.replace(" ", "-"),
+      apellidoMin = perfil.apellidos.replace(" ", "-"),
+      nameUser = nombreMin + '-' + apellidoMin,
+      fecha = perfil.fecha.split(" ");
+    cuerpo += `
       <div class="col-xl-4 col-lg-4 col-md-6 mb-5">
         <div class="card card-personal mb-md-0 mb-4">
           <div class="overlay"> 
@@ -108,11 +113,11 @@ $(document).ready(function () {
         </div>
       </div>
           `;
-        return cuerpo;
-    }
-    function cuerpoServicios(servicio, ruta, rutaImagen) {
-        var cuerpo = ``;
-        cuerpo += `
+    return cuerpo;
+  }
+  function cuerpoServicios(servicio, ruta, rutaImagen) {
+    var cuerpo = ``;
+    cuerpo += `
         <div class="col-md-6 col-sm-6 col-12 mb-4 wow fadeInDown">
            
             <div class="card card-image" style="background-image: url(${ruta + rutaImagen + servicio.imagen}); background-repeat: no-repeat; background-size: cover;">
@@ -129,16 +134,16 @@ $(document).ready(function () {
             </div>
         </div>
             `;
-        //}
-        return cuerpo;
-    }
-    function acciones() {
-        $(".mostrarTexto").off().on('click', function (e) {
-            e.preventDefault();
-            let opcionMostrar = $(this);
-            let descripcion = $(this).siblings();
-            descripcion.show();
-            opcionMostrar.remove();
-        });
-    }
+    //}
+    return cuerpo;
+  }
+  function acciones() {
+    $(".mostrarTexto").off().on('click', function (e) {
+      e.preventDefault();
+      let opcionMostrar = $(this);
+      let descripcion = $(this).siblings();
+      descripcion.show();
+      opcionMostrar.remove();
+    });
+  }
 });

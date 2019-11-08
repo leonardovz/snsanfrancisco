@@ -336,6 +336,7 @@ switch ($_POST['opcion']) {
 
         break;
     case 'traerPostsRelacion':
+
         // $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
         // $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
 
@@ -402,10 +403,15 @@ switch ($_POST['opcion']) {
 
     case 'busqueda':
         $buscar = isset($_POST['buscar']) && !empty($_POST['buscar']) ? $_POST['buscar'] : "";
+        //Verificar el perfil del Usuario
+        if ($buscar == "") {
+            die(json_encode($respuesta = array('respuesta' => 'error', 'Texto' => 'No se encontro resultado de la busqueda')));
+        }
+        $ADMINFUNC = new AdminFunciones();
+        $ADMINFUNC->CONEXION = $conexion;
 
-
-        $sqlPerfil = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.whatsapp,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio AND (U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%'  OR UI.nombreServicio LIKE '%$buscar%' OR UI.descripcion LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%')";
-        $sqlPublicacion = "SELECT P.*,U.nombre,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND (P.titulo LIKE '%$buscar%' OR P.descripcion LIKE '%$buscar%' OR U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%' OR UI.nombreServicio LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%') ";
+        $sqlPerfil = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.whatsapp,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio AND (U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%'  OR UI.nombreServicio LIKE '%$buscar%' OR UI.descripcion LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%' OR concat_ws(' ', U.nombre,U.apellidos) LIKE '%$buscar%')";
+        $sqlPublicacion = "SELECT P.*,U.nombre,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND (P.titulo LIKE '%$buscar%' OR P.descripcion LIKE '%$buscar%' OR U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%' OR UI.nombreServicio LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%' OR concat_ws(' ', U.nombre,U.apellidos) LIKE '%$buscar%' ) ";
         $sqlServicio = "SELECT * FROM servicios WHERE nombre LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' ";
 
         $respuestaPerfil = $conexion->query($sqlPerfil);
@@ -420,7 +426,7 @@ switch ($_POST['opcion']) {
             while ($resultPerfil = $respuestaPerfil->fetch_assoc()) {
                 $ARRAYPerfil[] = array(
                     'Perfil' => $resultPerfil,
-                    'rutaImagen' => 'galeria/usuario/' . rellenarCero($resultPerfil['idUsuario']).'/',
+                    'rutaImagen' => 'galeria/usuario/' . rellenarCero($resultPerfil['idUsuario']) . '/',
                 );
             }
         }
@@ -428,7 +434,7 @@ switch ($_POST['opcion']) {
             while ($resultPublicacion = $respuestaPublicacion->fetch_assoc()) {
                 $ARRAYPublicacion[] = array(
                     'Publicacion' => $resultPublicacion,
-                    'rutaImagen' => 'galeria/usuario/' . rellenarCero($resultPublicacion['idUsuario']).'/',
+                    'rutaImagen' => 'galeria/usuario/' . rellenarCero($resultPublicacion['idUsuario']) . '/',
 
                 );
             }
