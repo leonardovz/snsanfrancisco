@@ -220,108 +220,15 @@ require_once 'templates/header.php'; ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-0" id="cuerpoRigth">
-                            <h2 class="">Más publicaciones</h2>
-                            <div class="row mt-5">
-                                <div class="col-3">
-                                    <div class="view overlay rounded mb-lg-0 mb-4 p-0">
-                                        <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" alt="Sample image">
-                                        <a>
-                                            <div class="mask rgba-white-slight"></div>
-                                        </a>
-                                    </div>
+                        <div class="col-lg-4 col-md-6 mb-0" >
+                           <div class="row">
+                               <div class="col-12" >
+                                    <h3>Más publicaciones</h3>
+                               </div>
+                               <div class="col-12" id="cuerpoRigth">
 
-                                </div>
-                                <div class="col-9">
-                                    <p class="font-weight-bold dark-grey-text">
-                                        <span>17/08/2018</span>
-                                        <a href="#!"><span class="ml-4 m-0 badge pink"><i class="fas fa-camera pr-2" aria-hidden="true"></i>Aventura</span></a>
-                                    </p>
-
-                                    <div class="d-flex justify-content-between">
-                                        <div class="col-11 text-truncate pl-0 mb-lg-0 mb-3">
-                                            <a href="#!" class="dark-grey-text">Voluptatem accusantium doloremque</a>
-                                        </div>
-                                        <a><i class="fas fa-angle-double-right"></i></a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-3">
-                                    <div class="view overlay rounded mb-lg-0 mb-4 p-0">
-                                        <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" alt="Sample image">
-                                        <a>
-                                            <div class="mask rgba-white-slight"></div>
-                                        </a>
-                                    </div>
-
-                                </div>
-                                <div class="col-9">
-                                    <p class="font-weight-bold dark-grey-text">
-                                        <span>17/08/2018</span>
-                                        <a href="#!"><span class="ml-4 m-0 badge pink"><i class="fas fa-camera pr-2" aria-hidden="true"></i>Aventura</span></a>
-                                    </p>
-
-                                    <div class="d-flex justify-content-between">
-                                        <div class="col-11 text-truncate pl-0 mb-lg-0 mb-3">
-                                            <a href="#!" class="dark-grey-text">Voluptatem accusantium doloremque</a>
-                                        </div>
-                                        <a><i class="fas fa-angle-double-right"></i></a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-3">
-                                    <div class="view overlay rounded mb-lg-0 mb-4 p-0">
-                                        <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" alt="Sample image">
-                                        <a>
-                                            <div class="mask rgba-white-slight"></div>
-                                        </a>
-                                    </div>
-
-                                </div>
-                                <div class="col-9">
-                                    <p class="font-weight-bold dark-grey-text">
-                                        <span>17/08/2018</span>
-                                        <a href="#!"><span class="ml-4 m-0 badge pink"><i class="fas fa-camera pr-2" aria-hidden="true"></i>Aventura</span></a>
-                                    </p>
-
-                                    <div class="d-flex justify-content-between">
-                                        <div class="col-11 text-truncate pl-0 mb-lg-0 mb-3">
-                                            <a href="#!" class="dark-grey-text">Voluptatem accusantium doloremque</a>
-                                        </div>
-                                        <a><i class="fas fa-angle-double-right"></i></a>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-3">
-                                    <div class="view overlay rounded mb-lg-0 mb-4 p-0">
-                                        <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/49.jpg" alt="Sample image">
-                                        <a>
-                                            <div class="mask rgba-white-slight"></div>
-                                        </a>
-                                    </div>
-
-                                </div>
-                                <div class="col-9">
-                                    <p class="font-weight-bold dark-grey-text">
-                                        <span>17/08/2018</span>
-                                        <a href="#!"><span class="ml-4 m-0 badge pink"><i class="fas fa-camera pr-2" aria-hidden="true"></i>Aventura</span></a>
-                                    </p>
-
-                                    <div class="d-flex justify-content-between">
-                                        <div class="col-11 text-truncate pl-0 mb-lg-0 mb-3">
-                                            <a href="#!" class="dark-grey-text">Voluptatem accusantium doloremque</a>
-                                        </div>
-                                        <a><i class="fas fa-angle-double-right"></i></a>
-                                    </div>
-
-                                </div>
-                            </div>
+                               </div>
+                           </div>
                         </div>
 
                     </div>

@@ -8,7 +8,7 @@ global $EMAILCONFIG;
 $systemName = "Servicios y Noticias San Francisco de Asís";
 $keyWords = "Trabajos y Servicios, Construcción, Estilistas en San Francisco ,Albañiles, Troqueros, Papeleria, Arquitectos, San Francisco de Asís, Servicios y Noticias";
 $descripcionServ = "Aquí encontraras los servicios que ofrece San Francisco se Asís, municipio de Atotonilco el alto, Jalisco. Entra y encuentra lo que necesitas";
-$mesesAnio = array('','Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+$mesesAnio = array('', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 
 $EMAILCONFIG = array(
     'no-reply' => array(
@@ -147,7 +147,7 @@ function fotoPerfil($UserLogin, $ruta)
 {
     return  $ruta . (($UserLogin['imagen'] == 'default.png') ? "galeria/sistema/images/" : "galeria/usuario/" . rellenarCero($UserLogin['idUsuario']) . '/') . $UserLogin['imagen'];
 }
-function fotoPerfilPublico($imagen,$idUser, $ruta)
+function fotoPerfilPublico($imagen, $idUser, $ruta)
 {
     return  $ruta . (($imagen == 'default.png') ? "galeria/sistema/images/" : "galeria/usuario/" . rellenarCero($idUser) . '/') . $imagen;
 }
@@ -322,10 +322,49 @@ class AdminFunciones
         $conexion = $this->CONEXION;
         $resultado = false;
         if ($conexion) {
-            $sql = "SELECT * FROM servicios WHERE id = ".(int)$idServicio;
+            $sql = "SELECT * FROM servicios WHERE id = " . (int) $idServicio;
             $resultado = $conexion->query($sql);
             $resultado = ($resultado && $resultado->num_rows) ? $resultado : false;
         }
         return $resultado;
+    }
+    function paquetePerfilUser($idUser)
+    {
+        $respuesta = false;
+        // Siempre te arrojara la membresia con la ultima fecha de finalizacion
+        $sql = "SELECT M.*,R.nombre AS rol,R.imagen,R.tag,R.duracion,R.iconColor,R.icono,R.publicacion FROM membresias AS M,rango AS R WHERE M.idRango = R.id AND M.idUser = $idUser ORDER BY M.fechaFinal DESC LIMIT 1  ";
+        $resultado = $this->CONEXION->query($sql);
+        if ($resultado && $resultado->num_rows) {
+            $MEMBRESIA = $resultado->fetch_assoc();
+
+            $hoy = getdate();
+
+            $fHoy = $hoy['year'] . '-' . (($hoy['mon'] > 9) ? $hoy['mon'] : '0' . $hoy['mon']) . '-' . $hoy['mday'];
+
+            $fechaFinal  = $MEMBRESIA['fechaFinal'];
+
+            $dateHoy = new DateTime($fHoy);
+            $dateFinal = new DateTime($fechaFinal);
+            $comparacion = false;
+
+            if ($dateHoy < $dateFinal) {
+                $comparacion = true;
+            } else {
+                $comparacion = false;
+            }
+            $respuesta = array(
+                'respuesta' => true,
+                'membresia' => $MEMBRESIA,
+                'status' => $comparacion,
+            );
+        }
+        return $respuesta;
+    }
+    function contarPublicacionUser($idUser)
+    {
+        $contador = "SELECT COUNT(*) AS total FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND U.idUsuario =" . $idUser;
+        $NPUB = $this->CONEXION->query($contador);
+        $NPUB = ($NPUB && $NPUB->num_rows) ? $NPUB->fetch_assoc()['total'] : 0;
+        return $NPUB;
     }
 }

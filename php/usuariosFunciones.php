@@ -89,14 +89,15 @@ switch ($_POST['opcion']) {
         die(json_encode($respuesta));
         break;
     case 'crearPublicacion':
+        $ADMINFUNC = new AdminFunciones();
+        $ADMINFUNC->CONEXION = $conexion;
+
         $titulo       = isset($_POST['titulo']) && !empty($_POST['titulo']) ? htmlspecialchars($_POST['titulo']) : false;
         $descripcion = isset($_POST['descripcion']) && !empty($_POST['descripcion']) ? htmlspecialchars($_POST['descripcion']) : false;
 
         if (!isset($_FILES['avatar']) || empty($_FILES['avatar'])) {
             die(json_encode(array('respuesta' => 'error', 'Texto' => 'No se envio ningun archivo')));
         }
-
-
         $sql = "SELECT * FROM usuarios WHERE idUsuario = " . $USERLOGIN['idUsuario'];
         $resultado = $conexion->query($sql);
         $resultado = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
@@ -104,7 +105,13 @@ switch ($_POST['opcion']) {
             die(json_encode(array('respuesta' => 'error', 'Texto' => "Ocurrio un error al consultar tu perfil, Cierra sesión y vuelve a ingresar")));
         }
 
+        $MEMBRESIA = $ADMINFUNC->paquetePerfilUser($USERLOGIN['idUsuario']);
+        $nPub = $ADMINFUNC->contarPublicacionUser($USERLOGIN['idUsuario']); //Permite contar el numero de publicaciones actuales
+        if (!$MEMBRESIA) { }
 
+        if (!$MEMBRESIA || ($nPub > $MEMBRESIA['membresia']['publicacion'])) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => "El número de publicaciones exede tu paquete actual, si requieres de más publicaciónes puedes eliminar pubicaciónes pasadas, o consultar al administrador para mejorar tu paquete")));
+        }
         $IMAGENPERFIL = $_FILES['avatar'];
 
         validarImagen($IMAGENPERFIL);
@@ -151,6 +158,76 @@ switch ($_POST['opcion']) {
             );
         }
 
+        die(json_encode($respuesta));
+        break;
+    case 'editarPublicacion':
+        $titulo       = isset($_POST['titulo']) && !empty($_POST['titulo']) ? htmlspecialchars($_POST['titulo']) : false;
+        $descripcion = isset($_POST['descripcion']) && !empty($_POST['descripcion']) ? htmlspecialchars($_POST['descripcion']) : false;
+        $idPublicacion       = isset($_POST['idPublicacion']) && !empty($_POST['idPublicacion']) ? htmlspecialchars($_POST['idPublicacion']) : false;
+
+        $sql = "SELECT * FROM publicacion WHERE estado = 'AC' AND id =$idPublicacion AND iduser =  " . $USERLOGIN['idUsuario'];
+        $resultado = $conexion->query($sql);
+        $resultado = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
+        if (!$USERLOGIN ||  !$resultado) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => "Ocurrio un error al consultar tu perfil, Cierra sesión y vuelve a ingresar", $sql, $_POST)));
+        }
+        $sql = "UPDATE publicacion SET titulo='$titulo',descripcion='$descripcion' WHERE id=$idPublicacion";
+        $resultado = $conexion->query($sql);
+        $resultado = ($resultado && $conexion->affected_rows) ? true : false;
+        if ($resultado) {
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'Texto' => 'Actualización realizada con exito'
+            );
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'No se realizo ninguna modificación'
+            );
+        }
+
+        die(json_encode($respuesta));
+        break;
+    case 'eliminarPublicacion':
+        $idPublicacion       = isset($_POST['idPublicacion']) && !empty($_POST['idPublicacion']) ? htmlspecialchars($_POST['idPublicacion']) : false;
+        $sql = "SELECT * FROM publicacion WHERE id =$idPublicacion AND iduser =  " . $USERLOGIN['idUsuario'];
+        $resultado = $conexion->query($sql);
+        $PUBLICACION = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
+        if (!$USERLOGIN ||  !$PUBLICACION) {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => "Ocurrio un error al consultar tu perfil, Cierra sesión y vuelve a ingresar", $sql, $_POST)));
+        }
+        // $sql = "";
+        if ($USERLOGIN['rol'] == 1 && $USERLOGIN['idUsuario'] != $PUBLICACION['iduser']) {
+            $sql = "UPDATE publicacion SET estado= 'BAN' WHERE id = $idPublicacion";
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado && $conexion->affected_rows) ? true : false;
+            if ($resultado) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'Pubicación banneada'
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No se realizo ninguna modificación'
+                );
+            }
+        } else {
+            $sql = "DELETE FROM publicacion WHERE id = $idPublicacion AND iduser = " . $USERLOGIN['idUsuario'];
+            $resultado = $conexion->query($sql);
+            if ($resultado) {
+                unlink('../galeria/usuario/' . rellenarCero($USERLOGIN['idUsuario']) . '/' . $PUBLICACION['imagen']);
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'Se elimino de forma exitosa'
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No fue posible eliminar la publicación'
+                );
+            }
+        }
         die(json_encode($respuesta));
         break;
     case 'traerPostsPerfil':
@@ -201,7 +278,7 @@ switch ($_POST['opcion']) {
         $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
         if ($idUser) {
             // Siempre te arrojara la membresia con la ultima fecha de finalizacion
-            $sql = "SELECT M.*,R.nombre AS rol,R.imagen,R.tag,R.duracion,R.iconColor,R.icono FROM membresias AS M,rango AS R WHERE M.idRango = R.id AND M.idUser = $idUser ORDER BY M.fechaFinal DESC LIMIT 1 ";
+            $sql = "SELECT M.*,R.nombre AS rol,R.imagen,R.tag,R.duracion,R.iconColor,R.icono,R.publicacion FROM membresias AS M,rango AS R WHERE M.idRango = R.id AND M.idUser = $idUser ORDER BY M.fechaFinal DESC LIMIT 1  ";
             $resultado = $conexion->query($sql);
             if ($resultado && $resultado->num_rows) {
                 $MEMBRESIA = $resultado->fetch_assoc();
@@ -436,7 +513,7 @@ switch ($_POST['opcion']) {
         } else {
             $respuesta = array(
                 'respuesta' => 'error',
-                'Texto' => 'No fue posible registrar su código',$MEMBRESIA
+                'Texto' => 'No fue posible registrar su código', $MEMBRESIA
             );
         }
 
@@ -446,7 +523,7 @@ switch ($_POST['opcion']) {
 
         break;
 
-    
+
 
     case 'modificarPerfil':
         if ($USERLOGIN) {
@@ -546,6 +623,7 @@ switch ($_POST['opcion']) {
 
 
         break;
+
     case 'extra':
         break;
     default:

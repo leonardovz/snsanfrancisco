@@ -116,16 +116,15 @@ switch ($_POST['opcion']) {
         $resultado = $conexion->query($sql);
         if ($resultado && $resultado->num_rows) {
             $usuario = $resultado->fetch_assoc();
-            if($usuario['validar']!=1){
-                $sql = "UPDATE `usuarios` SET validar=1 WHERE idUsuario = ".$usuario['idUsuario'];
+            if ($usuario['validar'] != 1) {
+                $sql = "UPDATE `usuarios` SET validar=1 WHERE idUsuario = " . $usuario['idUsuario'];
                 $resultado = $conexion->query($sql);
-                if($resultado && $conexion->affected_rows){
+                if ($resultado && $conexion->affected_rows) {
                     $respuesta = array('respuesta' => 'exito', 'Texto' => 'Tu cuenta fue validada de manera exitosa!, Inicia Sesión y continua con la tu configuración');
-                }else{
+                } else {
                     $respuesta = array('respuesta' => 'error', 'Texto' => 'Por el momento no es posible verificar tu cuenta');
-
                 }
-            }else{
+            } else {
                 $respuesta = array('respuesta' => 'error', 'Texto' => 'El correo ha sido validado con anterioridad, ya puedes ingresar a tu cuenta y continuar con su configuración');
             }
         } else {

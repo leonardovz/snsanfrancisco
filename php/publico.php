@@ -28,7 +28,7 @@ switch ($_POST['opcion']) {
         // $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
         // $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
         // if ($idUser) {
-        $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario ORDER BY P.fecha DESC ";
+        $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND estado = 'AC' ORDER BY P.fecha DESC ";
         $resultado = $conexion->query($sql);
         $resultado = ($resultado  && $resultado->num_rows) ? $resultado : false;
         if ($resultado) {
@@ -189,7 +189,7 @@ switch ($_POST['opcion']) {
 
         $directorio = 'galeria/usuario/' . rellenarCero($idUser) . '/';
         if ($idUser) {
-            $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND P.iduser = " . $idUser . ' ORDER BY P.fecha DESC LIMIT ' . $LIMITE;
+            $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND P.iduser = " . $idUser . ' AND P.estado = "AC" ORDER BY P.fecha DESC LIMIT ' . $LIMITE;
             $resultado = $conexion->query($sql);
             $resultado = ($resultado  && $resultado->num_rows) ? $resultado : false;
             if ($resultado) {
@@ -263,7 +263,7 @@ switch ($_POST['opcion']) {
 
         $directorio = 'galeria/usuario/' . rellenarCero($idUser) . '/';
         if ($idUser) {
-            $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND P.iduser = " . $idUser . ' ORDER BY P.fecha DESC LIMIT ' . $LIMITE;
+            $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND P.iduser = " . $idUser . ' AND P.estado = "AC" ORDER BY P.fecha DESC LIMIT ' . $LIMITE;
             $resultado = $conexion->query($sql);
             $resultado = ($resultado  && $resultado->num_rows) ? $resultado : false;
             if ($resultado) {
@@ -308,7 +308,7 @@ switch ($_POST['opcion']) {
 
                 $directorio = 'galeria/usuario/' . rellenarCero($idUser) . '/';
 
-                $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND P.iduser = " . $idUser . ' ORDER BY P.fecha DESC LIMIT ' . 1;
+                $sql = "SELECT P.*,U.nombre,U.apellidos, U.img FROM publicacion AS P ,usuarios as U WHERE P.iduser = U.idUsuario AND P.iduser = " . $idUser . ' AND P.estado = "AC" ORDER BY P.fecha DESC LIMIT ' . 1;
                 $resultado = $conexion->query($sql);
                 if ($resultado  && $resultado->num_rows) {
                     while ($publicacion = $resultado->fetch_assoc()) {
@@ -342,7 +342,7 @@ switch ($_POST['opcion']) {
 
 
         // if ($idUser) {
-        $sql = "SELECT P.*,U.nombre,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id   GROUP BY U.idUsuario ORDER BY P.fecha DESC";
+        $sql = "SELECT P.*,U.nombre,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id  AND P.estado = 'AC' GROUP BY U.idUsuario ORDER BY P.fecha DESC";
         $resultado = $conexion->query($sql);
         $resultado = ($resultado  && $resultado->num_rows) ? $resultado : false;
         if ($resultado) {
@@ -411,7 +411,7 @@ switch ($_POST['opcion']) {
         $ADMINFUNC->CONEXION = $conexion;
 
         $sqlPerfil = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.whatsapp,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio AND (U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%'  OR UI.nombreServicio LIKE '%$buscar%' OR UI.descripcion LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%' OR concat_ws(' ', U.nombre,U.apellidos) LIKE '%$buscar%')";
-        $sqlPublicacion = "SELECT P.*,U.nombre,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND (P.titulo LIKE '%$buscar%' OR P.descripcion LIKE '%$buscar%' OR U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%' OR UI.nombreServicio LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%' OR concat_ws(' ', U.nombre,U.apellidos) LIKE '%$buscar%' ) ";
+        $sqlPublicacion = "SELECT P.*,U.nombre,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.estado = 'AC' AND P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND (P.titulo LIKE '%$buscar%' OR P.descripcion LIKE '%$buscar%' OR U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%' OR UI.nombreServicio LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%' OR concat_ws(' ', U.nombre,U.apellidos) LIKE '%$buscar%' ) ";
         $sqlServicio = "SELECT * FROM servicios WHERE nombre LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' ";
 
         $respuestaPerfil = $conexion->query($sqlPerfil);

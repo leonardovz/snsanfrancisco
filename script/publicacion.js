@@ -121,7 +121,7 @@ $(document).ready(function () {
                     formData.append('titulo', titulo); //Añadir POST
                     formData.append('descripcion', descripcion); //Añadir POST
                     if (titulo == "" || titulo.length < 3) {
-                        alerta('Es titulo es demaciado corto', 'error');
+                        alerta('Es título es demaciado corto', 'error');
                     } else if (descripcion == "" || descripcion.length < 4) {
                         let texto = (descripcion.length > 250) ? "  larga" : " corta";
                         alerta('La descripción es demaciado ' + texto, 'error');
@@ -149,18 +149,24 @@ $(document).ready(function () {
                             },
 
                             success: function (response) {
-                                $progressBar.width('100%').attr('aria-valuenow', 100).text('100%');
-                                setTimeout(() => {
-                                    $alert.show().addClass('alert-success').text(response.Texto);
-                                    alerta('Publicación realizada', 'success');
+                                if (response.respuesta == "exito") {
+                                    $progressBar.width('100%').attr('aria-valuenow', 100).text('100%');
                                     setTimeout(() => {
-                                        $("#titulo").val("");
-                                        $("#descripcion").val("");
-                                        $progressBar.width('0%').attr('aria-valuenow', 0).text('0%');
-                                        $alert.hide().addClass('alert-primary');
-                                        $("#cancelar").parent().show();
-                                    }, 2000);
-                                }, 1000);
+                                        $alert.show().addClass('alert-success').text(response.Texto);
+                                        alerta('Publicación realizada', 'success');
+                                        setTimeout(() => {
+                                            $("#titulo").val("");
+                                            $("#descripcion").val("");
+                                            $progressBar.width('0%').attr('aria-valuenow', 0).text('0%');
+                                            $alert.hide().addClass('alert-primary');
+                                            $("#cancelar").parent().show();
+                                        }, 2000);
+                                        traerPosts();
+                                    }, 1000);
+
+                                } else {
+                                    alerta(response.Texto, "error", 4000);
+                                }
                             },
 
                             error: function (xhr, status) {
@@ -218,7 +224,7 @@ $(document).ready(function () {
                 } else {
                     setTimeout(() => {
                         $("#cuerpoPublicaciones").html("");
-                        $("#cuerpoRigth").html("");
+                        // $("#cuerpoRigth").html("");
                     }, 3000);
                 }
             }
@@ -246,12 +252,12 @@ $(document).ready(function () {
                         <h4 class="card-title">${publicacion.nombre} ${publicacion.apellidos}</h4>
                         </a>
                         <a class="card-meta">${publicacion.titulo}</a>
-                        <p class="card-text">${publicacion.descripcion.substr(0, 55)}${((numDesc > 55) ? `<span class="" style="display:none;">${publicacion.descripcion.substr(55, numDesc)}</span> <a class="text-info mostrarTexto"> ... más </a> ` : "")}</p>
+                        <p class="card-text">${publicacion.descripcion.substr(0, 55)}${((numDesc > 55) ? `<span style="display:none;">${publicacion.descripcion.substr(55, numDesc)}</span> <a class="text-info mostrarTexto"> ... más </a> ` : "")}</p>
                         <hr>
                         <p class="card-meta float-right">${fecha[0]}</p>
                         <div data-idPub="${publicacion.id}" data-titulo="${publicacion.titulo}" data-descripcion="${publicacion.descripcion}">
                             <button type="button" class="btn btn-info btn-sm editarPub"><i class="fas fa-edit mx-2"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm eliminarPub"><i class="fas fa-trash-alt mx-2"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm ml-5 px-2 eliminarPub"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </div>
                   </div>
@@ -341,47 +347,93 @@ $(document).ready(function () {
                 Button.parent().parent().hide();//Ocultamos la información
                 Button.parent().parent().parent().append(`
                     <form id="formularioPublicacion" class="text-center">
-                    <input type="hidden" name="idPublicacion" class="form-control" value="${idPublicacion}">
                         <div class="md-form mt-3">
-                            <input type="text" id="titulo" class="form-control" value="${titulo}">
-                            <label class="active" for="titulo">Titulo</label>
+                            <input type="text" id="titulo" name="titulo" class="form-control" value="${titulo}">
+                            <label class="active" for="titulo">Título</label>
                         </div>
                         <div class="md-form">
-                            <textarea id="descripcion" class="form-control md-textarea" rows="3">${descripcion}</textarea>
-                            <label class="active" for="descripcion">Descripcion</label>
+                            <textarea id="descripcion" name="descripcion" class="form-control md-textarea" rows="3">${descripcion}</textarea>
+                            <label class="active" for="descripcion">Descripción</label>
                         </div>
                         <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Guardar</button>
-                        <a id="cancelarForm" class="btn btn-outline-danger btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Cancelar</a>
+                        <a id="cancelarForm" class="btn btn-outline-danger btn-rounded btn-block z-depth-0 my-4 waves-effect">Cancelar</a>
             
                     </form>
                 `);//Concatenamos el formulario
                 $("#cancelarForm").on('click', function (e) {
                     e.preventDefault();
                     cerrarForm(BotonMaster);
-                })
+                });
+                $("#formularioPublicacion").on('submit', function (e) {
+                    e.preventDefault();
+                    let formulario = $(this).serialize();
+                    let datos = "opcion=editarPublicacion&idPublicacion=" + idPublicacion + "&" + formulario;
+                    enviarForm(datos);
+                });
             }
-            function cerrarForm(Button) {
-                formularioPublicacion.remove();
-                contador = 0;
-                Button.parent().parent().show();
-            }
+
+
 
         });
         $(".eliminarPub").off().on('click', function (e) {
             e.preventDefault();
             let Button = $(this);
             let idPublicacion = Button.parent().attr('data-idPub');
-            console.log(idPublicacion);
+            Swal.fire({
+                icon: 'warning',
+                title: '¿Realmente deceas continuar?',
+                text: "Estas apunto de eliminar tu publicación!",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar'
+            }).then((result) => {
+                if (result.value) {
+                    let datos = "opcion=eliminarPublicacion&idPublicacion=" + idPublicacion;
+                    enviarForm(datos, Button);
+                }
+            });
         });
+        function destruirPub(Button) {
+            Button.parent().parent().parent().parent().parent().remove();
+        }
+        function cerrarForm(Button) {
+            formularioPublicacion.remove();
+            contador = 0;
+            Button.parent().parent().show();
+        }
+        function enviarForm(data, Button = false) {
+            $.ajax({
+                type: "POST",
+                url: ruta + 'php/usuariosFunciones.php',
+                dataType: "json",
+                data: data,
+                error: function (xhr, resp) {
+                    console.log(xhr.responseText);
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.respuesta == "removido") {
+                        destruirPub(Button);
+                        alerta(data.Texto, 'success', '1000');
+                    } else if (data.respuesta == "exito") {
+                        traerPosts();
+                        alerta(data.Texto, 'success', '1000');
+                    } else {
+                        alerta(data.Texto, 'error', '3000');
+                    }
+                }
+            });
+        }
     }
 
-    function alerta(texto, tipo) {
+    function alerta(texto, tipo, tiempo = 1500) {
         Swal.fire({
             position: 'top-end',
             type: tipo,
             title: texto,
             showConfirmButton: false,
-            timer: 1500
+            timer: tiempo
         })
     }
 });
