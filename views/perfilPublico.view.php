@@ -57,9 +57,9 @@ require_once 'templates/header.php'; ?>
 
                                 <div class="row">
                                     <div class="col-3 text-center">
-                                        <img src="<?php echo $ruta; ?>galeria/usuario/00001/perfil_1569612092_00001.jpg" alt="Michal Szymanski - founder of Material Design for Bootstrap" class="img-fluid z-depth-1-half rounded-circle">
+                                        <img src="<?php echo $ruta; ?>galeria/sistema/logo/5.png" alt="Michal Szymanski - founder of Material Design for Bootstrap" class="img-fluid z-depth-1-half rounded-circle">
                                         <div style="height: 10px"></div>
-                                        <p class="title mb-0">Leonardo</p>
+                                        <p class="title mb-0">SnSanFrancisco</p>
                                         <p class="text-muted " style="font-size: 13px">Consultame</p>
                                     </div>
 
@@ -76,8 +76,8 @@ require_once 'templates/header.php'; ?>
 
                             <!--Footer-->
                             <div class="modal-footer justify-content-center flex-wrap">
-                                <button type="button" class="btn btn-warning waves-effect waves-light">Necesito Ayuda</button>
-                                <a type="button" class="btn btn-outline-warning waves-effect">Quiero volver al Inicio</a>
+                                <a href="<?php echo $ruta;?>ayuda" type="button" class="btn btn-warning waves-effect waves-light">Necesito Ayuda</a>
+                                <a href="<?php echo $ruta;?>" type="button" class="btn btn-outline-warning waves-effect">Quiero volver al Inicio</a>
                             </div>
                         </div>
                         <!--/.Content-->

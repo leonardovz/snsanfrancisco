@@ -30,21 +30,11 @@ require_once 'templates/header.php'; ?>
                     <!-- Name -->
                     <label>Asignación de Usuario</label>
                     <select id="idUsuarioSel" name="idUsuario" class="browser-default custom-select mb-4">
-                        <option value="" disabled>Choose option</option>
-                        <option value="1" selected>Feedback</option>
-                        <option value="2">Report a bug</option>
-                        <option value="3">Feature request</option>
-                        <option value="4">Feature request</option>
                     </select>
                     <!-- Email -->
                     <!-- Subject -->
                     <label>Seleccióna el Paquete</label>
                     <select id="paqueteVal" name="paquete" class="browser-default custom-select mb-4">
-                        <option value="" disabled>Choose option</option>
-                        <option value="1" selected>Feedback</option>
-                        <option value="2">Report a bug</option>
-                        <option value="3">Feature request</option>
-                        <option value="4">Feature request</option>
                     </select>
                     <label>Cantidad de paquetes a asignar</label>
                     <input type="number" id="cantidad" class="form-control mb-4" placeholder="Cantidad">

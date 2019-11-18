@@ -127,6 +127,8 @@ if ($rutas) { //Ruta Vacia
         }
     } elseif ($RUTAS0 == 'acercade') {
         require_once 'views/acercade.view.php';
+    } elseif ($RUTAS0 == 'ayuda') {
+        require_once 'views/ayuda.view.php';
     } else {
         header('Location: ' . $ruta . 'error/404');
     }
