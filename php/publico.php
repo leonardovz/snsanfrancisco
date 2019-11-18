@@ -126,7 +126,7 @@ switch ($_POST['opcion']) {
             while ($PAQUETE = $PAQUETES->fetch_assoc()) {
                 $planesArray[] = array(
                     'plan' => $PAQUETE,
-                    'venefocios' => 'llorar'
+                    'venefocios' => 'Publicación'
                 );
             }
             $respuesta = array(

@@ -1,49 +1,41 @@
 <footer class="page-footer font-small special-color-dark pt-4">
 
   <div class="container">
-
-    <!--Grid row-->
-    <div class="row">
-
-      <!--Grid column-->
+    <div class="row justify-content-center my-4">
+      <div class="col-12 text-center">
+        <h3>Encuentranos en nuestras redes sociales</h3>
+      </div>
+      <div class="col-md-1 col"><a target="_BLANK" href="https://www.facebook.com/snsanfrancisco" class="btn btn-primary"><i class="fab fa-facebook-square fs-x2"></i></a></div>
+      <div class="col-md-1 col"><a target="_BLANK" href="https://wa.me/523481016176" class="btn btn-success"><i class="fab fa-whatsapp fs-x2"></i></a></div>
+      <div class="col-md-1 col"><a target="_BLANK" href="https://www.instagram.com/snsanfrancisco" class="btn purple-gradient"><i class="fab fa-instagram"></i></a></div>
+    </div>
+    <div class="row my-3">
       <div class="col-md-6 mb-4">
-
-        <!-- Form -->
         <div class="form-inline">
           <input class="form-control form-control-sm mr-3 w-75 inBusqueda" type="text" placeholder="Buscar" aria-label="Buscar">
           <i class="fas fa-search" aria-hidden="true"></i>
         </div>
-        <!-- Form -->
-
       </div>
-      <!--Grid column-->
-
-      <!--Grid column-->
       <div class="col-md-6 mb-4">
-
         <form class="input-group">
           <input type="text" class="form-control form-control-sm" placeholder="Ingresa tu correo electronico" aria-label="Ingresa tu correo electronico" aria-describedby="basic-addon2">
           <div class="input-group-append">
             <button class="btn btn-sm btn-outline-white my-0" type="button">Subscribete</button>
           </div>
         </form>
-
       </div>
-      <!--Grid column-->
-
     </div>
-    <!--Grid row-->
-    <div class="row">
+    <div class="row my-3">
 
       <!-- Grid column -->
-      <div class="col-md-4 mt-md-0 mt-3">
+      <div class="col-md-4 mt-md-0 mt-3 text-center">
 
         <!-- Content -->
         <h5 class="text-uppercase font-weight-bold">Presenta tu Servicio</h5>
         <p>Registra tu servicio y dalo a conocer de una manera muy distinta a las tradicionales</p>
 
       </div>
-      <div class="col-md-4 mt-md-0 mt-3">
+      <div class="col-md-4 mt-md-0 mt-3 text-center">
 
         <!-- Content -->
         <h5 class="text-uppercase font-weight-bold">Da a conocer tu marca</h5>
@@ -56,7 +48,7 @@
       <hr class="clearfix w-100 d-md-none pb-3">
 
       <!-- Grid column -->
-      <div class="col-md-4 mb-md-0 mb-3">
+      <div class="col-md-4 mb-md-0 mb-3 text-center">
 
         <!-- Content -->
         <h5 class="text-uppercase font-weight-bold">Patrocinador</h5>
@@ -67,6 +59,14 @@
       <!-- Grid column -->
 
     </div>
+    <div class="row justify-content-center my-4">
+      <div class="col-lg-3 col-md-4 col">
+        <a href="<?php echo $ruta; ?>acercade" class="btn peach-gradient btn-block">Acerca de</a>
+      </div>
+      <div class="col-lg-3 col-md-4 col">
+        <a href="<?php echo $ruta; ?>planes" class="btn blue-gradient btn-block">Planes</a>
+      </div>
+    </div>
   </div>
 
   <div class="footer-copyright text-center py-3">WEBMASTER:
@@ -75,5 +75,4 @@
   <div class="footer-copyright text-center py-3">© 2019 SnSanfrancisco:
     <a href="<?php echo $ruta; ?>"> snsanfrancisco.com</a>
   </div>
-
 </footer>

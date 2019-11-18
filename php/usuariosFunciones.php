@@ -624,6 +624,33 @@ switch ($_POST['opcion']) {
 
         break;
 
+    case 'traerPaquetes':
+        if ($USERLOGIN) {
+
+            $idUsuario = ($USERLOGIN['rol'] == 1) ? false : $USERLOGIN['idUsuario'];
+            $USUARIO = ($idUsuario) ? " AND idUsuario = " . $idUsuario : "";
+            $codigos = $conexion->query("SELECT codigos.*,rango.nombre AS nombreR FROM codigos,rango WHERE rango.id = codigos.idRango $USUARIO");
+            if ($codigos && $codigos->num_rows) {
+                $codigosArray = [];
+                while ($codigo = $codigos->fetch_assoc()) {
+                    $codigosArray[] = $codigo;
+                }
+
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'Te envio los códigos generados',
+                    'codigos' => $codigosArray,
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No te puedo mostrar códigos'
+                );
+            }
+        }
+        die(json_encode($respuesta));
+
+        break;
     case 'extra':
         break;
     default:

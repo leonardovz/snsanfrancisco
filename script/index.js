@@ -17,7 +17,6 @@ $(document).ready(function () {
         console.log(xhr.responseText);
       },
       success: function (data) {
-        console.log(data);
         let cuerpo = "",
           cuerpoRigth = "";
         if (data.respuesta == "exito") {
@@ -45,7 +44,7 @@ $(document).ready(function () {
         console.log(xhr.responseText);
       },
       success: function (data) {
-        // console.log(data);
+        console.log(data);
         let cuerpo = "",
           cuerpoRigth = "";
         if (data.respuesta == "exito") {
@@ -98,7 +97,6 @@ $(document).ready(function () {
       apellidoMin = perfil.apellidos.replace(" ", "-"),
       nameUser = nombreMin + '-' + apellidoMin,
       fecha = perfil.fecha.split(" ");
-      console.log(perfil);
     cuerpo += `
       <div class="col-xl-4 col-lg-4 col-md-6 mb-5">
         <div class="card card-personal mb-md-0 mb-4">
@@ -131,7 +129,7 @@ $(document).ready(function () {
         console.log(xhr.responseText);
       },
       success: function (data) {
-        console.log(data);
+        // console.log(data);
         if (data.respuesta == 'exito') {
           var cuerpo = '';
           for (let i in data.servicios) {
@@ -150,19 +148,22 @@ $(document).ready(function () {
   function cuerpoServicios(servicio, ruta, rutaImagen) {
     var cuerpo = ``;
     cuerpo += `
-      <div class="col-md-6 col-sm-6 col-12 mb-4 wow fadeInDown">
-          <div class="card card-image" style="background-image: url(${ruta + rutaImagen + servicio.imagen}); background-repeat: no-repeat; background-size: cover;">
-              <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-                  <div>
-                      <h5 class="pink-text"><i class="${servicio.icono} mx-3"></i> ${servicio.nombre}</h5>
-                      <h3 class="card-title pt-2"><strong>${servicio.descripcion}</strong></h3>
-                      <p></p>
-                      <a href="${ruta}servicios/${servicio.id}/${normalize(servicio.nombre).replace(" ", "-")}" class="btn ${servicio.color}"><i class="fas fa-clone left"></i> Ver</a>
-                  </div>
-              </div>
-          </div>
-      </div>
-          `;
+    <div class="col-md-6 col-sm-6 col-12 mb-4 wow fadeInDown">
+       
+        <div class="card card-image" style="background-image: url(${ruta + rutaImagen + servicio.imagen}); background-repeat: no-repeat; background-size: cover;">
+
+            <!-- Content -->
+            <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+                <div>
+                    <h5 class="pink-text"><i class="${servicio.icono} mx-3"></i> ${servicio.nombre}</h5>
+                    <h3 class="card-title pt-2"><strong>${servicio.descripcion}</strong></h3>
+                    <p></p>
+                    <a href="${ruta}servicios/${servicio.id}/${normalize(servicio.nombre).replace(" ", "-")}" class="btn ${servicio.color}"><i class="fas fa-clone left"></i> Ver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+        `;
     //}
     return cuerpo;
   }

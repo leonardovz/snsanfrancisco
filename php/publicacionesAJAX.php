@@ -53,6 +53,31 @@ switch ($_POST['opcion']) {
         }
         die(json_encode($respuesta));
         break;
+    case 'traerPerfiles':
+
+        $sql = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.whatsapp,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio";
+
+        $resultado = $conexion->query($sql);
+
+        $perfiles = ($resultado && $resultado->num_rows) ? $resultado : false;
+        if ($perfiles) {
+            $perfilesArray = [];
+            while ($servicio = $perfiles->fetch_assoc()) {
+                $perfilesArray[] = $servicio;
+            }
+            $respuesta = array(
+                'respuesta' => 'exito',
+                'Texto' => 'Se encontraron algunos perfiles',
+                'perfiles' => $perfilesArray,
+            );
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'Ocurrio un error al realizar la consulta',
+            );
+        }
+        die(json_encode($respuesta));
+        break;
     default:
         break;
 }

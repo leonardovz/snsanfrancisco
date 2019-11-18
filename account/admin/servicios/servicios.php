@@ -154,23 +154,8 @@ require_once 'templates/header.php'; ?>
             e.preventDefault();
         });
     </script>
-    <script src="<?php echo $ruta; ?>account/admin/servicios.js"></script>
-    <script>
-        function crearCodigo() {
-            $.ajax({
-                type: "POST",
-                url: ruta + 'php/usuariosFunciones.php',
-                dataType: "json",
-                data: 'opcion=generarCodigo',
-                error: function(xhr, resp) {
-                    console.log(xhr.responseText);
-                },
-                success: function(data) {
-                    console.log(data);
-                }
-            });
-        }
-    </script>
+    <script src="<?php echo $ruta; ?>account/admin/servicios/servicios.js"></script>
+    
 </body>
 
 </html>

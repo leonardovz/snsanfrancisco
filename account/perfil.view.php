@@ -36,20 +36,21 @@ require_once 'templates/header.php'; ?>
             <div class="col-md-7">
                 <h2 class="h1-responsive font-weight-bold text-center my-5">Bienvenido, <?php echo $UserLogin['nombre'] . ' ' . $UserLogin['apellidos']; ?></h2>
             </div>
-            <div class="col-md-5 text-center">
-                <div class="btn-group responsive font-weight-bold text-center my-5">
-                    <button class="btn btn-danger btn-lg btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Acciones <span class="ml-2"><i class="fas fa-cog " aria-hidden="true"></i> </span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="<?php echo $ruta; ?>perfil"><span class="green-text mr-4"><i class="fas fa-plus"></i></span> Crear publicación</a>
-                        <a class="dropdown-item" href="<?php echo $ruta; ?>perfil/config"><span class="blue-text mr-4"><i class="fas fa-user-circle"></i></span> Editar perfil</a>
-                        <a class="dropdown-item" href="<?php echo $ruta; ?>perfil"><span class="purple-text mr-4"><i class="fas fa-shopping-bag"></i></span> Cambiar plan</a>
-                        <a class="dropdown-item" href="<?php echo $ruta; ?>perfil"><span class="orange-text mr-4"><i class="fas fa-chart-line"></i></span> Ver estadisticas (Veta)</a>
-                        <a class="dropdown-item" href="<?php echo $ruta; ?>perfil"><span class="text-danger mr-4"><i class="fas fa-door-closed"></i></span> Cerrar Sesión</a>
+            <?php if ($UserLogin['rol'] == 1) { ?>
+                <div class="col-md-5 text-center">
+                    <div class="btn-group responsive font-weight-bold text-center my-5">
+                        <button class="btn btn-danger btn-lg btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Acciones <span class="ml-2"><i class="fas fa-cog " aria-hidden="true"></i> </span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="<?php echo $ruta; ?>perfil/servicios"><span class="green-text mr-4"><i class="fab fa-searchengin"></i></span> Servicios</a>
+                            <a class="dropdown-item" href="<?php echo $ruta; ?>perfil/codigos"><span class="blue-text mr-4"><i class="fas fa-code-branch"></i></span> Códigos</a>
+                            <a class="dropdown-item" href="<?php echo $ruta; ?>perfil/usuarios"><span class="purple-text mr-4"><i class="fas fa-users"></i></span> Usuarios</a>
+                            <a class="dropdown-item" href="<?php echo $ruta; ?>perfil/publicaciones"><span class="orange-text mr-4"><i class="fas fa-vote-yea"></i></span> Publicaciones</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -220,15 +221,15 @@ require_once 'templates/header.php'; ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-0" >
-                           <div class="row">
-                               <div class="col-12" >
+                        <div class="col-lg-4 col-md-6 mb-0">
+                            <div class="row">
+                                <div class="col-12">
                                     <h3>Más publicaciones</h3>
-                               </div>
-                               <div class="col-12" id="cuerpoRigth">
+                                </div>
+                                <div class="col-12" id="cuerpoRigth">
 
-                               </div>
-                           </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

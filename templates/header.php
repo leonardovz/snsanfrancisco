@@ -12,19 +12,19 @@
   <meta name="keywords" content="<?php echo $keyWords;?>">
   <meta name="description" content="<?php echo $descripcionServ;?>">
   <meta name="robots" content="all">
-  <meta name="author" content="Ingeniero - Leonardo Vázquez Angulo">
+  <meta name="author" content="WEBMASTER - Leonardo Vázquez Angulo">
   <!-- Open Graph protocol -->
   <meta property="og:title" content="Servicios y Noticias" />
   <meta property="og:site_name" content="SnSanfrancisco" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.snsanfrancisco.com" />
-  <meta property="og:image" content="https://www.snsanfrancisco.com/images/icons/favicon.png" />
+  <meta property="og:image" content="<?php echo $ruta;?>/galeria/sistema/logo/5.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="200" />
   <meta property="og:image:height" content="200" />
   <meta property="og:description" content="<?php echo $keyWords;?>" />
   <meta name="twitter:title" content="Servicios y Noticias | San Francisco de Asis  | Jalisco" />
-  <meta name="twitter:image" content="" />
+  <meta name="twitter:image" content="<?php echo $ruta;?>/galeria/sistema/logo/5.png" />
   <meta name="twitter:url" content="https://snsanfrancisco.com" />
   <meta name="twitter:card" content="" />
 

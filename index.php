@@ -93,7 +93,9 @@ if ($rutas) { //Ruta Vacia
                         $idUsuario = (int) $RUTAS1;
                         require_once 'views/perfilPublico.view.php';
                     } elseif ($RUTAS1 == 'servicios') {
-                        require_once 'account/admin/servicios.php';
+                        require_once 'account/admin/servicios/servicios.php';
+                    } elseif ($RUTAS1 == 'codigos') {
+                        require_once 'account/admin/codigos/codigos.php';
                     } else {
                         header('Location: ' . $ruta . 'error/404');
                     }

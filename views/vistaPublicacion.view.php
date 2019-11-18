@@ -25,11 +25,11 @@ if ($PUBLICACION) {
     $contador = "SELECT COUNT(*) AS total FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND U.idUsuario =" . $PUBLICACION['idUsuario'];
     $NPUB = $conexion->query($contador);
     $NPUB = ($NPUB && $NPUB->num_rows) ? $NPUB->fetch_assoc()['total'] : 0;
-   
+
     $systemName = $PUBLICACION['nombreServicio'] . ' | ' . $PUBLICACION['titulo'] . ' | ' . $systemName;
     $keyWords = $PUBLICACION['nombre'] . ' | ' . $keyWords;
     $descripcionServ = $descripcionServ . ' - ' . $PUBLICACION['nombreU'] . ' ' . $PUBLICACION['apellidos'] . ' te ofrece su servicio de ' . $PUBLICACION['nombreServicio'];
-    
+
     $SERVICIO = $FUNCIONES->verificarServicio($PUBLICACION['idServicio']);
     if ($SERVICIO) {
         $SERVICIO = $SERVICIO->fetch_assoc();
@@ -90,11 +90,11 @@ require_once 'templates/header.php';
                                             <a class="card-meta">Publicado: <?php echo $FECHA[2] . ' de  ' . strtolower($mesesAnio[(int) $FECHA[1]]) . ' de ' . $FECHA[0]; ?> </a>
                                             <!-- Text -->
                                             <p class="card-text"><?php echo substr($PUBLICACION['descripcion'], 0, 90) . ((strlen($PUBLICACION['descripcion']) > 90) ? '<a class="text-primary" id="mostrarDescripcion">... más </a>' : ""); ?><span id="descripcionConten" style="display:none;"><?php echo substr($PUBLICACION['descripcion'], 90); ?></span></p>
-                                            <a href="#!"><span class="badge <?php echo $SERVICIO['color'];?> mx-2"><i class="<?php echo $SERVICIO['icono'];?> pr-2" aria-hidden="true"></i><?php echo $SERVICIO['nombre'];?></span></a>
+                                            <a href="#!"><span class="badge <?php echo $SERVICIO['color']; ?> mx-2"><i class="<?php echo $SERVICIO['icono']; ?> pr-2" aria-hidden="true"></i><?php echo $SERVICIO['nombre']; ?></span></a>
                                             <hr>
 
                                             <a class="card-meta"><span><i class="fas fa-user mr-2"></i><?php echo $NPUB; ?>Publicaciones</span></a>
-                                            <p class="card-meta float-right">Miembro desde <?php echo explode('-', (explode(" ", $PUBLICACION['fechaU'])[0] ))[0]; ?></p>
+                                            <p class="card-meta float-right">Miembro desde <?php echo explode('-', (explode(" ", $PUBLICACION['fechaU'])[0]))[0]; ?></p>
 
                                         </div>
                                         <!-- Card content -->
@@ -105,8 +105,12 @@ require_once 'templates/header.php';
                         </div>
                     <?php } else { ?>
                     <?php } ?>
-                    <div class="row">
-                        <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
+                    <div class="row p-3">
+                        <div class="col-md-12 bg-secondary my-5">
+                            <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
+                                <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
+                            </a>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 m-3 p-2">
@@ -116,8 +120,12 @@ require_once 'templates/header.php';
                             <div class="row" id="cuerpoPublicacionesSP"></div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
+                    <div class="row p-3">
+                        <div class="col-md-12 bg-secondary my-5">
+                            <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
+                                <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
+                            </a>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -131,43 +139,8 @@ require_once 'templates/header.php';
             </div>
         </div>
         <h1>Relación de servicios!</h1>
-        <div class="row">
-            <div class="col-md-4 mb-4 rubberBand">
-                <div class="card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
-                    <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-                        <div>
-                            <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Desarrollo Web</h5>
-                            <h3 class="card-title pt-2"><strong>Crece tus proyectos</strong></h3>
-                            <p></p>
-                            <a class="btn btn-pink"><i class="fas fa-clone left"></i> View project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
-                    <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-                        <div>
-                            <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Diseñador</h5>
-                            <h3 class="card-title pt-2"><strong>Mejora tu marca</strong></h3>
-                            <p></p>
-                            <a class="btn btn-pink"><i class="fas fa-clone left"></i> View project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
-                    <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-                        <div>
-                            <h5 class="pink-text"><i class="fas fa-chart-pie"></i> Estilistas</h5>
-                            <h3 class="card-title pt-2"><strong>Cambia tu look</strong></h3>
-                            <p></p>
-                            <a class="btn btn-pink"><i class="fas fa-clone left"></i> View project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row justify-content-center" id="serviciosBody">
+            
         </div>
     </div>
     <?php require_once 'templates/footer.view.php'; ?>
@@ -179,7 +152,7 @@ require_once 'templates/header.php';
                 $("#descripcionConten").show();
             });
         });
-        var idUsuario = <?php echo $PUBLICACION['idUsuario'];?>;
+        var idUsuario = <?php echo $PUBLICACION['idUsuario']; ?>;
     </script>
     <script src="<?php echo $ruta; ?>script/postPublico.js"></script>
 </body>

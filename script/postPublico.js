@@ -2,7 +2,7 @@ var ruta = ruta();
 $(document).ready(function () {
     traerPostsDerecha();
     traerPosts();
-
+    traerServicios();
     function traerPostsDerecha() {
         $.ajax({
             type: "POST",
@@ -61,7 +61,7 @@ $(document).ready(function () {
             type: "POST",
             url: ruta + 'php/publico.php',
             dataType: "json",
-            data: 'opcion=traerPostsPerfil&limite=6&idUsuario='+idUsuario,
+            data: 'opcion=traerPostsPerfil&limite=6&idUsuario=' + idUsuario,
             error: function (xhr, resp) {
                 console.log(xhr.responseText);
             },
@@ -113,6 +113,53 @@ $(document).ready(function () {
                 </div>
               </div>
               `;
+        return cuerpo;
+    }
+    function traerServicios() {
+        $.ajax({
+            type: "POST",
+            url: ruta + 'php/publico.php',
+            dataType: "json",
+            data: 'opcion=serviciosInicio',
+            error: function (xhr, resp) {
+                console.log(xhr.responseText);
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.respuesta == 'exito') {
+                    var cuerpo = '';
+                    for (let index = 0; index < 6 && index < data.servicios.length; index++) {
+                        cuerpo += (cuerpoServicios(data.servicios[index], ruta, data.rutaImagen));
+                    }
+                    $("#serviciosBody").html(cuerpo);
+                    new WOW().init();
+                    // wowElement();
+                } else {
+
+                }
+            }
+        });
+    }
+    function cuerpoServicios(servicio, ruta, rutaImagen) {
+        var cuerpo = ``;
+        cuerpo += `
+        <div class="col-md-6 col-sm-6 col-12 mb-4 wow fadeInDown">
+           
+            <div class="card card-image" style="background-image: url(${ruta + rutaImagen + servicio.imagen}); background-repeat: no-repeat; background-size: cover;">
+
+                <!-- Content -->
+                <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+                    <div>
+                        <h5 class="pink-text"><i class="${servicio.icono} mx-3"></i> ${servicio.nombre}</h5>
+                        <h3 class="card-title pt-2"><strong>${servicio.descripcion}</strong></h3>
+                        <p></p>
+                        <a href="${ruta}servicios/${servicio.id}/${normalize(servicio.nombre).replace(" ", "-")}" class="btn ${servicio.color}"><i class="fas fa-clone left"></i> Ver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+            `;
+        //}
         return cuerpo;
     }
     function acciones() {

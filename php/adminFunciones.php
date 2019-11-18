@@ -30,18 +30,19 @@ switch ($_POST['opcion']) {
         $ADMINFUNC = new AdminFunciones();
         $ADMINFUNC->CONEXION = $conexion;
 
-        $idRango = isset($_POST['rango']) && !empty($_POST['rango']) ? $_POST['rango'] : false;
-        $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false; //Obtener el id de el usuario de la Sesión activa
+        $idRango = isset($_POST['paquete']) && !empty($_POST['paquete']) ? $_POST['paquete'] : false;
+        $idUsuario = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? $_POST['idUsuario'] : 0;
+        $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : 0; //Obtener el id de el usuario de la Sesión activa
 
         if ($idUser && $USERLOGIN['rol'] == 1) {
             if ($idRango && $ADMINFUNC->verificarPaquete($idRango)) {
                 $codigo = $ADMINFUNC->codigoUnico();
-                $sql = "INSERT INTO codigos(codigo, idRango, idUser_Creador) VALUES ('$codigo',$idRango,$idUser)";
+                $sql = "INSERT INTO codigos(codigo, idRango,idUsuario, idUser_Creador) VALUES ('$codigo',$idRango,$idUsuario,$idUser)";
 
                 if ($conexion->query($sql)) {
                     $respuesta = array(
                         'respuesta' => 'exito',
-                        'Texto' => 'Peticion Exito',
+                        'Texto' => 'Código Generado',
                         'codigo' => $codigo
                     );
                 } else {

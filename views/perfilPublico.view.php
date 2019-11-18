@@ -212,6 +212,9 @@ require_once 'templates/header.php'; ?>
             </div>
         </div>
     </div>
+    <div class="container-fluid">
+        <div class="row justify-content-center" id="contServicios"></div>
+    </div>
     <div class="container">
         <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

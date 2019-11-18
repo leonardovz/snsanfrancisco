@@ -42,7 +42,8 @@ switch ($_POST['opcion']) {
         if ($email && $emailR && $nombre && $apellidos && $password && $passwordR) {
             if ($email == $emailR) {
                 if ($password == $passwordR) {
-                    if (correoExiste($conexion, $email)) {
+                    if (!correoExiste($conexion, $email)) {
+                        $password = md5($password);
                         $sql = "INSERT INTO usuarios(nombre, apellidos, correo, password, tipoUser, validar, encriptado,modo) VALUES ('$nombre','$apellidos','$email','$password',$tipoUser,$validar,'$mailEncrypt','$modo')";
                         $resultado = $conexion->query($sql);
                         if ($resultado) {
@@ -50,12 +51,13 @@ switch ($_POST['opcion']) {
                                 'correo' => $email,
                                 'nombre' => $nombre,
                                 'apellido' => $apellidos,
-                                'url' => 'https://snsanfrancisco.com/',
+                                'url' => $ruta,
                                 'validarCorreo' => md5($email),
                             );
-                            $respuesta = enviarCorreo2($datos);
+                            $respuesta = array('respuesta' => 'error', 'Texto' => 'Registro realizado con exito');
+
                         } else {
-                            $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible realizar el registro', 'sql' => $sql, 'error' => $respuesta->error);
+                            $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible realizar el registro');
                         }
                     } else {
                         $respuesta = array('respuesta' => 'error', 'Texto' => 'El correo electronico, ya ha sido registrado',);
@@ -142,14 +144,14 @@ switch ($_POST['opcion']) {
         break;
 }
 
-function enviarCorreo2($datos)
+
+function enviarCorreo2($datos = false)
 {
     $respuesta = array();
     $mail = new PHPMailer\PHPMailer\PHPMailer();
     $mail->CharSet = 'UTF-8';
-    // $mail->SMTPDebug = 1;
     $mail->Debugoutput = 'html';
-    $mail->IsSMTP(); // enable SMTP
+    // $mail->IsSMTP(); // enable SMTP
     $mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
     $mail->SMTPAuth = true; // authentication enabled
     $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
@@ -157,7 +159,7 @@ function enviarCorreo2($datos)
     $mail->Port = 465; // or 587
     $mail->IsHTML(true);
     $mail->Username = "no-reply@snsanfrancisco.com";
-    $mail->Password = ")L7l9h1y~keT";
+    $mail->Password = "Syst3m4s34@$";
     $mail->SetFrom("no-reply@snsanfrancisco.com");
     $mail->Subject = "Comprobación de correo Electronico";
     $mail->Body = "Prueba de envio de correos desde hostgator";
@@ -177,67 +179,27 @@ function enviarCorreo2($datos)
     }
     return $respuesta;
 }
-function enviarCorreo($datos)
+
+function EnviarCorreo($perfil = false)
 {
 
-    date_default_timezone_set("America/Mexico_City");
-
-    // $url = ruta();
-    $mail = new PHPMailer;
-    $mail->CharSet = 'UTF-8';
-    $mail->isMail();
-    $mail->setFrom('Serviciosanfco@gmail.com', 'SF noticias y servicios');
-    $mail->addReplyTo('Serviciosanfco@gmail.com', 'SF noticias y servicios');
-    $mail->Subject = "Por favor verifique su dirección de correo electrónico";
-    $mail->addAddress($datos['correo']);
-    $mail->msgHTML('<div style="width:100%; background:#eee; position:relative; font-family:sans-serif; padding-bottom:40px">
-	
-			<center>
-				
-				<img style="padding:20px; width:50%" src="http://drive.google.com/uc?export=view&id=1VMXji0nuInMduFaI5RC7R97RUa0YeT6w">
-		
-			</center>
-		
-			<div style="position:relative; margin:auto; width:600px; background:white; padding:20px">
-			
-				<center>
-				
-				<img style="padding:20px; width:15%" src="http://tutorialesatualcance.com/tienda/icon-email.png">
-		
-				<h3 style="font-weight:100; color:#999">VERIFIQUE SU DIRECCIÓN DE CORREO ELECTRÓNICO</h3>
-		
-				<hr style="border:1px solid #ccc; width:80%">
-		
-				<h4 style="font-weight:100; color:#999; padding:0 20px">Para comenzar a usar su cuenta, debe confirmar su dirección de correo electrónico</h4>
-		
-				<a href="' . $datos['url'] . 'verificar/' . $datos['validarCorreo'] . '" target="_blank" style="text-decoration:none">
-		
-				<div style="line-height:60px; background:#0aa; width:60%; color:white">Verifique su dirección de correo electrónico</div>
-		
-				</a>
-		
-				<br>
-		
-				<hr style="border:1px solid #ccc; width:80%">
-		
-				<h5 style="font-weight:100; color:#999">Si no se inscribió en esta cuenta, puede ignorar este correo electrónico y la cuenta se eliminará.</h5>
-		
-				</center>
-			</div>
-	
-		</div>');
-    $envio = $mail->Send();
-
-    if (!$envio) {
-        $respuesta = array(
-            'respuesta' => 'exito',
-            'Texto' => 'No fue posible enviar el correo de verificación'
-        );
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+    // $mail->IsSMTP(); // enable SMTP
+    $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+    $mail->SMTPAuth = true; // authentication enabled
+    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+    $mail->Host = "mx72.hostgator.mx";
+    $mail->Port = 587; // or 587
+    $mail->IsHTML(true);
+    $mail->Username = "no-reply@snsanfrancisco.com";
+    $mail->Password = ")L7l9h1y~keT";
+    $mail->SetFrom("no-reply@snsanfrancisco.com");
+    $mail->Subject = "Inicio de Sesión";
+    $mail->Body = "Se ha ingresado a su cuenta desde la IP:";
+    $mail->AddAddress("leonardovazquez81@gmail.com");
+    if (!$mail->Send()) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
     } else {
-        $respuesta = array(
-            'respuesta' => 'exito',
-            'Texto' => 'Registro realizado Satisfactoriamente,por favor revise la bandeja de entrada o la carpeta de SPAM de su correo electronico ' . $datos['correo'] . ' para verificar su correo'
-        );
+        echo "Mensaje enviado correctamente";
     }
-    return $respuesta;
 }
