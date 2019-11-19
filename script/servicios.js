@@ -92,7 +92,6 @@ $(document).ready(function () {
             apellidoMin = perfil.apellidos.replace(" ", "-"),
             nameUser = nombreMin + '-' + apellidoMin,
             fecha = perfil.fecha.split(" ");
-        console.log(perfil);
         cuerpo += `
           <div class="col-xl-4 col-lg-4 col-md-6 mb-5">
             <div class="card card-personal mb-md-0 mb-4">

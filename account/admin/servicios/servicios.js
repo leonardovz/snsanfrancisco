@@ -137,7 +137,7 @@ $(document).ready(function () {
                         alerta('La descripción es demaciado corta', 'error');
                     }
                     else {
-                        $.ajax(ruta + 'php/publicacionesAJAX.php', {
+                        $.ajax(ruta + 'php/adminFunciones.php', {
                             method: 'POST',
                             data: formData,
                             processData: false,

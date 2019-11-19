@@ -104,11 +104,7 @@ $(document).ready(function () {
             <a class="card-meta">${perfil.servicio} <span><i class="${perfil.iconoS} ${perfil.colorS}-text mx-3" > </i></span></a>
             <p class="card-text">${perfil.nombre} ${perfil.apellidos}</p>
             <hr>
-            <p class="card-meta float-left" style="font-size: 1.75em;">
-              <a target="_blank" href="https://m.me/EsthelaAngulo1.0" class="text-primary"><i class="fab fa-facebook-messenger"></i></a>
-              ${((perfil.whatsapp == perfil.celular) ? '<a target="_blank" href="https://api.whatsapp.com/send?phone=' + ruta + ' class="text-success mx-5"><i class="fab fa-whatsapp"></i></a>' : "")}
-            </p>
-            <p class="card-meta float-right">Agendar una Cita</p>
+            <p class="card-meta text-center"><a class="btn ${perfil.colorS} text-white btn-md" href="${ruta}perfil/${rellenarCero(perfil.idUsuario)}/${normalize(nameUser)}" >Visitar Perfil</a> </p>
           </div>
         </div>
       </div>

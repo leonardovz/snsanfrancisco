@@ -4,6 +4,7 @@ session_start();
 require_once '../config/ruta.php';
 require_once '../config/config.php';
 require_once '../config/funciones.php';
+require_once '../php/emailTemplates.php';
 require_once '../recursos/PHPMailer/src/PHPMailer.php';
 require_once '../recursos/PHPMailer/src/SMTP.php';
 
@@ -49,13 +50,11 @@ switch ($_POST['opcion']) {
                         if ($resultado) {
                             $datos = array(
                                 'correo' => $email,
-                                'nombre' => $nombre,
-                                'apellido' => $apellidos,
-                                'url' => $ruta,
-                                'validarCorreo' => md5($email),
+                                'nombre' => $nombre . " " . $apellidos,
+                                'verificacion' => md5($email),
                             );
+                            enviarCorreo2($datos, $ruta);
                             $respuesta = array('respuesta' => 'error', 'Texto' => 'Registro realizado con exito');
-
                         } else {
                             $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible realizar el registro');
                         }
@@ -145,9 +144,11 @@ switch ($_POST['opcion']) {
 }
 
 
-function enviarCorreo2($datos = false)
+function enviarCorreo2($datos, $url)
 {
     $respuesta = array();
+    $PLANTILLAS = new PlantillasEmail();
+    $CORREO = $PLANTILLAS->templateRegistro($datos, $url);
     $mail = new PHPMailer\PHPMailer\PHPMailer();
     $mail->CharSet = 'UTF-8';
     $mail->Debugoutput = 'html';
@@ -165,7 +166,7 @@ function enviarCorreo2($datos = false)
     $mail->Body = "Prueba de envio de correos desde hostgator";
     $mail->AddAddress("leonardovazquez81@gmail.com");
     // $mail->AddAddress("blancaflore2305@gmail.com");
-    $mail->msgHTML('<h1>Holamundo</h1>');
+    $mail->msgHTML($CORREO);
     if (!$mail->Send()) {
         $respuesta = array(
             'respuesta' => 'error',
