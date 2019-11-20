@@ -317,6 +317,17 @@ class AdminFunciones
         }
         return $resultado;
     }
+    function verificarPassword($idUsuario)
+    {
+        $conexion = $this->CONEXION;
+        $resultado = false;
+        if ($conexion) {
+            $sql = "SELECT usersinfo.*,usuarios.nombre,usuarios.apellidos,usuarios.fecha,usuarios.img FROM usersinfo,usuarios WHERE usersinfo.iduser = usuarios.idUsuario AND usuarios.idUsuario = $idUsuario";
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado && $resultado->num_rows) ? $resultado : false;
+        }
+        return $resultado;
+    }
     function verificarServicio($idServicio)
     {
         $conexion = $this->CONEXION;

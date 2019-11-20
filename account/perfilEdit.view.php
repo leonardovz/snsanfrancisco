@@ -73,12 +73,14 @@ require_once 'templates/header.php'; ?>
                     <div class="row mt-5">
                         <div class="col-md-6" style="display:none;">
                             <form id="formCambiarPass" class="text-center border border-light p-5">
-                                <input type="text" name="password" id="password" class="form-control mb-4" placeholder="Contraseña Actual">
-                                <input type="text" name="passwordNew" id="passwordNew" class="form-control mb-4" placeholder="Nueva Contraseña">
-                                <input type="text" name="passwordNewR" id="passwordNewR" class="form-control mb-4" placeholder="Repite tu nueva Contraseña">
+                                <input type="text" name="passwordAC" id="password" class="form-control mb-4" placeholder="Contraseña Actual">
+                                <input type="text" name="password" id="passwordNew" class="form-control mb-4" placeholder="Nueva Contraseña">
+                                <input type="text" name="passwordR" id="passwordNewR" class="form-control mb-4" placeholder="Repite tu nueva Contraseña">
                                 <button class="btn btn-info btn-block" type="submit">Guardar Cambios</button>
                             </form>
                         </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6" id="errorPassword"></div>
                     </div>
                     <div class="row mt-5">
                         <div class="col-md-8 text-center" id="planInactivo" style="display: none;">
@@ -108,7 +110,7 @@ require_once 'templates/header.php'; ?>
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Crop the image</h5>
+                        <h5 class="modal-title" id="modalLabel">Cambia tu imagen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -119,8 +121,8 @@ require_once 'templates/header.php'; ?>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="crop">Crop</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="crop">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -153,6 +155,7 @@ require_once 'templates/header.php'; ?>
                     }
                 }
             });
+
             $.ajax({
                 type: "POST",
                 url: ruta + 'php/usuariosFunciones.php',
@@ -195,9 +198,32 @@ require_once 'templates/header.php'; ?>
                     }
                 });
             });
-            $("#cambioPassword").on('submit', function(e) {
+            $("#cambioPassword").on('click', function(e) {
                 e.preventDefault();
+                $("#formCambiarPass").parent().show();
+                $("#formCambiarPass").on('submit', function(e) {
+                    e.preventDefault();
+                    var $formulario = $(this).serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: ruta + 'php/usuariosFunciones.php',
+                        dataType: "json",
+                        data: 'opcion=changePassword&' + $formulario,
+                        error: function(xhr, resp) {
+                            console.log(xhr.responseText);
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data.respuesta == "exito") {
+                                alertaSwal(data.Texto, "success", 2000);
+                                $("#formCambiarPass").parent().hide();
 
+                            } else {
+                                alertaSwal(data.Texto, "error", 2000);
+                            }
+                        }
+                    });
+                });
             });
 
             function configurarPerfilEmpresa() {
@@ -518,7 +544,7 @@ require_once 'templates/header.php'; ?>
                 var coloniasImp = $("#coloniasVal");
 
                 var errores = 0;
-                if (true ) { //|| statusCP
+                if (true) { //|| statusCP
                     if (colonia == 0 && false) {
                         coloniaText = $("#coloniaText").val();
                         if (coloniaText == "" || coloniaText.length < 5) {
