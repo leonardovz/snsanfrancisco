@@ -1,7 +1,7 @@
 new WOW().init();
 var ruta = ruta();
 $(document).ready(function () {
-  var BUSQUEDA = (window.location.pathname).split("/")[3].replace(/-/g, " ");//Cacha la ruta y separa los datos para enviar a SQL
+  var BUSQUEDA = (window.location.pathname).split("/")[2].replace(/-/g, " ");//Cacha la ruta y separa los datos para enviar a SQL
   traerPosts();
   $("#inBusqueda").val(BUSQUEDA);
   function traerPosts() {

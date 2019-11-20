@@ -1,9 +1,9 @@
 <?php 
 $bd_config = array(
     'host' => 'localhost',
-	'database' => 'sanfrancisco',
-	'usuario' => 'rootLeo',
-	'pass' => 'data1122'
+	'database' => 'snsanfra_sistema',
+	'usuario' => 'snsanfra_init',
+	'pass' => 'VPg0DI$wl596'
 );
 
 
