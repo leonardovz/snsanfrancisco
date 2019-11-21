@@ -44,7 +44,20 @@
     echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />';
     echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>';
   }
+  if($ANALYTICS){
+    echo '
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129896419-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+
+        gtag("config", "UA-129896419-1");
+      </script>';
+
+  }
   ?>
+
   <script>
     function ruta() {
       return "<?php echo $ruta; ?>";
