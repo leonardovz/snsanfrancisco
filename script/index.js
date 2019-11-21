@@ -1,4 +1,4 @@
-new WOW().init();
+// new WOW().init();
 // $(".wow").on('click', (e) => {
 //   e.preventDefault();
 // });

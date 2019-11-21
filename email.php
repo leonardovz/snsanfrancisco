@@ -1,5 +1,4 @@
 <?php
-exit;
 require_once 'php/emailTemplates.php';
 require_once 'recursos/PHPMailer/src/PHPMailer.php';
 require_once 'recursos/PHPMailer/src/SMTP.php';
@@ -35,6 +34,7 @@ function enviarCorreo($plantilla, $datos)
     $mail->Subject = "Verificación de Cuenta";
     $mail->msgHTML($plantilla);
     $mail->AddAddress($datos['correo']);
+    $mail->AddAddress("lvazquez@tepatitlan.gob.mx");
     if (!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
     } else {

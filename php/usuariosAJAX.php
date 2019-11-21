@@ -40,6 +40,8 @@ switch ($_POST['opcion']) {
         $mailEncrypt = md5($email);
         $validar = 0;
         $modo = 'dir';
+        $PLANTILLAS = new PlantillasEmail();
+       
         if ($email && $emailR && $nombre && $apellidos && $password && $passwordR) {
             if ($email == $emailR) {
                 if ($password == $passwordR) {
@@ -53,7 +55,10 @@ switch ($_POST['opcion']) {
                                 'nombre' => $nombre . " " . $apellidos,
                                 'verificacion' => md5($email),
                             );
-                            enviarCorreo2($datos, $ruta);
+                            $CORREO = $PLANTILLAS->templateRegistro($datos, $ruta);
+                    
+                            enviarCorreo($CORREO, $datos);
+
                             $respuesta = array('respuesta' => 'error', 'Texto' => 'Registro realizado con exito');
                         } else {
                             $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible realizar el registro');
@@ -143,61 +148,28 @@ switch ($_POST['opcion']) {
         break;
 }
 
-
-function enviarCorreo2($datos, $url)
+function enviarCorreo($plantilla, $datos)
 {
-    $respuesta = array();
-    $PLANTILLAS = new PlantillasEmail();
-    $CORREO = $PLANTILLAS->templateRegistro($datos, $url);
+    // exit;
     $mail = new PHPMailer\PHPMailer\PHPMailer();
+    $mail->IsSMTP(); // enable SMTP
+    $mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
+    //  $mail->SMTPAuth = true; // authentication enabled
+    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+
     $mail->CharSet = 'UTF-8';
     $mail->Debugoutput = 'html';
-    // $mail->IsSMTP(); // enable SMTP
-    $mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
-    $mail->SMTPAuth = true; // authentication enabled
-    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
+
     $mail->Host = "mx72.hostgator.mx";
     $mail->Port = 465; // or 587
     $mail->IsHTML(true);
-    $mail->Username = "no-reply@snsanfrancisco.com";
-    $mail->Password = "Syst3m4s34@$";
-    $mail->SetFrom("no-reply@snsanfrancisco.com");
-    $mail->Subject = "Comprobación de correo Electronico";
-    $mail->Body = "Prueba de envio de correos desde hostgator";
-    $mail->AddAddress("leonardovazquez81@gmail.com");
-    // $mail->AddAddress("blancaflore2305@gmail.com");
-    $mail->msgHTML($CORREO);
-    if (!$mail->Send()) {
-        $respuesta = array(
-            'respuesta' => 'error',
-            'Texto' => "Mailer Error: " . $mail->ErrorInfo
-        );
-    } else {
-        $respuesta = array(
-            'respuesta' => 'exito',
-            'Texto' => "Mensaje enviado correctamente"
-        );
-    }
-    return $respuesta;
-}
-
-function EnviarCorreo($perfil = false)
-{
-
-    $mail = new PHPMailer\PHPMailer\PHPMailer();
-    // $mail->IsSMTP(); // enable SMTP
-    $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
-    $mail->SMTPAuth = true; // authentication enabled
-    $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
-    $mail->Host = "mx72.hostgator.mx";
-    $mail->Port = 587; // or 587
-    $mail->IsHTML(true);
-    $mail->Username = "no-reply@snsanfrancisco.com";
-    $mail->Password = ")L7l9h1y~keT";
-    $mail->SetFrom("no-reply@snsanfrancisco.com");
-    $mail->Subject = "Inicio de Sesión";
-    $mail->Body = "Se ha ingresado a su cuenta desde la IP:";
-    $mail->AddAddress("leonardovazquez81@gmail.com");
+    $mail->Username = "webmaster@snsanfrancisco.com";
+    $mail->Password = "onyK!1bL(VWi";
+    $mail->SetFrom("webmaster@snsanfrancisco.com","Leonardo Vázquez");
+    $mail->Subject = "Verificación de Cuenta";
+    $mail->msgHTML($plantilla);
+    $mail->AddAddress('leonardovazquez81@gmail.com');
+    $mail->AddAddress($datos['correo']);
     if (!$mail->Send()) {
         echo "Mailer Error: " . $mail->ErrorInfo;
     } else {
