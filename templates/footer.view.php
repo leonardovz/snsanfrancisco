@@ -5,9 +5,10 @@
       <div class="col-12 text-center">
         <h3>Encuentranos en nuestras redes sociales</h3>
       </div>
-      <div class="col-md-1 col"><a target="_BLANK" href="https://www.facebook.com/snsanfrancisco" class="btn btn-primary"><i class="fab fa-facebook-square fs-x2"></i></a></div>
-      <div class="col-md-1 col"><a target="_BLANK" href="https://wa.me/523481016176" class="btn btn-success"><i class="fab fa-whatsapp fs-x2"></i></a></div>
-      <div class="col-md-1 col"><a target="_BLANK" href="https://www.instagram.com/snsanfrancisco" class="btn purple-gradient"><i class="fab fa-instagram"></i></a></div>
+      <div class="col-md-2 col text-center"><a target="_BLANK" href="https://www.facebook.com/snsanfrancisco" class="btn btn-primary"><i class="fab fa-facebook-square" style="font-size: 2.3em;"></i></a></div>
+      <div class="col-md-2 col text-center"><a target="_BLANK" href="https://wa.me/523481016176" class="btn btn-success"><i class="fab fa-whatsapp" style="font-size: 2.3em;"></i></a></div>
+      <div class="col-md-2 col text-center"><a target="_BLANK" href="https://www.instagram.com/snsanfrancisco" class="btn purple-gradient"><i class="fab fa-instagram" style="font-size: 2.3em;"></i></a></div>
+      <div class="col-md-2 col text-center"><a target="_BLANK" href="https://www.linkedin.com/in/leonardovz/" class="btn btn-info"><i class="fab fa-linkedin" style="font-size: 2.3em;"></i></a></div>
     </div>
     <div class="row my-3">
       <div class="col-md-6 mb-4">
@@ -65,6 +66,11 @@
       </div>
       <div class="col-lg-3 col-md-4 col">
         <a href="<?php echo $ruta; ?>planes" class="btn blue-gradient btn-block">Planes</a>
+      </div>
+    </div>
+    <div class="row justify-content-center my-4">
+      <div class="col-lg-3 col-md-4 col">
+        <a href="<?php echo $ruta; ?>ayuda" class="btn aqua-gradient btn-block">AYUDA</a>
       </div>
     </div>
   </div>
