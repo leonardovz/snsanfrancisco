@@ -651,7 +651,45 @@ switch ($_POST['opcion']) {
         die(json_encode($respuesta));
 
         break;
-    case 'extra':
+    case 'changePassword':
+        $passwordAC =   isset($_POST['passwordAC'])  && !empty($_POST['passwordAC']) ? $conexion->real_escape_string($_POST['passwordAC']) : false;
+        $password =     isset($_POST['password'])    && !empty($_POST['password'])   ? $conexion->real_escape_string($_POST['password'])   : false;
+        $passwordR =    isset($_POST['passwordR'])   && !empty($_POST['passwordR'])  ? $conexion->real_escape_string($_POST['passwordR'])  : false;
+        if ($password && $passwordAC && $passwordR) {
+            $email = $USERLOGIN['correo'];
+
+            if (correoExiste($conexion, $email)) {
+                $passwordAC = md5($passwordAC);
+                $sql = "SELECT * FROM usuarios WHERE correo = '$email' AND password ='$passwordAC' ";
+                $resultado = $conexion->query($sql);
+                $resultado = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
+                if ($resultado) {
+                    if ($resultado['validar'] == 0) {
+                        die(json_encode(array('respuesta' => 'error', 'Texto' => 'Es necesario que verifiques tu cuenta',)));
+                    }
+
+                    if ($password != $passwordR) {
+                        die(json_encode(array('respuesta' => 'error', 'Texto' => 'Tu nueva contraseña no coincide',)));
+                    }
+                    $newPass = md5($password);
+                    $sql = "UPDATE usuarios SET password = '$newPass' WHERE idUsuario = ".$USERLOGIN['idUsuario'];
+                    $resultado = $conexion->query($sql);
+                    if($resultado && $conexion->affected_rows){
+                        $respuesta = array('respuesta' => 'exito', 'Texto' => 'Cambios aplicados correctamente',);
+                    }else{
+                        $respuesta = array('respuesta' => 'error', 'Texto' => 'No se pudo realizar ningun cambio en la contraseña',$sql);
+                    }
+                } else {
+                    $respuesta = array('respuesta' => 'error', 'Texto' => 'No puedes cambiar tu contraseña por una ya activa',);
+                }
+            } else {
+                $respuesta = array('respuesta' => 'error', 'Texto' => 'No se encontro tu correo electronico',);
+            }
+        } else {
+            $respuesta = array('respuesta' => 'error', 'Texto' => 'No llegaron los datos de forma correcta', 'post' => $_POST);
+        }
+        die(json_encode($respuesta));
+
         break;
     default:
         break;

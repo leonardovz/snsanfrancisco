@@ -10,6 +10,7 @@ if (!isset($conexion)) {
     echo "Por el momento no se puede acceder a la plataforma";
     exit;
 }
+$ANALYTICS = true;
 
 
 
@@ -85,6 +86,7 @@ if ($rutas) { //Ruta Vacia
             $idUsuario = $UserLogin['idUsuario'];
             if ($UserLogin['rol'] == 1) {
                 // >> < Apartado para el administrador > << 
+                $ANALYTICS = false;
 
                 if ($RUTAS1) {
                     if ($RUTAS1 == 'config') {
