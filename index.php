@@ -11,7 +11,7 @@ if (!isset($conexion)) {
     exit;
 }
 $ANALYTICS = true;
-
+$ADSENSE = false;
 
 
 $rutas = (isset($_GET['ruta']) && !empty($_GET['ruta'])) ? explode("/", strtolower($_GET['ruta'])) : false; //validacion de la segmentacion
@@ -47,6 +47,7 @@ if ($rutas) { //Ruta Vacia
     } elseif ($RUTAS0 == 'blog') {
         if ($RUTAS1) {
             if ($RUTAS1 == 'publicacion' && $RUTAS2) {
+                $ADSENSE = true; //Activa el modo de anuncion en este apartado
                 require_once 'views/vistaPublicacion.view.php';
             } else {
                 header('Location: ' . $ruta . 'error/404');
@@ -57,6 +58,7 @@ if ($rutas) { //Ruta Vacia
     } elseif ($RUTAS0 == 'servicios') {
         if ($RUTAS1) {
             if ((int) $RUTAS1) {
+                $ADSENSE = true; //Activa el modo de anuncion en este apartado
                 require_once 'views/serviciosBuscar.view.php';
             } else {
                 header('Location: ' . $ruta . 'error/404');
@@ -67,6 +69,7 @@ if ($rutas) { //Ruta Vacia
     } elseif ($RUTAS0 == 'buscar') {
         if ($RUTAS1) {
             if ($RUTAS1) {
+                $ADSENSE = true; //Activa el modo de anuncion en este apartado
                 require_once 'views/busqueda.view.php';
             } else {
                 header('Location: ' . $ruta . 'error/404');
@@ -92,6 +95,7 @@ if ($rutas) { //Ruta Vacia
                     if ($RUTAS1 == 'config') {
                         require_once 'account/perfilEdit.view.php';
                     } elseif (is_numeric($RUTAS1)) {
+                        $ADSENSE = true; //Activa el modo de anuncion en este apartado
                         $idUsuario = (int) $RUTAS1;
                         require_once 'views/perfilPublico.view.php';
                     } elseif ($RUTAS1 == 'servicios') {
@@ -110,6 +114,7 @@ if ($rutas) { //Ruta Vacia
                     require_once 'account/perfilEdit.view.php';
                 } elseif (is_numeric($RUTAS1)) {
                     $idUsuario = (int) $RUTAS1;
+                    $ADSENSE = true; //Activa el modo de anuncion en este apartado
                     require_once 'views/perfilPublico.view.php';
                 } else {
                     header('Location: ' . $ruta . 'error/404');
@@ -135,5 +140,6 @@ if ($rutas) { //Ruta Vacia
         header('Location: ' . $ruta . 'error/404');
     }
 } else {
+    $ADSENSE = true;
     require_once 'views/index.view.php';
 }

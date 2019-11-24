@@ -57,9 +57,9 @@ switch ($_POST['opcion']) {
                             );
                             $CORREO = $PLANTILLAS->templateRegistro($datos, $ruta);
                     
-                            enviarCorreo($CORREO, $datos);
+                            $respuesta = enviarCorreo($CORREO, $datos);
 
-                            $respuesta = array('respuesta' => 'error', 'Texto' => 'Registro realizado con exito');
+                            $respuesta = array('respuesta' => 'error', 'Texto' => 'Registro realizado con exito','correo'=>$respuesta);
                         } else {
                             $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible realizar el registro');
                         }
@@ -171,8 +171,8 @@ function enviarCorreo($plantilla, $datos)
     $mail->AddAddress('leonardovazquez81@gmail.com');
     $mail->AddAddress($datos['correo']);
     if (!$mail->Send()) {
-        echo "Mailer Error: " . $mail->ErrorInfo;
+        return "Mailer Error: " . $mail->ErrorInfo;
     } else {
-        echo "Mensaje enviado correctamente";
+        return "Mensaje enviado correctamente";
     }
 }

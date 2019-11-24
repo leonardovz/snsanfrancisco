@@ -86,6 +86,15 @@ $(document).ready(function () {
             }
         });
     }
+    function acciones() {
+        $(".mostrarTexto").off().on('click', function (e) {
+            e.preventDefault();
+            let opcionMostrar = $(this);
+            let descripcion = $(this).siblings();
+            descripcion.show();
+            opcionMostrar.remove();
+        });
+    }
     function cuerpoPerfil(perfil, ruta, rutaImagen) {
         var cuerpo = ``;
         let nombreMin = perfil.nombre.replace(" ", "-"),
