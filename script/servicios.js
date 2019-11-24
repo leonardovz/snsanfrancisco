@@ -26,7 +26,6 @@ $(document).ready(function () {
                     }
                     $("#serviciosSystem").html(cuerpo);
                     new WOW().init();
-                    // wowElement();
                 } else {
 
                 }
@@ -175,6 +174,15 @@ $(document).ready(function () {
             showConfirmButton: false,
             timer: 1500
         })
+    }
+    function acciones() {
+        $(".mostrarTexto").off().on('click', function (e) {
+            e.preventDefault();
+            let opcionMostrar = $(this);
+            let descripcion = $(this).siblings();
+            descripcion.show();
+            opcionMostrar.remove();
+        });
     }
 
 });
