@@ -86,7 +86,11 @@ require_once 'templates/header.php';
 
     <section class="container">
         <!-- Grid row -->
-
+        <div class="row">
+            <div class="col-md-12">
+                <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12 p-4">
                 <h1></h1>
@@ -118,7 +122,9 @@ require_once 'templates/header.php';
         </div>
 
         <div class="row">
-            <div class="col-md-12 bg-secondary"><br><br><br><br><br><br></div>
+            <div class="col-md-12">
+                <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            </div>
         </div>
     </section>
     <?php require_once 'templates/footer.view.php'; ?>

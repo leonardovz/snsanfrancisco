@@ -99,9 +99,7 @@ require_once 'templates/header.php';
       </div>
       <div class="row p-3">
         <div class="col my-5">
-          <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
-            <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
-          </a>
+          <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </div>
       </div>
       <div class="row py-3">
@@ -113,9 +111,7 @@ require_once 'templates/header.php';
       </div>
       <div class="row p-3">
         <div class="col-md-12 bg-secondary my-5">
-          <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
-            <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
-          </a>
+          <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </div>
       </div>
       <h2>Nuevos Servicios Registrados!</h2>
@@ -124,9 +120,7 @@ require_once 'templates/header.php';
       </div>
       <div class="row p-3">
         <div class="col-md-12 bg-secondary my-5">
-          <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
-            <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
-          </a>
+          <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </div>
       </div>
     </section>

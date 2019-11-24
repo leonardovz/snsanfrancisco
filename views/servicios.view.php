@@ -68,10 +68,7 @@ require_once 'templates/header.php';
         </div>
     </div>
     <div class="container">
-
         <section class="my-5">
-
-            <!-- Grid row -->
             <div class="row">
                 <div class="col-md-12 p-4">
                     <h1></h1>
@@ -82,9 +79,7 @@ require_once 'templates/header.php';
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8 col my-5">
-                    <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
-                        <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
-                    </a>
+                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                 </div>
             </div>
             <div class="row">
@@ -96,9 +91,7 @@ require_once 'templates/header.php';
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8 col my-5">
-                    <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
-                        <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
-                    </a>
+                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                 </div>
             </div>
         </section>
