@@ -103,16 +103,12 @@ require_once 'templates/header.php'; ?>
                                             <h6 class="font-weight-bold" id="servicioPerfil">Termina de configurar tu Perfil</h6>
                                         </a>
                                     </div>
-
-                                    <!-- Excerpt -->
                                     <h3 class="font-weight-bold dark-grey-text mb-3"><a>Para poder continuar con las publicaciónes es necesario que configures el perfil de tu servicio</a></h3>
                                     <p class="dark-grey-text mb-lg-0 mb-md-5 mb-4">
                                         <a href="<?php echo $ruta; ?>planes" class="btn btn-info">Activar mi plan</a>
                                     </p>
 
                                 </div>
-                                <!-- Featured news -->
-
                             </div>
                         <?php } ?>
                     </div>
@@ -124,19 +120,13 @@ require_once 'templates/header.php'; ?>
                         <div class="col-md-8">
                             <div class="row p-3">
                                 <div class="col-md-12  rounded-lg z-depth-1-half ">
-                                    <!--Section: Contact v.2-->
                                     <section class="mb-4">
-
-                                        <!--Section heading-->
                                         <h2 class="h2-responsive font-weight-bold text-center my-4">Nueva Publicación
                                         </h2>
                                         <div class="row">
-
-                                            <!--Grid column-->
                                             <div class="col-md-12 mb-md-0 mb-5 ">
                                                 <form id="formPublicacion" name="contact-form" action="" method="POST">
                                                     <div class="row">
-                                                        <!--Grid column-->
                                                         <div class="col-md-8">
                                                             <div class="row">
                                                                 <div class="col-md-12">
@@ -152,9 +142,7 @@ require_once 'templates/header.php'; ?>
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
-
                                                         <div class="col-4 opciones oculta">
                                                             <label class="label aqua-gradient rounded " data-toggle="tooltip" title="Agregar imagen" style="width: 100%; cursor: pointer;">
                                                                 <img class="rounded z-depth-3 mt-0 pt-0" id="avatar" src="<?php echo $ruta; ?>galeria/sistema/images/imgdefault.png" alt="avatar" style="width: 100%;">
@@ -174,13 +162,11 @@ require_once 'templates/header.php'; ?>
                                                             <div id="cancelar" class="btn btn-danger btn-block text-center" type="submit"><i class="fas fa-window-close"></i></div>
                                                         </div>
                                                     </div>
-                                                    <!--Grid row-->
                                                 </form>
                                                 <div class="status"></div>
                                             </div>
                                         </div>
                                     </section>
-                                    <!--Section: Contact v.2-->
                                 </div>
                             </div>
                             <div class="row mt-5" id="cuerpoPublicaciones">

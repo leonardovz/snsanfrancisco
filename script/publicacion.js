@@ -165,7 +165,12 @@ $(document).ready(function () {
                                     }, 1000);
 
                                 } else {
-                                    alerta(response.Texto, "error", 4000);
+                                    // alerta(response.Texto, "error", 4000);
+                                    Swal.fire(
+                                        '¡ERROR!',
+                                        response.Texto,
+                                        'error'
+                                    )
                                 }
                             },
 

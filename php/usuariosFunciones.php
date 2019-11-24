@@ -113,6 +113,9 @@ switch ($_POST['opcion']) {
             die(json_encode(array('respuesta' => 'error', 'Texto' => "El número de publicaciones exede tu paquete actual, si requieres de más publicaciónes puedes eliminar pubicaciónes pasadas, o consultar al administrador para mejorar tu paquete")));
         }
         $IMAGENPERFIL = $_FILES['avatar'];
+        $IMAGENTYPE = explode(".", $IMAGENPERFIL['name']);
+        $IMAGENTYPE = end($IMAGENTYPE);
+
 
         validarImagen($IMAGENPERFIL);
 
@@ -672,12 +675,12 @@ switch ($_POST['opcion']) {
                         die(json_encode(array('respuesta' => 'error', 'Texto' => 'Tu nueva contraseña no coincide',)));
                     }
                     $newPass = md5($password);
-                    $sql = "UPDATE usuarios SET password = '$newPass' WHERE idUsuario = ".$USERLOGIN['idUsuario'];
+                    $sql = "UPDATE usuarios SET password = '$newPass' WHERE idUsuario = " . $USERLOGIN['idUsuario'];
                     $resultado = $conexion->query($sql);
-                    if($resultado && $conexion->affected_rows){
+                    if ($resultado && $conexion->affected_rows) {
                         $respuesta = array('respuesta' => 'exito', 'Texto' => 'Cambios aplicados correctamente',);
-                    }else{
-                        $respuesta = array('respuesta' => 'error', 'Texto' => 'No se pudo realizar ningun cambio en la contraseña',$sql);
+                    } else {
+                        $respuesta = array('respuesta' => 'error', 'Texto' => 'No se pudo realizar ningun cambio en la contraseña', $sql);
                     }
                 } else {
                     $respuesta = array('respuesta' => 'error', 'Texto' => 'No puedes cambiar tu contraseña por una ya activa',);
