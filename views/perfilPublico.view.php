@@ -76,8 +76,8 @@ require_once 'templates/header.php'; ?>
 
                             <!--Footer-->
                             <div class="modal-footer justify-content-center flex-wrap">
-                                <a href="<?php echo $ruta;?>ayuda" type="button" class="btn btn-warning waves-effect waves-light">Necesito Ayuda</a>
-                                <a href="<?php echo $ruta;?>" type="button" class="btn btn-outline-warning waves-effect">Quiero volver al Inicio</a>
+                                <a href="<?php echo $ruta; ?>ayuda" type="button" class="btn btn-warning waves-effect waves-light">Necesito Ayuda</a>
+                                <a href="<?php echo $ruta; ?>" type="button" class="btn btn-outline-warning waves-effect">Quiero volver al Inicio</a>
                             </div>
                         </div>
                         <!--/.Content-->
@@ -140,6 +140,11 @@ require_once 'templates/header.php'; ?>
                 <section class="magazine-section">
                     <div class="row">
                         <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-12">
+                                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                </div>
+                            </div>
                             <div class="row" id="cuerpoPublicaciones">
                                 <div class="col">
                                     <p>Cargando ... </p>
@@ -204,6 +209,16 @@ require_once 'templates/header.php'; ?>
                             <div class="row my-5">
                                 <div class="col" id="cuerpoRigth">
 
+                                </div>
+                            </div>
+                            <div class="row my-5">
+                                <div class="col">
+                                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                </div>
+                            </div>
+                            <div class="row my-5">
+                                <div class="col">
+                                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                                 </div>
                             </div>
                         </div>
