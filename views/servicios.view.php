@@ -24,10 +24,8 @@ require_once 'templates/header.php';
                             <h6 class="mb-3">Subscribete a las noticias y nuevas publicaciónes de nuestros Usuarios. Resuelve todas tus inquietudes, envianos tus dudad y sugerencias! estamos para atenderte!
 
                             </h6>
-                            <a class="btn btn-outline-white">Leer Más</a>
+                            <a href="<?php echo $ruta; ?>acercade" class="btn btn-outline-white">Leer Más</a>
                         </div>
-                        <!--Grid column-->
-                        <!--Grid column-->
                         <div class="col-md-6 col-xl-5 mb-4">
 
                             <!--Form-->

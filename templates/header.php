@@ -44,7 +44,7 @@
     echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />';
     echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>';
   }
-  if($ANALYTICS){
+  if ($ANALYTICS) {
     echo '
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129896419-1"></script>
       <script>
@@ -54,11 +54,12 @@
 
         gtag("config", "UA-129896419-1");
       </script>';
-
   }
-  if($ADSENSE){
+  if ($ADSENSE) {
     echo '<script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
-
+  }
+  if ($RECAPTCHA) {
+    echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
   }
   ?>
 

@@ -12,7 +12,7 @@ if (!isset($conexion)) {
 }
 $ANALYTICS = true;
 $ADSENSE = false;
-
+$RECAPTCHA = true;
 
 $rutas = (isset($_GET['ruta']) && !empty($_GET['ruta'])) ? explode("/", strtolower($_GET['ruta'])) : false; //validacion de la segmentacion
 $RUTAS0 = (isset($rutas[0]) && !empty($rutas[0])) ? $rutas[0] : false; //validacion de la RUTA CERO
@@ -41,7 +41,11 @@ if ($rutas) { //Ruta Vacia
     } elseif ($RUTAS0 == 'desarrollador') {
         require_once 'views/master.view.php';
     } elseif ($RUTAS0 == 'registro') {
-        require_once 'views/registro.view.php';
+        if ($UserLogin) {
+            header('Location: ' . $ruta . 'perfil');
+        } else {
+            require_once 'views/registro.view.php';
+        }
     } elseif ($RUTAS0 == 'verificar' && !$UserLogin) {
         require_once 'views/verificacionMail.view.php';
     } elseif ($RUTAS0 == 'blog') {

@@ -17,7 +17,7 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.respuesta == 'exito') {
                     loading(75);
                     setTimeout(() => {
@@ -31,7 +31,7 @@ $(document).ready(function () {
                                     cuerpo += (cuerpoPublicacion(data.publicaciones[i], ruta, data.rutaImagen));
                                 }
                             }
-                            console.log(cuerpo);
+                            // console.log(cuerpo);
                             var actual = (data.publicaciones.length > 6) ? 6 : 0;
 
 
@@ -70,8 +70,8 @@ $(document).ready(function () {
                 $("#cuerpoPublicaciones").append(imprimir);
                 verMasPost(data, actual + nImpresiones, nImpresiones, rutaAC);
             });
-            console.log(actual);
-            console.log(nImpresiones);
+            // console.log(actual);
+            // console.log(nImpresiones);
         } else {
             $("#verMasPosts").off();
             $("#verMasPosts").hide();
@@ -94,7 +94,7 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.respuesta == "exito") {
                     let cuerpo = "";
                     for (let i in data.publicaciones) {

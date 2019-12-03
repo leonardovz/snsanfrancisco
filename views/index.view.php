@@ -28,7 +28,7 @@ require_once 'templates/header.php';
                 tus inquietudes, envianos tus dudad y sugerencias! estamos para atenderte!
 
               </h6>
-              <a class="btn btn-outline-white">Leer Más</a>
+              <a href="<?php echo $ruta;?>acercade" class="btn btn-outline-white">Leer Más</a>
             </div>
             <!--Grid column-->
             <!--Grid column-->

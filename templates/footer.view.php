@@ -18,10 +18,13 @@
         </div>
       </div>
       <div class="col-md-6 mb-4">
-        <form class="input-group">
-          <input type="text" class="form-control form-control-sm" placeholder="Ingresa tu correo electronico" aria-label="Ingresa tu correo electronico" aria-describedby="basic-addon2">
+        <form class="input-group" id="formSubscripcion" method="post">
+          <input type="email" name="mail" class="form-control form-control-sm" placeholder="Ingresa tu correo electronico" aria-label="Ingresa tu correo electronico" aria-describedby="basic-addon2">
           <div class="input-group-append">
-            <button class="btn btn-sm btn-outline-white my-0" type="button">Subscribete</button>
+            <button class="btn btn-sm btn-outline-white my-0" type="submit">Subscribete</button>
+          </div>
+          <div class="col-md-12 my-2 ml-5">
+            <div class="g-recaptcha" data-sitekey="6LfTXMQUAAAAAFrpHyGr_-sXZzdaQ4Pgy4Hmjhlg"></div>
           </div>
         </form>
       </div>
@@ -80,5 +83,6 @@
   </div>
   <div class="footer-copyright text-center py-3">© 2019 SnSanfrancisco:
     <a href="<?php echo $ruta; ?>"> snsanfrancisco.com</a>
+    <span class="ml-5">Recuerda revisar nuestros <a target="_blank" href="<?php echo $ruta;?>galeria/documentos/terminos_y_condiciones.pdf">Términos y Condiciones</a> </span>
   </div>
 </footer>

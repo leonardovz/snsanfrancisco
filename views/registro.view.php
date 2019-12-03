@@ -18,7 +18,7 @@
                     </h5>
                     <div class="card-body">
 
-                        <form id="formRegistro" method="post"> 
+                        <form id="formRegistro" method="post">
                             <div class="md-form">
                                 <input type="text" id="nombre" name="nombre" class="form-control">
                                 <label for="nombre" class="font-weight-light">Nombre</label>
@@ -35,7 +35,7 @@
 
                             <div class="md-form">
                                 <input type="email" id="emailR" name="emailR" class="form-control">
-                                <label for="emailR" class="font-weight-light">Confirmación de  email</label>
+                                <label for="emailR" class="font-weight-light">Confirmación de email</label>
                             </div>
 
                             <div class="md-form">
@@ -46,17 +46,25 @@
                                 <input type="password" name="passwordR" id="passwordR" class="form-control">
                                 <label for="passwordR" class="font-weight-light">Repite la contraseña</label>
                             </div>
+                            <div class="col-md-12 p-0 mb-5 text-center">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id id="terminos-condiciones" name="terminos-condiciones">
+                                    <label class="custom-control-label" for="terminos-condiciones">Acepto los  <a target="_blank" href="<?php echo $ruta;?>galeria/documentos/terminos_y_condiciones.pdf">Términos y Condiciones</a></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0 mb-5">
+                                <div class="g-recaptcha" data-sitekey="6LfTXMQUAAAAAFrpHyGr_-sXZzdaQ4Pgy4Hmjhlg"></div>
+                            </div>
 
                             <div class="text-center py-4 mt-3">
                                 <button class="btn btn-cyan" type="submit">Registrarme</button>
                             </div>
-
                             <div class="text-center py-4 mt-0">
                                 <p>Ya eres miembro?
                                     <a href="<?php echo $ruta; ?>login">Ingresa</a>
                                 </p>
 
-                                <p>Ingresa con  :</p>
+                                <p>Ingresa con :</p>
                                 <a type="button" class="btn btn-primary text-white text-center">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
@@ -64,15 +72,13 @@
                                     <i class="fab fa-google"></i>
                                 </a>
                             </div>
-
                         </form>
-
                     </div>
 
                 </div>
                 <div class="card">
                     <div class="card-body" id="errores">
-                    
+
                     </div>
 
                 </div>
@@ -85,7 +91,7 @@
     <?php require_once 'templates/footer.view.php'; ?>
 
     <?php require_once 'templates/footer.php'; ?>
-    <script src="<?php echo $ruta;?>script/registro.js"></script>
+    <script src="<?php echo $ruta; ?>script/registro.js"></script>
 </body>
 
 </html>
