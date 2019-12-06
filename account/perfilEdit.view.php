@@ -46,9 +46,8 @@ require_once 'templates/header.php'; ?>
                                     <div class="alert" role="alert"></div>
                                 </div>
                                 <div class="card-body elegant-color white-text rounded-bottom">
-                                    <a class="activator waves-effect mr-4"><i class="fas fa-share-alt white-text"></i></a>
+                                    <!-- <a class="activator waves-effect mr-4"><i class="fas fa-share-alt white-text"></i></a> -->
                                     <a class="activator waves-effect mr-4 text-primary" id="editarFoto"><i class="fas fa-edit"></i></a>
-                                    <a class="activator waves-effect mr-4 text-danger"><i class="fas fa-trash-alt"></i></i></a>
                                 </div>
 
                             </div>

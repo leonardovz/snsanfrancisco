@@ -30,6 +30,7 @@
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <link href="<?php echo $ruta; ?>recursos/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<?php echo $ruta; ?>recursos/sweetalert2/sweetalert2.min.css" rel="stylesheet">
   <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/jquery-3.4.1.min.js"></script>
 
   <link href="<?php echo $ruta; ?>recursos/css/mdb.min.css" rel="stylesheet">
@@ -44,7 +45,7 @@
     echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />';
     echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>';
   }
-  if($ANALYTICS){
+  if ($ANALYTICS) {
     echo '
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129896419-1"></script>
       <script>
@@ -54,11 +55,12 @@
 
         gtag("config", "UA-129896419-1");
       </script>';
-
   }
-  if($ADSENSE){
+   if(isset($ADSENSE) && $ADSENSE) {
     echo '<script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
-
+  }
+  if ($RECAPTCHA) {
+    echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
   }
   ?>
 

@@ -96,7 +96,7 @@ $(document).ready(function () {
 
                     success: function (response) {
                         $alert.show().addClass('alert-success').text('Perfil actualizado');
-                        console.log(response);
+                        // console.log(response);
                     },
 
                     error: function (xhr,status) {

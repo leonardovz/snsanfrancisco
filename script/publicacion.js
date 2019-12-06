@@ -202,7 +202,7 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.respuesta == 'exito') {
                     loading(75);
                     setTimeout(() => {
@@ -417,7 +417,7 @@ $(document).ready(function () {
                     console.log(xhr.responseText);
                 },
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.respuesta == "removido") {
                         destruirPub(Button);
                         alerta(data.Texto, 'success', '1000');

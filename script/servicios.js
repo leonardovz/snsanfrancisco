@@ -18,7 +18,7 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.respuesta == 'exito') {
                     var cuerpo = '';
                     for (let i in data.servicios) {
@@ -42,7 +42,7 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 let cuerpo = "",
                     cuerpoRigth = "";
                 if (data.respuesta == "exito") {

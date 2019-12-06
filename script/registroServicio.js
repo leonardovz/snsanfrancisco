@@ -47,7 +47,7 @@ $(document).ready(function () {
                         </select>`);
                         $("#colonia").change(function () {
                             let colonia = $(this).val();
-                            console.log(colonia);
+                            // console.log(colonia);
                             if (colonia == 0) {
                                 coloniasImp.html(`<div class="col">
                                 <div class="md-form mt-3">
@@ -79,7 +79,7 @@ $(document).ready(function () {
                     colonias.html("");
                     coloniasImp.html("");
                 }
-                console.log(data);
+                // console.log(data);
             }
         });
     }
@@ -107,7 +107,7 @@ $(document).ready(function () {
                         </select>`);
                     $('#servicio').select2();
                 }
-                console.log(data);
+                // console.log(data);
             }
         });
     }
@@ -158,7 +158,7 @@ $(document).ready(function () {
                     console.log(xhr.responseText);
                 },
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.respuesta == 'exito') {
                         alertaSwal(data.Texto,'success')
                     } else {

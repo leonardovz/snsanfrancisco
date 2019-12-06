@@ -18,6 +18,18 @@ if ($conexion->connect_errno) {
     );
     die(json_encode($respuesta));
 }
+$response_recapcha = $_POST['g-recaptcha-response'];
+if (isset($response_recapcha) && $response_recapcha) {
+    $secret = "6LfTXMQUAAAAAJYmMvBxne034MJMwQu6ze8X2-5V";
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $validar_server = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response_recapcha&remoteip=$ip");
+} else {
+    die(json_encode(array(
+        'respuesta' => 'error',
+        'Texto' => 'Debes de completar el capcha'
+    )));
+}
+
 // $_POST['opcion']="cargarNotas";
 // $tipoUsuario = $_SESSION['tipoUser']; //Verificacion de el tipo de usuario, Solo admin puede crear ADMIN y Vendedor.
 // $idUsuario = $_SESSION['idUsuario']; //Verificacion de el tipo de usuario, Solo admin puede crear ADMIN y Vendedor.
@@ -29,6 +41,7 @@ if (!isset($_POST['opcion'])) {
 
 switch ($_POST['opcion']) {
     case 'registro':
+        die(json_encode($_POST));
         $email     = (isset($_POST['email'])    && !empty($_POST['email']))    ? strtolower($_POST['email']) : false;
         $emailR    = (isset($_POST['emailR'])   && !empty($_POST['emailR']))   ? strtolower($_POST['emailR']) : false;
         $nombre    = (isset($_POST['nombre'])   && !empty($_POST['nombre']))   ? strtolower($_POST['nombre']) : false;
@@ -41,7 +54,7 @@ switch ($_POST['opcion']) {
         $validar = 0;
         $modo = 'dir';
         $PLANTILLAS = new PlantillasEmail();
-       
+
         if ($email && $emailR && $nombre && $apellidos && $password && $passwordR) {
             if ($email == $emailR) {
                 if ($password == $passwordR) {
@@ -56,10 +69,10 @@ switch ($_POST['opcion']) {
                                 'verificacion' => md5($email),
                             );
                             $CORREO = $PLANTILLAS->templateRegistro($datos, $ruta);
-                    
+
                             $respuesta = enviarCorreo($CORREO, $datos);
 
-                            $respuesta = array('respuesta' => 'error', 'Texto' => 'Registro realizado con exito','correo'=>$respuesta);
+                            $respuesta = array('respuesta' => 'error', 'Texto' => 'Registro realizado con exito', 'correo' => $respuesta);
                         } else {
                             $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible realizar el registro');
                         }
@@ -140,9 +153,9 @@ switch ($_POST['opcion']) {
         die(json_encode($respuesta));
         break;
     case 'subscribirCuenta':
-        $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
-        $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
-
+        // $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
+        // $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
+        die(json_encode($respuesta = array('respuesta' => 'exito', 'Texto' => 'Por el momento no es posible generar más subscripciones',)));
         break;
     default:
         break;
@@ -165,7 +178,7 @@ function enviarCorreo($plantilla, $datos)
     $mail->IsHTML(true);
     $mail->Username = "webmaster@snsanfrancisco.com";
     $mail->Password = "onyK!1bL(VWi";
-    $mail->SetFrom("webmaster@snsanfrancisco.com","Leonardo Vázquez");
+    $mail->SetFrom("webmaster@snsanfrancisco.com", "Leonardo Vázquez");
     $mail->Subject = "Verificación de Cuenta";
     $mail->msgHTML($plantilla);
     $mail->AddAddress('leonardovazquez81@gmail.com');

@@ -94,7 +94,7 @@
                         console.log(xhr.responseText);
                     },
                     success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if (data.respuesta == 'exito') {
                             let cuerpoMes ="";
                             let cuerpoAnio ="";

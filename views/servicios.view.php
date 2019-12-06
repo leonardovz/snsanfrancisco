@@ -24,10 +24,8 @@ require_once 'templates/header.php';
                             <h6 class="mb-3">Subscribete a las noticias y nuevas publicaciónes de nuestros Usuarios. Resuelve todas tus inquietudes, envianos tus dudad y sugerencias! estamos para atenderte!
 
                             </h6>
-                            <a class="btn btn-outline-white">Leer Más</a>
+                            <a href="<?php echo $ruta; ?>acercade" class="btn btn-outline-white">Leer Más</a>
                         </div>
-                        <!--Grid column-->
-                        <!--Grid column-->
                         <div class="col-md-6 col-xl-5 mb-4">
 
                             <!--Form-->
@@ -79,7 +77,9 @@ require_once 'templates/header.php';
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8 col my-5">
-                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+                        <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <?php } ?>
                 </div>
             </div>
             <div class="row">
@@ -91,7 +91,9 @@ require_once 'templates/header.php';
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8 col my-5">
-                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <?php if (isset($ADSENSE) && $ADSENSE) { ?>s
+                        <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <?php } ?>s
                 </div>
             </div>
         </section>

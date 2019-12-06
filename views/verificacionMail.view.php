@@ -105,11 +105,13 @@
             </div>
         </div>
     <?php } ?>
-    <?php require_once 'templates/footer.view.php'; ?>
-    <?php require_once 'templates/footer.php'; ?>
+    <?php
+    require_once 'templates/footer.view.php';
+    require_once 'templates/footer.php';
+    ?>
 
     <script>
-        var ruta= ruta();
+        var ruta = ruta();
         $(document).ready(function() {
             $("#formVerificar").on('submit', function(e) {
                 e.preventDefault();
@@ -120,8 +122,8 @@
                     if (expresion.test(correo)) {
                         $.ajax({
                             type: 'POST',
-                            url: ruta+'php/usuariosAJAX.php',
-                            data: 'opcion=verificacion&email='+correo+'&codVerificacion='+codVerificacion,
+                            url: ruta + 'php/usuariosAJAX.php',
+                            data: 'opcion=verificacion&email=' + correo + '&codVerificacion=' + codVerificacion,
                             dataType: 'json',
                             error: function(xhr, status) {
                                 console.log(JSON.stringify(xhr));
@@ -129,10 +131,10 @@
                             success: function(data) {
                                 console.log(data);
                                 if (data.respuesta == 'exito') {
-                                    alertaSwal(data.Texto,'success');
+                                    alertaSwal(data.Texto, 'success');
                                     location.reload();
                                 } else {
-                                    alertaSwal(data.Texto,'error',3000);
+                                    alertaSwal(data.Texto, 'error', 3000);
 
                                 }
                                 // console.log(data);
