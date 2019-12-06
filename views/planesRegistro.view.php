@@ -265,7 +265,7 @@ require_once 'templates/header.php';
     <?php require_once 'templates/footer.php'; ?>
     <script>
         var ruta = ruta();
-        var paquete = <?php echo $PAQUETE['id']; ?>;
+        var paquete = <?php echo $PAQUETE['id']; ?> + 0;
     </script>
     <?php
     if (!$PERFIL) { ?>
@@ -309,7 +309,7 @@ require_once 'templates/header.php';
                                 console.log(xhr.responseText);
                             },
                             success: function(data) {
-                                console.log(data);
+                                // console.log(data);
                                 if (data.respuesta == 'exito') {
                                     alertaSwal(data.Texto, 'success');
                                     setTimeout(() => {

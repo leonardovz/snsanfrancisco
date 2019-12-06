@@ -55,7 +55,7 @@
         gtag("config", "UA-129896419-1");
       </script>';
   }
-  if ($ADSENSE) {
+   if(isset($ADSENSE) && $ADSENSE) {
     echo '<script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
   }
   if ($RECAPTCHA) {

@@ -77,7 +77,9 @@ require_once 'templates/header.php';
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8 col my-5">
-                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+                        <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <?php } ?>
                 </div>
             </div>
             <div class="row">
@@ -89,7 +91,9 @@ require_once 'templates/header.php';
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8 col my-5">
-                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <?php if (isset($ADSENSE) && $ADSENSE) { ?>s
+                        <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <?php } ?>s
                 </div>
             </div>
         </section>

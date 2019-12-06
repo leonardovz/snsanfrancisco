@@ -55,7 +55,7 @@ switch ($_POST['opcion']) {
         break;
     case 'traerPerfiles':
 
-        $sql = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.whatsapp,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio";
+        $sql = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.social,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio";
 
         $resultado = $conexion->query($sql);
 

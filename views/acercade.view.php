@@ -43,11 +43,11 @@
                     </p>
 
                     <!-- CTA -->
-                    <a target="_blank" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" class="btn btn-indigo btn-md">Registrarme
-                        <i class="fas fa-download ml-1"></i>
+                    <a href="<?php echo $ruta; ?>registro" class="btn btn-indigo btn-md">Registrarme
+                        <i class="fas fa-users-cog mx-3"></i>
                     </a>
-                    <a target="_blank" href="https://mdbootstrap.com/docs/jquery/components/" class="btn btn-indigo btn-md">Iniciar Sesión
-                        <i class="far fa-image ml-1"></i>
+                    <a href="<?php echo $ruta; ?>login" class="btn btn-indigo btn-md">Iniciar Sesión
+                        <i class="fas fa-sign-in-alt mx-3"></i>
                     </a>
 
                 </div>
@@ -183,10 +183,7 @@
                     </div>
                 </div>
             </div>
-
-
             <hr class="mb-5">
-
         </div>
     </div>
     <div class="container-fluid">

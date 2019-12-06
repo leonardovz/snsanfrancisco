@@ -290,7 +290,7 @@ class AdminFunciones
         $codigo = $ADMINFUN->generarCodigo(12); //Genera un codigo aleatorio
         $codigoStatus = $ADMINFUN->verificarCodigo($codigo); //Es necesario comparar los registros y verificar que no exista
         if ($codigoStatus) {
-            codigoUnico(); //Recursividad, si ya existe prueba otro, hasta que el sistema diga que ya no existe registro
+            $this->codigoUnico(); //Recursividad, si ya existe prueba otro, hasta que el sistema diga que ya no existe registro
         } else {
             return $codigo; //Devuelve el codigo final
         }

@@ -89,7 +89,7 @@ switch ($_POST['opcion']) {
     case 'traerPerfilPublico':
         $idServicio = isset($_POST['idServicio']) && !empty($_POST['idServicio']) ? (int) $_POST['idServicio'] : false;
         $SERVICIO = ($idServicio) ? "AND UI.idServicio =  " . $idServicio : "";
-        $sql = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.whatsapp,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio $SERVICIO ORDER BY U.fecha DESC " . (($idServicio) ? "" : "LIMIT 8");
+        $sql = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.social,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio $SERVICIO ORDER BY U.fecha DESC " . (($idServicio) ? "" : "LIMIT 8");
         $resultado = $conexion->query($sql);
         $usuarios = ($resultado  && $resultado->num_rows) ? $resultado : false;
         if ($usuarios) {
@@ -110,7 +110,7 @@ switch ($_POST['opcion']) {
             $respuesta = array(
                 'respuesta' => 'error',
                 'Texto' => 'No cuenta con publicaciones',
-                'POST' => $_POST,
+                'POST' => $_POST,$sql
             );
         }
         die(json_encode($respuesta));
@@ -410,7 +410,7 @@ switch ($_POST['opcion']) {
         $ADMINFUNC = new AdminFunciones();
         $ADMINFUNC->CONEXION = $conexion;
 
-        $sqlPerfil = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.whatsapp,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio AND (U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%'  OR UI.nombreServicio LIKE '%$buscar%' OR UI.descripcion LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%' OR concat_ws(' ', U.nombre,U.apellidos) LIKE '%$buscar%')";
+        $sqlPerfil = "SELECT U.idUsuario ,U.nombre,U.apellidos,U.correo,U.fecha,U.img, UI.nombreServicio, UI.celular,UI.telefono,UI.descripcion,UI.domicilio,UI.social,S.nombre AS servicio,S.color AS colorS, S.icono AS iconoS  FROM usuarios AS U, usersinfo AS UI,servicios AS S  WHERE U.idUsuario = UI.iduser AND S.id=UI.idServicio AND (U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%'  OR UI.nombreServicio LIKE '%$buscar%' OR UI.descripcion LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%' OR concat_ws(' ', U.nombre,U.apellidos) LIKE '%$buscar%')";
         $sqlPublicacion = "SELECT P.*,U.nombre,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.estado = 'AC' AND P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND (P.titulo LIKE '%$buscar%' OR P.descripcion LIKE '%$buscar%' OR U.nombre LIKE '%$buscar%' OR U.apellidos LIKE '%$buscar%' OR UI.nombreServicio LIKE '%$buscar%' OR S.nombre LIKE '%$buscar%' OR S.descripcion LIKE '%$buscar%' OR concat_ws(' ', U.nombre,U.apellidos) LIKE '%$buscar%' ) ";
         $sqlServicio = "SELECT * FROM servicios WHERE nombre LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' ";
 

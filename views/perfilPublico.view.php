@@ -13,12 +13,14 @@ if ($conexion->connect_errno) {
 }
 $PERFIL = $FUNCIONES->verificarPerfil($idUsuario); //configuraci[on del perfil]
 $SERVICIO = false;
+$PAQUETE = false;
 if ($PERFIL) {
     $PERFIL = $PERFIL->fetch_assoc();
     $SERVICIO = $FUNCIONES->verificarServicio($PERFIL['idServicio']);
     if ($SERVICIO) {
         $SERVICIO = $SERVICIO->fetch_assoc();
     }
+    $PAQUETE = $FUNCIONES->paquetePerfilUser($PERFIL['iduser']);
 }
 if ($PERFIL) {
     $systemName = $PERFIL['nombreServicio'] . ' | ' . $systemName;
@@ -93,7 +95,6 @@ require_once 'templates/header.php'; ?>
     } ?>
     <div class="container">
         <div class="row justify-content-end">
-
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -116,7 +117,7 @@ require_once 'templates/header.php'; ?>
                         <div class="col-md-6">
 
                             <!-- Featured news -->
-                            <div class="single-news mb-lg-0 mb-5 pt-5 ">
+                            <div class="single-news mb-lg-0 mb-5 pt-5 text-justify">
                                 <div class="news-data d-flex justify-content">
                                     <a href="#!" class="deep-blue-text">
                                         <h6 class="font-weight-bold"><i class="<?php echo $SERVICIO['icono'] ?> pr-2"></i><?php echo $SERVICIO['nombre']; ?></h6>
@@ -142,7 +143,9 @@ require_once 'templates/header.php'; ?>
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-12">
-                                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                    <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+                                        <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="row" id="cuerpoPublicaciones">
@@ -184,23 +187,25 @@ require_once 'templates/header.php'; ?>
                                             </li>
                                         </ul>
                                         <hr class="hr-light my-4">
-                                        <ul class="list-inline text-center list-unstyled">
-                                            <li class="list-inline-item">
-                                                <a class="p-2 fa-lg tw-ic">
-                                                    <i class="fab fa-twitter"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a class="p-2 fa-lg li-ic">
-                                                    <i class="fab fa-linkedin-in"> </i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a class="p-2 fa-lg ins-ic">
-                                                    <i class="fab fa-instagram"> </i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <?php if ($PAQUETE && $PAQUETE['membresia']['rol'] != 'Gratis' && $PAQUETE['status']) { ?>
+                                            <ul class="list-inline text-center list-unstyled">
+                                                <li class="list-inline-item">
+                                                    <a class="p-2 fa-lg tw-ic">
+                                                        <i class="fab fa-twitter"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a class="p-2 fa-lg li-ic">
+                                                        <i class="fab fa-linkedin-in"> </i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a class="p-2 fa-lg ins-ic">
+                                                        <i class="fab fa-instagram"> </i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        <?php } ?>
 
                                     </div>
                                 </div>
@@ -213,12 +218,16 @@ require_once 'templates/header.php'; ?>
                             </div>
                             <div class="row my-5">
                                 <div class="col">
-                                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                    <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+                                        <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="row my-5">
                                 <div class="col">
-                                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                    <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+                                        <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -229,29 +238,6 @@ require_once 'templates/header.php'; ?>
     </div>
     <div class="container-fluid">
         <div class="row justify-content-center" id="contServicios"></div>
-    </div>
-    <div class="container">
-        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Crop the image</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="img-container">
-                            <img id="image" src="<?php echo $ruta; ?>galeria/sistema/images/default.png" style="width: 100%;">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" id="crop">Crop</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <?php require_once 'templates/footer.view.php'; ?>
     <?php require_once 'templates/footer.php'; ?>
@@ -283,7 +269,7 @@ require_once 'templates/header.php'; ?>
                 }
             });
         });
-        var perfilAC = <?php echo $idUsuario; ?>;
+        var perfilAC = <?php echo $idUsuario; ?> + 0;
     </script>
     <script src="<?php echo $ruta; ?>script/publicPerfil.js "></script>
 </body>

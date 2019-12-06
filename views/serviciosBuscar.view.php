@@ -110,7 +110,9 @@ require_once 'templates/header.php';
         </div>
         <div class="row">
             <div class="col-md-12">
-                <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <?php } ?>
             </div>
         </div>
         <div class="row">
@@ -139,7 +141,9 @@ require_once 'templates/header.php';
         </div>
         <div class="row">
             <div class="col-md-12">
-                <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <?php } ?>
             </div>
         </div>
     </section>
