@@ -1,6 +1,11 @@
 <?php
 
-function ruta(){
+function ruta()
+{
     $ruta = $_SERVER['HTTP_HOST'];
-    return 'https://'.$ruta.'/'; 
+    if ($ruta == "localhost") {
+        return 'https://' . $ruta . '/snsanfrancisco/';
+    } else {
+        return 'https://' . $ruta . '/';
+    }
 }

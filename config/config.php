@@ -6,5 +6,13 @@ $bd_config = array(
 	'pass' => 'VPg0DI$wl596'
 );
 
+if ($_SERVER['HTTP_HOST'] == "localhost") {
+	$bd_config = array(
+		'host' => 'localhost',
+		'database' => 'sanfrancisco',
+		'usuario' => 'rootLeo',
+		'pass' => 'data1122'
+	);
+}
 
 ?>

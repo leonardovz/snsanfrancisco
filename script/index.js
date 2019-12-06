@@ -44,7 +44,6 @@ $(document).ready(function () {
         console.log(xhr.responseText);
       },
       success: function (data) {
-        console.log(data);
         let cuerpo = "",
           cuerpoRigth = "";
         if (data.respuesta == "exito") {
@@ -55,7 +54,7 @@ $(document).ready(function () {
           $("#cuerpoRigth").html(cuerpoRigth);
           acciones();
         } else {
-          alerta(data.Texto, 'error');
+          // alerta(data.Texto, 'error');
         }
       }
     });
