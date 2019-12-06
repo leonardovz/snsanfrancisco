@@ -155,7 +155,7 @@ switch ($_POST['opcion']) {
     case 'subscribirCuenta':
         // $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
         // $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
-        die(json_encode($_POST));
+        die(json_encode($respuesta = array('respuesta' => 'exito', 'Texto' => 'Por el momento no es posible generar más subscripciones',)));
         break;
     default:
         break;

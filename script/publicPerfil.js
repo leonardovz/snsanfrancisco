@@ -220,7 +220,6 @@ $(document).ready(function () {
             </div>
         </div>
             `;
-        //}
         return cuerpo;
     }
     function acciones() {

@@ -30,6 +30,7 @@
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <link href="<?php echo $ruta; ?>recursos/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<?php echo $ruta; ?>recursos/sweetalert2/sweetalert2.min.css" rel="stylesheet">
   <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/jquery-3.4.1.min.js"></script>
 
   <link href="<?php echo $ruta; ?>recursos/css/mdb.min.css" rel="stylesheet">

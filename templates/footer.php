@@ -2,7 +2,7 @@
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/mdb.min.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>script/funciones.js"></script>
-<script type="text/javascript" src="<?php echo $ruta; ?>recursos/sweetalert2/sweetalert2.all.min.js"></script>
+<script type="text/javascript" src="<?php echo $ruta; ?>recursos/sweetalert2/sweetalert2.min.js"></script>
 <?php if ($UserLogin) { ?>
   <script>
     $("#cerrarSesion").on('click', (e) => {
@@ -52,7 +52,17 @@
         console.log(xhr.responseText);
       },
       success: function(data) {
-        console.log(data);
+        if (data.respuesta == "exito") {
+          Swal.fire({
+            icon: 'success',
+            text: data.Texto,
+          });
+        } else {
+         Swal.fire({
+            icon: 'error',
+            text: data.Texto,
+          });
+        }
       }
     });
   });
