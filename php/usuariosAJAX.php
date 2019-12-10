@@ -41,14 +41,16 @@ if (!isset($_POST['opcion'])) {
 
 switch ($_POST['opcion']) {
     case 'registro':
-        die(json_encode($_POST));
         $email     = (isset($_POST['email'])    && !empty($_POST['email']))    ? strtolower($_POST['email']) : false;
         $emailR    = (isset($_POST['emailR'])   && !empty($_POST['emailR']))   ? strtolower($_POST['emailR']) : false;
         $nombre    = (isset($_POST['nombre'])   && !empty($_POST['nombre']))   ? strtolower($_POST['nombre']) : false;
         $apellidos = (isset($_POST['apellido']) && !empty($_POST['apellido'])) ? strtolower($_POST['apellido']) : false;
         $password  = (isset($_POST['password']) && !empty($_POST['password'])) ? $_POST['password'] : false;
         $passwordR = (isset($_POST['passwordR']) && !empty($_POST['passwordR'])) ? $_POST['passwordR'] : false;
-
+        $terminos = (isset($_POST['terminos-condiciones']) && !empty($_POST['terminos-condiciones'])) ? $_POST['terminos-condiciones'] : false;
+        if ($terminos != 'on') {
+            die(json_encode(array('respuesta' => 'error', 'Texto' => 'Debes de aaceptar los terminos y condiciones para continuar')));
+        }
         $tipoUser = 3;
         $mailEncrypt = md5($email);
         $validar = 0;
@@ -60,6 +62,7 @@ switch ($_POST['opcion']) {
                 if ($password == $passwordR) {
                     if (!correoExiste($conexion, $email)) {
                         $password = md5($password);
+                        
                         $sql = "INSERT INTO usuarios(nombre, apellidos, correo, password, tipoUser, validar, encriptado,modo) VALUES ('$nombre','$apellidos','$email','$password',$tipoUser,$validar,'$mailEncrypt','$modo')";
                         $resultado = $conexion->query($sql);
                         if ($resultado) {

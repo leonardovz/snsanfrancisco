@@ -48,8 +48,8 @@
                             </div>
                             <div class="col-md-12 p-0 mb-5 text-center">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id id="terminos-condiciones" name="terminos-condiciones">
-                                    <label class="custom-control-label" for="terminos-condiciones">Acepto los  <a target="_blank" href="<?php echo $ruta;?>galeria/documentos/terminos_y_condiciones.pdf">Términos y Condiciones</a></label>
+                                    <input type="checkbox" class="custom-control-input" id="terminos-condiciones" name="terminos-condiciones">
+                                    <label class="custom-control-label" for="terminos-condiciones">Acepto los <a target="_blank" href="<?php echo $ruta; ?>galeria/documentos/terminos_y_condiciones.pdf">Términos y Condiciones</a></label>
                                 </div>
                             </div>
                             <div class="col-md-12 p-0 mb-5">

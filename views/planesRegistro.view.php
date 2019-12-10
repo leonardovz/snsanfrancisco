@@ -309,7 +309,7 @@ require_once 'templates/header.php';
                                 console.log(xhr.responseText);
                             },
                             success: function(data) {
-                                // console.log(data);
+                                console.log(data);
                                 if (data.respuesta == 'exito') {
                                     alertaSwal(data.Texto, 'success');
                                     setTimeout(() => {

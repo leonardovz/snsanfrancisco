@@ -109,7 +109,7 @@ switch ($_POST['opcion']) {
         $nPub = $ADMINFUNC->contarPublicacionUser($USERLOGIN['idUsuario']); //Permite contar el numero de publicaciones actuales
         if (!$MEMBRESIA) { }
 
-        if (!$MEMBRESIA || ($nPub > $MEMBRESIA['membresia']['publicacion'])) {
+        if (!$MEMBRESIA || ($nPub >= $MEMBRESIA['membresia']['publicacion'])) {
             die(json_encode(array('respuesta' => 'error', 'Texto' => "El número de publicaciones exede tu paquete actual, si requieres de más publicaciónes puedes eliminar pubicaciónes pasadas, o consultar al administrador para mejorar tu paquete")));
         }
         $IMAGENPERFIL = $_FILES['avatar'];
@@ -428,7 +428,7 @@ switch ($_POST['opcion']) {
         $tipoPago = 'codigo';
         $mesesMembresia = (int) $codigoServicio['cantidad'] * (int) $codigoServicio['duracion'];
         $fechaInicio = date("Y-m-d");
-        $fechaFinal =  date("Y-m-d", strtotime($fechaInicio . "+ $mesesMembresia month"));
+        $fechaFinal =  date("Y-m-d", strtotime($fechaInicio . "+ " . $mesesMembresia . " month"));
         // FIN Calculo para realizar la activación de la membresia
 
         $sql = "INSERT INTO usersinfo(iduser, nombreServicio, telefono,correoServicio,domicilio, idServicio, CP, colonia) VALUES ($idUsuario,'$nombreServicio','$telefonoOficina','$correoServicio','$domicilio','$servicio',$codigoPostal,'$colonia')";
@@ -444,13 +444,13 @@ switch ($_POST['opcion']) {
             } else {
                 $respuesta = array(
                     'respuesta' => 'error',
-                    'Texto' => 'No fue posible registrar su membresia'
+                    'Texto' => 'No fue posible registrar su membresia, reinicia la ventana'
                 );
             }
         } else {
             $respuesta = array(
                 'respuesta' => 'error',
-                'Texto' => 'no fue posible realizar el registro'
+                'Texto' => 'no fue posible realizar el registro intenta recargar la página'
             );
         }
         // $respuesta = array();

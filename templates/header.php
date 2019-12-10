@@ -56,7 +56,7 @@
         gtag("config", "UA-129896419-1");
       </script>';
   }
-   if(isset($ADSENSE) && $ADSENSE) {
+  if (isset($ADSENSE) && $ADSENSE) {
     echo '<script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
   }
   if ($RECAPTCHA) {
@@ -73,7 +73,6 @@
       return "<?php echo $ruta; ?>";
     }
   </script>
-
-  <link rel="stylesheet" href="<?php echo $ruta; ?>recursos/js/addons/cropper.js">
+  <script src="<?php echo $ruta; ?>recursos/js/addons/cropper.js" async defer></script>
 
 </head>

@@ -158,9 +158,12 @@ $(document).ready(function () {
                     console.log(xhr.responseText);
                 },
                 success: function (data) {
-                    // console.log(data);
+                    console.log(data);
                     if (data.respuesta == 'exito') {
-                        alertaSwal(data.Texto,'success')
+                        alertaSwal(data.Texto, 'success');
+                        setTimeout(() => {
+                            window.location = ruta + 'perfil';
+                        }, 3000);
                     } else {
                         errorForm.append('<div class="alert alert-warning" role="alert">' + data.Texto + ' </div>');
                     }
