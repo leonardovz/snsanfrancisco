@@ -13,25 +13,21 @@ $(document).ready(() => {
             data: 'opcion=registro&' + formulario,
             dataType: 'json',
             error: function (xhr, status) {
-                console.log(JSON.stringify(xhr));
+                // console.log(JSON.stringify(xhr));
+                Swal.fire('exito!', "Registro realizado correctamente, no fue posible enviar su correo electronico", 'warning');
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.respuesta == 'exito') {
+                    Swal.fire('¡Exito!', data.Texto, 'exito');
 
                 } else {
                     var posicion = $("#apellido").offset().top;
-                    $("#errores").html(`<div class="alert alert-primary" role="alert">
-                    ${data.Texto}
-                  </div>`);
+                    $("#errores").html(`<div class="alert alert-primary" role="alert"> ${data.Texto} </div>`);
                     $("html, body").animate({
                         scrollTop: posicion
                     }, 2000);
-                    Swal.fire(
-                        'Alerta!',
-                        data.Texto,
-                        'error'
-                    )
+                    Swal.fire('¡Error!', data.Texto, 'error');
                 }
             }
         });
