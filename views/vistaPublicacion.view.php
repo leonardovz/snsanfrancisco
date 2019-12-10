@@ -140,7 +140,7 @@ require_once 'templates/header.php';
         </div>
         <h1>Relación de servicios!</h1>
         <div class="row justify-content-center" id="serviciosBody">
-            
+
         </div>
     </div>
     <?php require_once 'templates/footer.view.php'; ?>
@@ -152,7 +152,7 @@ require_once 'templates/header.php';
                 $("#descripcionConten").show();
             });
         });
-        var idUsuario = <?php echo $PUBLICACION['idUsuario']; ?>;
+        var idUsuario = <?php echo $PUBLICACION['idUsuario']; ?> + 0;
     </script>
     <script src="<?php echo $ruta; ?>script/postPublico.js"></script>
 </body>

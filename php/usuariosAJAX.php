@@ -75,7 +75,7 @@ switch ($_POST['opcion']) {
 
                             $respuesta = enviarCorreo($CORREO, $datos);
 
-                            $respuesta = array('respuesta' => 'error', 'Texto' => 'Registro realizado con exito', 'correo' => $respuesta);
+                            $respuesta = array('respuesta' => 'exito', 'Texto' => 'Registro realizado con exito', 'correo' => $respuesta);
                         } else {
                             $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible realizar el registro');
                         }
