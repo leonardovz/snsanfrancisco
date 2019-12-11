@@ -150,7 +150,7 @@ require_once 'templates/header.php';
     <?php require_once 'templates/footer.view.php'; ?>
     <?php require_once 'templates/footer.php'; ?>
     <script>
-        var idServicio = <?php echo $idPost; ?>
+        var idServicio = <?php echo $idPost; ?> + 0;
     </script>
     <script src="<?php echo $ruta; ?>script/serviciosBusqueda.js"></script>
 </body>

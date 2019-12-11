@@ -110,7 +110,7 @@ switch ($_POST['opcion']) {
             $respuesta = array(
                 'respuesta' => 'error',
                 'Texto' => 'No cuenta con publicaciones',
-                'POST' => $_POST,$sql
+                'POST' => $_POST, $sql
             );
         }
         die(json_encode($respuesta));
@@ -465,6 +465,43 @@ switch ($_POST['opcion']) {
         }
         die(json_encode($respuesta));
         break;
+    case 'codigoPostal':
+        $CP = isset($_POST['CP']) && !empty($_POST['CP']) ? (int) $_POST['CP'] : false;
+        if ($CP) {
+            $sql = "SELECT * FROM codigospostales WHERE cp = '$CP'";
+            $resultado = $conexion->query($sql);
+            $CODIGOS = [];
+            if ($resultado && $resultado->num_rows) {
+                $CODIGO = [];
+                $COLONIAS = [];
+                $i = 0;
+                while ($completoPostal = $resultado->fetch_assoc()) {
+                    if ($i == 0) {
+                        $CODIGO = $completoPostal;
+                        $i++;
+                    } else { }
+                    $COLONIAS[] = $completoPostal['asentamiento'];
+                }
+                $CODIGOS[] = array(
+                    'codigo_postal' => $CODIGO['cp'],
+                    'estado' => $CODIGO['estado'],
+                    'municipio' => $CODIGO['municipio'],
+                    'colonias' => $COLONIAS,
+                );
+                $respuesta = array('respuesta' => 'exito', 'Texto' => 'Algunos códigos encontrados', 'codigos' => $CODIGOS,);
+            } else {
+                $CODIGOS[] = array(
+                    'codigo_postal' =>'',
+                    'estado' => '',
+                    'municipio' => '',
+                    'colonias' => '',
+                );
+                $respuesta = array('respuesta' => 'exito', 'Texto' => 'No se encontro resultado de la busqueda', 'codigos' => $CODIGOS,);
+            }
+        } else {
+            $respuesta = array('respuesta' => 'error', 'Texto' => 'No se encontro resultado de la busqueda', 'codigos' => $CODIGOS,);
+        }
+        die(json_encode($respuesta));
     default:
         break;
 }

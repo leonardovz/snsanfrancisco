@@ -25,7 +25,7 @@
                             <!-- Grid column -->
                             <div class="col-xl-7 pb-2">
 
-                                <p class="card-text">Para asegurarnos de que seas tu, es necesario que ingreses nuevamente tu correo electronico Registrado</p>
+                                <p class="card-text">Para asegurarnos de que seas tu, es necesario que ingreses nuevamente tu correo electronico registrado</p>
                                 <p><b>Tu código es: </b> <?php echo $rutas[1]; ?></p>
                             </div>
                             <div class="col-md-7">
@@ -36,6 +36,9 @@
                                         <input type="hidden" id="codVerificacion" value="<?php echo $rutas[1]; ?>" style="display:none;">
                                         <input type="email" id="correoVerificar" class="form-control">
                                         <label for="correoVerificar">Ingresa tu correo</label>
+                                    </div>
+                                    <div class="col-md-12 p-0 mb-5">
+                                        <div class="g-recaptcha" data-sitekey="6LfTXMQUAAAAAFrpHyGr_-sXZzdaQ4Pgy4Hmjhlg"></div>
                                     </div>
                                     <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id=>Validar Correo Electronico</button>
                                 </form>
@@ -117,13 +120,14 @@
                 e.preventDefault();
                 let correo = $("#correoVerificar").val();
                 let codVerificacion = $("#codVerificacion").val();
+                var formulario = $(this).serialize();
                 if (correo != "") {
                     var expresion = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
                     if (expresion.test(correo)) {
                         $.ajax({
                             type: 'POST',
                             url: ruta + 'php/usuariosAJAX.php',
-                            data: 'opcion=verificacion&email=' + correo + '&codVerificacion=' + codVerificacion,
+                            data: 'opcion=verificacion&email=' + correo + '&codVerificacion=' + codVerificacion+'&'+formulario,
                             dataType: 'json',
                             error: function(xhr, status) {
                                 console.log(JSON.stringify(xhr));
