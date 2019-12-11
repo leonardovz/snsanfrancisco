@@ -17,9 +17,10 @@ $(document).ready(function () {
 
     function traerDireccion(codigoPostal) {
         $.ajax({
-            type: "GET",
-            url: 'https://api-codigos-postales.herokuapp.com/v2/codigo_postal/' + codigoPostal,
+            type: "POST",
+            url: ruta+'php/publico.php',
             dataType: "json",
+            data: "opcion=codigoPostal&CP=" + codigoPostal,
             error: function (xhr, resp) {
                 console.log(xhr.responseText);
                 coloniasImp.html(`<div class="col">
@@ -30,54 +31,57 @@ $(document).ready(function () {
                             </div>`);
             },
             success: function (data) {
-                if (data.estado != "" && data.municipio != "") {
-                    statusCP = true;
-                    $("#errorCP").html("");
-                    estado.val(data.estado).show();
-                    municipio.val(data.municipio).show();
-                    if (data.colonias.length > 0) {
-                        let opciones = "";
-                        for (const i in data.colonias) {
-                            opciones += `<option value="${data.colonias[i]}" >${data.colonias[i]}</option>`;
-                        }
-                        colonias.html(`<label>Colonia</label>
+                if (data.respuesta == "exito") {
+                    data = data.codigos[0];
+                    if (data.estado != "" && data.municipio != "") {
+                        statusCP = true;
+                        $("#errorCP").html("");
+                        estado.val(data.estado).show();
+                        municipio.val(data.municipio).show();
+                        if (data.colonias.length > 0) {
+                            let opciones = "";
+                            for (const i in data.colonias) {
+                                opciones += `<option value="${data.colonias[i]}" >${data.colonias[i]}</option>`;
+                            }
+                            colonias.html(`<label>Colonia</label>
                         <select class="browser-default custom-select select2" id="colonia"name="colonia">
                         ${opciones}
                             <option value="0">Otra</option>
                         </select>`);
-                        $("#colonia").change(function () {
-                            let colonia = $(this).val();
-                            // console.log(colonia);
-                            if (colonia == 0) {
-                                coloniasImp.html(`<div class="col">
+                            $("#colonia").change(function () {
+                                let colonia = $(this).val();
+                                // console.log(colonia);
+                                if (colonia == 0) {
+                                    coloniasImp.html(`<div class="col">
                                 <div class="md-form mt-3">
                                     <input type="text" id="coloniaText" name="coloniaText" class="form-control">
                                     <label for="coloniaText">Colonia</label>
                                 </div>
                             </div>`);
-                            } else {
-                                coloniasImp.html("");
-                            }
-                        });
-                    } else if (data.colonias.length == 0) {
-                        coloniasImp.html(`<div class="col">
+                                } else {
+                                    coloniasImp.html("");
+                                }
+                            });
+                        } else if (data.colonias.length == 0) {
+                            coloniasImp.html(`<div class="col">
                                 <div class="md-form mt-3">
                                     <input type="text" id="coloniaText" name="coloniaText" class="form-control">
                                     <label for="coloniaText">Colonia</label>
                                 </div>
                             </div>`);
-                    }
-                } else {
-                    statusCP = false;
-                    $("#errorCP").html(`
+                        }
+                    } else {
+                        statusCP = false;
+                        $("#errorCP").html(`
                         <div class="alert alert-danger" role="alert">
                             El código postal que ingresaste no se encuentra en nuestra base de datos
                         </div>
                     `);
-                    estado.val(data.estado).hide();
-                    municipio.val(data.municipio).hide();
-                    colonias.html("");
-                    coloniasImp.html("");
+                        estado.val(data.estado).hide();
+                        municipio.val(data.municipio).hide();
+                        colonias.html("");
+                        coloniasImp.html("");
+                    }
                 }
                 // console.log(data);
             }

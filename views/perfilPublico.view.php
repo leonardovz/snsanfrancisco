@@ -243,17 +243,20 @@ require_once 'templates/header.php'; ?>
             });
             var $codigoPostal = $("#codigoPostal");
             $.ajax({
-                type: "GET",
-                url: 'https://api-codigos-postales.herokuapp.com/v2/codigo_postal/' + $codigoPostal.attr('data-postal'),
+                type: "POST",
+                url: '<?php echo $ruta; ?>/php/publico.php',
                 dataType: "json",
+                data: "opcion=codigoPostal&CP=" + $codigoPostal.attr('data-postal'),
                 error: function(xhr, resp) {
                     console.log(xhr.responseText);
                 },
                 success: function(data) {
-                    if (data.estado != "" && data.municipio != "") {
-                        $codigoPostal.html(`
-                        <p><i class="fas fa-phone pr-2"></i>${data.municipio}</p>
-                    `);
+                    console.log(data);
+                    if (data.respuesta == "exito") {
+                        data = data.codigos[0];
+                        $codigoPostal.html(` <p><i class="fas fa-phone pr-2"></i>${data.municipio}</p>`);
+                    } else {
+
                     }
                 }
             });
@@ -267,16 +270,16 @@ require_once 'templates/header.php'; ?>
 
             ?>
             var cuerpoSocial = "";
-            if (social.facebook && social.facebook != '')  {
+            if (social.facebook && social.facebook != '') {
                 cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://www.facebook.com/${(social.facebook)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-facebook-f"></"></i></a> </li>`;
             }
-            if (social.whatsapp && social.whatsapp != '')  {
+            if (social.whatsapp && social.whatsapp != '') {
                 cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://api.whatsapp.com/send?phone=52${(social.whatsapp)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-whatsapp"></i></a> </li>`;
             }
-            if (social.messenger && social.messenger != '')  {
+            if (social.messenger && social.messenger != '') {
                 cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://www.messenger.com/t/${(social.messenger)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-facebook-messenger"></i></a> </li>`;
             }
-            if (social.personalWeb && social.personalWeb != '')  {
+            if (social.personalWeb && social.personalWeb != '') {
                 cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://${(social.personalWeb)}"class="p-2 fa-lg tw-ic text-white"><i class="fas fa-laptop-code"></i></a> </li>`;
             }
             $("#socialContact").html(cuerpoSocial);
