@@ -20,9 +20,9 @@ RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
 RewriteRule ^([a-zA-Z0-9Ññ/-]+)$ index.php?ruta=$1
 #
-##ErrorDocument 400 http://snsanfrancisco/error/400
-##ErrorDocument 401 http://snsanfrancisco/error/401
-##ErrorDocument 403 http://snsanfrancisco/error/403
-ErrorDocument 404 http://snsanfrancisco/error/404
-##ErrorDocument 500 http://snsanfrancisco/error/500
-##ErrorDocument 503 http://snsanfrancisco/error/503
+##ErrorDocument 400 https://snsanfrancisco.com/error/400
+##ErrorDocument 401 https://snsanfrancisco.com/error/401
+##ErrorDocument 403 https://snsanfrancisco.com/error/403
+ErrorDocument 404 https://snsanfrancisco.com/error/404
+##ErrorDocument 500 https://snsanfrancisco.com/error/500
+##ErrorDocument 503 https://snsanfrancisco.com/error/503
