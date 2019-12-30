@@ -83,6 +83,23 @@
   </div>
   <div class="footer-copyright text-center py-3">© 2019 SnSanfrancisco:
     <a href="<?php echo $ruta; ?>"> snsanfrancisco.com</a>
-    <span class="ml-5">Recuerda revisar nuestros <a target="_blank" href="<?php echo $ruta;?>galeria/documentos/terminos_y_condiciones.pdf">Términos y Condiciones</a> </span>
+    <span class="ml-5">Recuerda revisar nuestros <a target="_blank" href="<?php echo $ruta; ?>galeria/documentos/terminos_y_condiciones.pdf">Términos y Condiciones</a> </span>
   </div>
 </footer>
+<div class="container">
+  <div class="row">
+    <div class="modal fade" id="sideModalTR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <!-- Change class .modal-sm to change the size of the modal -->
+      <div class="modal-dialog modal-full-height modal-bottom  " role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <span class="modal-title w-100" id="myModalLabel">Utilizamos cookies para ofrecerte la mejor experiencia. Si sigues navegando consideramos que aceptas su uso. <a href="">Cookies</a></span>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

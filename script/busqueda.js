@@ -1,7 +1,7 @@
 new WOW().init();
 var ruta = ruta();
 $(document).ready(function () {
-  var BUSQUEDA = (window.location.pathname).split("/")[2].replace(/-/g, " ");//Cacha la ruta y separa los datos para enviar a SQL
+  var BUSQUEDA = (window.location.pathname).split("/")[3].replace(/-/g, " ");//Cacha la ruta y separa los datos para enviar a SQL
   traerPosts();
   $("#inBusqueda").val(BUSQUEDA);
   function traerPosts() {
@@ -17,9 +17,6 @@ $(document).ready(function () {
         console.log(xhr.responseText);
       },
       success: function (data) {
-        // console.log(BUSQUEDA);
-        // console.log(data);
-
         if (data.respuesta == "exito") {
           let cuerpoPub = "";
           let cuerpoUser = "";
@@ -141,5 +138,109 @@ $(document).ready(function () {
       descripcion.show();
       opcionMostrar.remove();
     });
+  }
+  function traerBlogs(blogPublicacion = false) {
+    var tituloPrincipal = $("#tituloPrincipal");
+    var imagenPrincipal = $("#imagenPrincipal");
+    var cuerpoPrincipal = $("#cuerpoPrincipal");
+    blogPublicacion = (blogPublicacion) ? "&idPublicacion=" + blogPublicacion : "";
+    $.ajax({
+      type: "POST",
+      url: ruta + 'php/publicacionesAJAX.php',
+      dataType: "json",
+      data: `opcion=traerPostsBlog&pagina=${paginaAC}&busqueda=${busqueda}${blogPublicacion}`,
+      error: function (xhr, resp) {
+        console.log(xhr.responseText);
+      },
+      success: function (data) {
+        console.log(data);
+        if (data.respuesta == 'exito') {
+          PUBLICACIONES = data.publicaciones;
+          setTimeout(() => {
+            let cuerpo = "",
+              cuerpoRigth = "";
+            for (let i in PUBLICACIONES) {
+              if (i == 0) {
+                tituloPrincipal.html(PUBLICACIONES[i].titulo);
+                imagenPrincipal.html(`<img class="rounded z-depth-3 mt-0 pt-0" src="${ruta + data.rutaImagen}${PUBLICACIONES[i].imagen}" alt="avatar" style="width: 100%;">`);
+                cuerpoPrincipal.html(PUBLICACIONES[i].descripcion);
+              } else {
+                cuerpo += (cuerpoPostBlog(PUBLICACIONES[i], ruta, data.rutaImagen));
+              }
+            }
+            $("#cuerpoPostBlog").html(cuerpo);
+            $("#cuerpoRigth").html(cuerpoRigth);
+            paginaAC = parseInt(paginaAC);
+            paginaAC = (paginaAC) ? paginaAC : 1;
+            paginar(paginaAC, data.totalPublicaciones, ruta + 'blog/' + busquedaRuta);
+
+            acciones();
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            $("#cuerpoPostBlog").html("");
+          }, 3000);
+        }
+      }
+    });
+  }
+  function cuerpoPostBlog(publicacion, ruta, rutaImagen) {
+    var cuerpo = ``;
+    let nombreMin = publicacion.nombre.replace(" ", "-"),
+      apellidoMin = publicacion.apellidos.replace(" ", "-"),
+      nameUser = nombreMin + '-' + apellidoMin;
+    var fecha = publicacion.fecha.split(" ")[0];
+    fecha = fecha.split("-");
+    fecha = MESES[fecha[1]] + " de " + fecha[0];
+    numDesc = publicacion.descripcion.length;
+    cuerpo += `
+        <div class="col-md-6 mb-4">
+            <div class="card card-personal mb-md-0 m-1">
+                <div class="view overlay">
+                    <img class="card-img-top" src="${ruta}${rutaImagen}${publicacion.imagen}" alt="Card image cap">
+                    <a href="${ruta + 'blog/post/' + (publicacion.id)}">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <a>
+                        <h4 class="card-title h6">${publicacion.titulo}.</h4>
+                    </a>
+                    <p class="card-text">By <a  class="card-text" href="${ruta}perfil/${rellenarCero(publicacion.iduser)}/${normalize(nameUser)}" > ${publicacion.nombre} ${publicacion.apellidos} </a></p>
+                    <hr>
+                    <a class="card-meta text-justify"><span><i class="fas fa-user mx-2"></i>${publicacion.vistas} Vistas</span> <a class="card-text text-right ml-2 "> ${fecha} </a></a>
+                </div>
+            </div>
+        </div>
+          `;
+    return cuerpo;
+  }
+  function paginar(pagina, paginas, rutaDir = "") {
+    let total = paginas,
+      elementos = 6;
+    if (true) {
+      paginas = ((total % elementos) > 0) ? Math.trunc(total / elementos) + 1 : Math.trunc(total / elementos)
+    }
+    if (pagina > paginas) {
+      pagina = 1;
+    }
+    var elementosCard = 9; //Numero de elementos para realizar la paginación
+    // var recorrido = (paginas > elementosCard) ? (((paginas % elementosCard) > 0) ? Math.trunc(paginas / elementosCard) + 1 : Math.trunc(paginas / elementosCard)) : paginas;
+    var i = (Math.trunc(pagina / elementosCard)) * elementosCard;
+    var limite = i + elementosCard;
+    if ((pagina + elementosCard) > paginas) { //Validar que los elementos no sobrepasen el limite
+      i = paginas - elementosCard; //Asignación inicio del ciclo
+      limite = paginas //Asignación fin del ciclo
+    }
+    i = (i < 1) ? 1 : i;
+    var cuerpo = `<ul class="pagination">`;
+    cuerpo += ` <li class="page-item ${((pagina <= 1) ? " disabled" : "")}"><a class="page-link" ${((pagina <= 1) ? "" : 'href="' + rutaDir + 'pagina-' + (paginaAC - 1) + '"')}>Previous</a></li>`;
+    for (i; i <= limite; i++) {
+      cuerpo += `<li class="page-item ${((i == pagina) ? " active" : " ")}"><a class="page-link" ${(i == paginaAC) ? "" : 'href="' + rutaDir + 'pagina-' + i + '"'}>${i}</a></li>`;
+    }
+    cuerpo += `<li class="page-item ${((pagina >= paginas) ? " disabled" : "")}" ><a class="page-link" ${((pagina >= paginas) ? "" : 'href="' + rutaDir + 'pagina-' + ((paginaAC) + 1) + '"')} >Next</a></li>`;
+    cuerpo += (pagina != paginas) ? `<li class="page-item ${((pagina >= paginas) ? " disabled" : "")}" ><a class="page-link" href="${rutaDir}pagina-${paginas}"><i class="fa fa-fast-forward" aria-hidden="true"></i> </a></li>` : "";
+    cuerpo += `</ul>`;
+    $("#paginacion").html(cuerpo);
   }
 });

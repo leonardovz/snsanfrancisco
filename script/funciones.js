@@ -8,6 +8,13 @@ function rellenarCero(numero, ceros = 5) {
     cadena += numero;
     return cadena;
 }
+function removeSpecialChars(str) {
+    return str.replace(/(?!\w|\s)./g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/^(\s*)([\W\w]*)(\b\s*$)/g, '$2')
+        .replace(/ /g, "-")
+        .trim();
+}
 var normalize = (function () {
     var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÇç",
         to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuucc",

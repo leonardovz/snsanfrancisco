@@ -18,7 +18,7 @@ if ($conexion->connect_errno) {
     );
     die(json_encode($respuesta));
 }
-$response_recapcha = $_POST['g-recaptcha-response'];
+$response_recapcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : false;
 if (isset($response_recapcha) && $response_recapcha) {
     $secret = "6LfTXMQUAAAAAJYmMvBxne034MJMwQu6ze8X2-5V";
     $ip = $_SERVER['REMOTE_ADDR'];
@@ -62,7 +62,7 @@ switch ($_POST['opcion']) {
                 if ($password == $passwordR) {
                     if (!correoExiste($conexion, $email)) {
                         $password = md5($password);
-                        
+
                         $sql = "INSERT INTO usuarios(nombre, apellidos, correo, password, tipoUser, validar, encriptado,modo) VALUES ('$nombre','$apellidos','$email','$password',$tipoUser,$validar,'$mailEncrypt','$modo')";
                         $resultado = $conexion->query($sql);
                         if ($resultado) {

@@ -122,6 +122,14 @@ require_once 'templates/header.php';
                 <div class="row justify-content-center" id="contServicios"></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12 p-4">
+                <h3>Post blog encontrados!</h3>
+            </div>
+            <div class="col">
+                <div class="row justify-content-center" id="cuerpoPostBlog"></div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-12">

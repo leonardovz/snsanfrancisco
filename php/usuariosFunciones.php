@@ -199,7 +199,7 @@ switch ($_POST['opcion']) {
         if (!$USERLOGIN ||  !$PUBLICACION) {
             die(json_encode(array('respuesta' => 'error', 'Texto' => "Ocurrio un error al consultar tu perfil, Cierra sesión y vuelve a ingresar", $sql, $_POST)));
         }
-        // $sql = "";
+
         if ($USERLOGIN['rol'] == 1 && $USERLOGIN['idUsuario'] != $PUBLICACION['iduser']) {
             $sql = "UPDATE publicacion SET estado= 'BAN' WHERE id = $idPublicacion";
             $resultado = $conexion->query($sql);
@@ -219,7 +219,11 @@ switch ($_POST['opcion']) {
             $sql = "DELETE FROM publicacion WHERE id = $idPublicacion AND iduser = " . $USERLOGIN['idUsuario'];
             $resultado = $conexion->query($sql);
             if ($resultado) {
-                unlink('../galeria/usuario/' . rellenarCero($USERLOGIN['idUsuario']) . '/' . $PUBLICACION['imagen']);
+                $galery = ('../galeria/usuario/' . rellenarCero($USERLOGIN['idUsuario']) . '/' . $PUBLICACION['imagen']);
+                if (is_file($galery)) {
+                    unlink($galery);
+                }
+
                 $respuesta = array(
                     'respuesta' => 'exito',
                     'Texto' => 'Se elimino de forma exitosa'

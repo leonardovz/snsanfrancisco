@@ -44,16 +44,32 @@ if ($rutas) { //Ruta Vacia
         if ($UserLogin) {
             header('Location: ' . $ruta . 'perfil');
         } else {
-            require_once 'views/registro.view.php';
+            if ($RUTAS1 && (int) $RUTAS1 > 0) {
+                $ADMIN = new AdminFunciones();
+                $ADMIN->CONEXION = $conexion;
+                $USUARIO = $ADMIN->encontrarUsuario((int) $RUTAS1);
+                // var_dump($USUARIO);
+                if ($USUARIO && $USUARIO['validar'] == 0) {
+                    require_once 'views/registroAfter.view.php';
+                } else {
+                    header('Location: ' . $ruta . 'registro');
+                }
+            } else {
+                require_once 'views/registro.view.php';
+            }
         }
     } elseif ($RUTAS0 == 'verificar' && !$UserLogin) {
         require_once 'views/verificacionMail.view.php';
     } elseif ($RUTAS0 == 'blog') {
         if ($RUTAS1) {
             if ($RUTAS1 == 'publicacion' && $RUTAS2) {
-                // $ADSENSE = true; //Activa el modo de anuncion en este apartado
                 require_once 'views/vistaPublicacion.view.php';
-            } else {
+            }else if ($RUTAS1 == 'busqueda' && $RUTAS2) {
+                require_once 'views/blog.view.php';
+            } else if ($RUTAS1 == 'post' && $RUTAS2) {
+                require_once 'views/vistaPublicacion.view.php';
+            }
+             else {
                 header('Location: ' . $ruta . 'error/404');
             }
         } else {
@@ -106,6 +122,8 @@ if ($rutas) { //Ruta Vacia
                         require_once 'account/admin/servicios/servicios.php';
                     } elseif ($RUTAS1 == 'codigos') {
                         require_once 'account/admin/codigos/codigos.php';
+                    } elseif ($RUTAS1 == 'publicaciones') {
+                        require_once 'account/admin/publicaciones/publicacion.view.php';
                     } else {
                         header('Location: ' . $ruta . 'error/404');
                     }

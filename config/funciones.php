@@ -378,4 +378,29 @@ class AdminFunciones
         $NPUB = ($NPUB && $NPUB->num_rows) ? $NPUB->fetch_assoc()['total'] : 0;
         return $NPUB;
     }
+    function encontrarUsuario($idUsuario)
+    {
+        $conexion = $this->CONEXION;
+        $resultado = false;
+        if ($conexion) {
+            $sql = "SELECT nombre, apellidos, fecha, img, validar FROM usuarios WHERE idUsuario = $idUsuario";
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
+        }
+        return $resultado;
+    }
+}
+class Publicaciones
+{
+    var $CONEXION = false;
+    function contarPublicaciones($busqueda = "")
+    {
+        $resultado = false;
+        if ($this->CONEXION) {
+            $sql = "SELECT  COUNT(*) AS total FROM blogposts AS B ,usuarios as U WHERE B.iduser = U.idUsuario $busqueda";
+            $resultado = $this->CONEXION->query($sql);
+            $resultado = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc()['total'] : false;
+        }
+        return $resultado;
+    }
 }
