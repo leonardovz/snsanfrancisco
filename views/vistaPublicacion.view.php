@@ -1,160 +1,111 @@
 <?php
-require_once 'config/ruta.php';
-require_once 'config/config.php';
-require_once 'config/funciones.php';
-$conexion = conexion($bd_config);
-
-if ($conexion->connect_errno) {
-    $respuesta = array(
-        'respuesta' => 'error',
-        'Texto' => 'Hay un problema al conectar con el servidor'
-    );
-    die(json_encode($respuesta));
-}
-
-$FUNCIONES = new AdminFunciones();
-$FUNCIONES->CONEXION = $conexion;
-$idPost = ($RUTAS1) ? (int) $RUTAS2 : false;
-$sql = "SELECT P.*,U.nombre AS nombreU,U.apellidos, U.img,U.idUsuario,S.nombre,UI.nombreServicio,U.fecha AS fechaU,S.id AS idServicio FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND P.id =" . $idPost;
-$resultado = $conexion->query($sql);
-$PUBLICACION = ($resultado  && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
-
-$NPUB = 0;
-$SERVICIO = false;
-if ($PUBLICACION) {
-    $contador = "SELECT COUNT(*) AS total FROM publicacion AS P ,usuarios as U, usersinfo AS UI,servicios AS S WHERE P.iduser = U.idUsuario AND U.idUsuario = UI.iduser AND UI.idServicio = S.id AND U.idUsuario =" . $PUBLICACION['idUsuario'];
-    $NPUB = $conexion->query($contador);
-    $NPUB = ($NPUB && $NPUB->num_rows) ? $NPUB->fetch_assoc()['total'] : 0;
-
-    $systemName = $PUBLICACION['nombreServicio'] . ' | ' . $PUBLICACION['titulo'] . ' | ' . $systemName;
-    $keyWords = $PUBLICACION['nombre'] . ' | ' . $keyWords;
-    $descripcionServ = $descripcionServ . ' - ' . $PUBLICACION['nombreU'] . ' ' . $PUBLICACION['apellidos'] . ' te ofrece su servicio de ' . $PUBLICACION['nombreServicio'];
-
-    $SERVICIO = $FUNCIONES->verificarServicio($PUBLICACION['idServicio']);
-    if ($SERVICIO) {
-        $SERVICIO = $SERVICIO->fetch_assoc();
-    }
-}
-// var_dump($PUBLICACION);
-// exit;
-require_once 'templates/header.php';
-
-?>
+$BUSQUEDAAC = explode("-", $RUTAS1)[0];
+$BUSQUEDAAC = ($BUSQUEDAAC == 'busqueda') ? str_replace("-", " ", substr($RUTAS1, (9))) : false;
+$PAGINACION = explode("-", $RUTAS2);
+$pagina = isset($PAGINACION[1]) ? (int) $PAGINACION[1] : 0;
+$PAGINACION = ($PAGINACION[0] == 'pagina') ? $pagina : 0;
+require_once 'templates/header.php'; ?>
 
 <body>
     <!-- Main navigation -->
     <header class="mb-5">
         <!--Navbar-->
         <?php require_once 'templates/header.view.php'; ?>
-        <br><br>
+        <br>
+        <br>
+        <br>
     </header>
-    <div class="container mt-5">
-        <!-- Section: Group of personal cards -->
-        <div class="row">
-            <div class="col-md-8">
-                <section class="mt-5">
-                    <?php if ($PUBLICACION) {
-                        $FECHA = explode(" ", $PUBLICACION['fecha']);
-                        $FECHA = explode("-", $FECHA[0]);
+    <div class="container my-5">
+        <section class="mt-5">
+            <div class="row mt-5">
+                <div class="col-md-8 mb-4">
 
-                        ?>
-                        <!-- Grid row -->
-                        <div class="row mt-5">
-                            <div class="col-md-12 m-3 p-2">
-                                <h3><?php echo $PUBLICACION['titulo']; ?></h3>
+                    <h2 class="card-title section-heading">
+                        <strong id="tituloPrincipal">
+                            <div class="spinner-grow" role="status">
+                                <span class="sr-only">Loading...</span>
                             </div>
-                            <div class="col-md-12 mb-4">
-                                <!-- Card group-->
-                                <div class="card-group">
-
-                                    <!-- Card -->
-                                    <div class="card mb-md-0 mb-4">
-
-                                        <!-- Card image-->
-                                        <div class="overlay">
-                                            <img class="card-img-top" src="<?php echo $ruta . 'galeria/usuario/' . rellenarCero($PUBLICACION['idUsuario']) . '/' . $PUBLICACION['imagen']; ?>" alt="Card image cap">
-                                            <a>
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card card-personal mb-md-0 mb-4">
-                                        <!-- Card content -->
-                                        <div class="card-body">
-                                            <a>
-                                                <h4 class="card-title"><?php echo $PUBLICACION['nombreServicio']; ?></h4>
-                                            </a>
-                                            <a href="<?php echo $ruta . 'perfil/' . rellenarCero($PUBLICACION['idUsuario']); ?>">
-                                                <h5 class="card-title"><?php echo $PUBLICACION['nombreU'] . ' ' . $PUBLICACION['apellidos']; ?></h5>
-                                            </a>
-                                            <a class="card-meta">Publicado: <?php echo $FECHA[2] . ' de  ' . strtolower($mesesAnio[(int) $FECHA[1]]) . ' de ' . $FECHA[0]; ?> </a>
-                                            <!-- Text -->
-                                            <p class="card-text"><?php echo substr($PUBLICACION['descripcion'], 0, 90) . ((strlen($PUBLICACION['descripcion']) > 90) ? '<a class="text-primary" id="mostrarDescripcion">... más </a>' : ""); ?><span id="descripcionConten" style="display:none;"><?php echo substr($PUBLICACION['descripcion'], 90); ?></span></p>
-                                            <a href="#!"><span class="badge <?php echo $SERVICIO['color']; ?> mx-2"><i class="<?php echo $SERVICIO['icono']; ?> pr-2" aria-hidden="true"></i><?php echo $SERVICIO['nombre']; ?></span></a>
-                                            <hr>
-
-                                            <a class="card-meta"><span><i class="fas fa-user mr-2"></i><?php echo $NPUB; ?>Publicaciones</span></a>
-                                            <p class="card-meta float-right">Miembro desde <?php echo explode('-', (explode(" ", $PUBLICACION['fechaU'])[0]))[0]; ?></p>
-
-                                        </div>
-                                        <!-- Card content -->
-
-                                    </div>
-                                </div>
+                        </strong>
+                    </h2>
+                    <div class="w-100" id="imagenPrincipal">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-justify" id="cuerpoPrincipal">
+                            <div class="spinner-grow" role="status">
+                                <span class="sr-only">Loading...</span>
                             </div>
                         </div>
-                    <?php } else { ?>
-                    <?php } ?>
-                    <div class="row p-3">
-                        <div class="col-md-12 bg-secondary my-5">
-                            <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
-                                <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
-                            </a>
-                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 m-3 p-2">
-                            <h4>Otras publicaciónes recientes</h4>
+                </div>
+                <div class="col-md-4 mt-5">
+                    <div class="row px-md-3 " id="cuerpoPerfiles">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
                         </div>
-                        <div class="col">
-                            <div class="row" id="cuerpoPublicacionesSP"></div>
-                        </div>
-                    </div>
-                    <div class="row p-3">
-                        <div class="col-md-12 bg-secondary my-5">
-                            <a href="<?php echo $ruta; ?>perfil/00002/Ramon-Vazquez">
-                                <img src="<?php echo $ruta; ?>galeria/sistema/banners/4.png" alt="" style="width: 100%;">
-                            </a>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <div class="col-lg-4 col-md-6 my-5 pt-5">
-                <h2 class="">Más publicaciones</h2>
-                <div class="row my-5">
-                    <div class="col" id="cuerpoRigth">
-
                     </div>
                 </div>
             </div>
-        </div>
-        <h1>Relación de servicios!</h1>
-        <div class="row justify-content-center" id="serviciosBody">
+            <div class="row justify-content-end">
+                <div class="col-md-8">
+                    <h2 class="section-heading">Más posts</h2>
+                    <div class="row justify-content-between" id="paginacion">
+                    </div>
 
-        </div>
+                    <div class="row justify-content-between" id="cuerpoPostBlog">
+                    </div>
+                    <h2 class="section-heading">Más publicaciónes</h2>
+                    <div class="row justify-content-between" id="cuerpoPublicaciones">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="h5">Servicios</h3>
+                    <!--Grid row-->
+                    <div class="row" id="contServicios">
+                        <!--Grid column-->
+                        <div class="col-md-12 mb-4">
+
+                            <!-- Card -->
+                            <div class="card gradient-card">
+
+                                <div class="card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg)">
+
+                                    <!-- Content -->
+                                    <a href="#!">
+                                        <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                                            <div class="first-content align-self-center p-3">
+                                                <h3 class="card-title">Today's sales</h3>
+                                                <p class="lead mb-0">Click on this card to see details</p>
+                                            </div>
+                                            <div class="second-content align-self-center mx-auto text-center">
+                                                <i class="far fa-money-bill-alt fa-3x"></i>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Card -->
+                        </div>
+                        <!--Grid row-->
+                    </div>
+                </div>
+        </section>
     </div>
+
+
+
     <?php require_once 'templates/footer.view.php'; ?>
     <?php require_once 'templates/footer.php'; ?>
     <script>
-        $(document).ready(function() {
-            $("#mostrarDescripcion").on('click', function() {
-                $(this).remove();
-                $("#descripcionConten").show();
-            });
-        });
-        var idUsuario = <?php echo $PUBLICACION['idUsuario']; ?> + 0;
+        var busqueda = '<?php echo $BUSQUEDAAC; ?>';
+        var paginaAC = '<?php echo $PAGINACION; ?>';
+        var busquedaRuta = 'busqueda<?php echo (($BUSQUEDAAC) ? "-" : "") . str_replace(" ", "-", $BUSQUEDAAC); ?>/';
+        <?php echo 'var idPostBlog = ' . (((int) $RUTAS2 > 0) ? (int) $RUTAS2 : "false") . ";" ?>
     </script>
-    <script src="<?php echo $ruta; ?>script/postPublico.js"></script>
+    <script src="<?php echo $ruta; ?>script/blogVista.js"></script>
+
 </body>
 
 </html>

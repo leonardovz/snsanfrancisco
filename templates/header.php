@@ -38,6 +38,9 @@
   if (isset($acStyles) && $acStyles) {
     echo '<link href="' . $ruta . 'recursos/css/style.css" rel="stylesheet">';
   }
+  if (isset($summernote) && $summernote) {
+    echo '<link href="' . $ruta . 'recursos/summernote/summernote-lite.css" rel="stylesheet">';
+  }
   if (isset($CROOPER) && $CROOPER) {
     echo '<link href="' . $ruta . 'recursos/css/addons/cropper.css" rel="stylesheet">';
     echo '<script type="text/javascript" src="' . $ruta . 'recursos/js/addons/cropper.js"></script>';
@@ -45,7 +48,7 @@
     echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />';
     echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>';
   }
-  if ($ANALYTICS) {
+  if (isset($ANALYTICS) && $ANALYTICS) {
     echo '
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129896419-1"></script>
       <script>
@@ -59,7 +62,7 @@
   if (isset($ADSENSE) && $ADSENSE) {
     echo '<script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
   }
-  if ($RECAPTCHA) {
+  if (isset($RECAPTCHA) && $RECAPTCHA) {
     echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
   }
   ?>

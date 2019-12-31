@@ -3,6 +3,10 @@
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/mdb.min.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>script/funciones.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/sweetalert2/sweetalert2.min.js"></script>
+
+<?php if (isset($summernote) && $summernote) { ?>
+  <script type="text/javascript" src="<?php echo $ruta; ?>recursos/summernote/summernote-lite.js"></script>
+<?php } ?>
 <?php if ($UserLogin) { ?>
   <script>
     $("#cerrarSesion").on('click', (e) => {
@@ -66,4 +70,13 @@
       }
     });
   });
+</script>
+<script>
+  var terminos = localStorage.getItem('terminos_y_condiciones_snsanfrancisco')
+  if (!terminos) {
+    $("#sideModalTR").modal('show');
+    setTimeout(() => {
+      localStorage.setItem('terminos_y_condiciones_snsanfrancisco', 1);
+    }, 10000);
+  }
 </script>
