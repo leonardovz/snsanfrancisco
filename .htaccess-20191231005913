@@ -1,6 +1,3 @@
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 ## Impedir que se pueda ver el listado de contenidos de un directorio
 #
 #Options All -Indexes
