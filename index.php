@@ -38,6 +38,12 @@ if ($rutas) { //Ruta Vacia
         } else {
             require_once 'views/login.view.php';
         }
+    } elseif ($RUTAS0 == 'recuperarcuenta') {
+        if ($UserLogin) {
+            header('Location: ' . $ruta . 'perfil');
+        } else {
+            require_once 'views/recuperacion.view.php';
+        }
     } elseif ($RUTAS0 == 'desarrollador') {
         require_once 'views/master.view.php';
     } elseif ($RUTAS0 == 'registro') {

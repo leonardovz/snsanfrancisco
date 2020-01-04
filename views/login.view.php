@@ -40,20 +40,13 @@
                             </div>
                             <div class="d-flex justify-content-around">
                                 <div>
-                                    <!-- Forgot password -->
-                                    <a href="">¿Olvidaste tu contraseña?</a>
+                                    <a href="<?php echo $ruta?>recuperarCuenta">¿Olvidaste tu contraseña?</a>
                                 </div>
                             </div>
-
-                            <!-- Sign in button -->
                             <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Ingresar</button>
-
-                            <!-- Register -->
                             <p>¿No eres miembro?
                                 <a href="<?php echo $ruta; ?>registro">Registrate</a>
                             </p>
-
-                            <!-- Social login -->
                             <p>Inicia Sesión con :</p>
                             <a id="loginFacebook" class="btn btn-primary text-white text-center">
                                 <i class="fab fa-facebook-f"></i>

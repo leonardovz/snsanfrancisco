@@ -18,17 +18,7 @@ if ($conexion->connect_errno) {
     );
     die(json_encode($respuesta));
 }
-$response_recapcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : false;
-if (isset($response_recapcha) && $response_recapcha) {
-    $secret = "6LfTXMQUAAAAAJYmMvBxne034MJMwQu6ze8X2-5V";
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $validar_server = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response_recapcha&remoteip=$ip");
-} else {
-    die(json_encode(array(
-        'respuesta' => 'error',
-        'Texto' => 'Debes de completar el capcha'
-    )));
-}
+
 
 // $_POST['opcion']="cargarNotas";
 // $tipoUsuario = $_SESSION['tipoUser']; //Verificacion de el tipo de usuario, Solo admin puede crear ADMIN y Vendedor.
@@ -41,6 +31,17 @@ if (!isset($_POST['opcion'])) {
 
 switch ($_POST['opcion']) {
     case 'registro':
+        $response_recapcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : false;
+        if (isset($response_recapcha) && $response_recapcha) {
+            $secret = "6LfTXMQUAAAAAJYmMvBxne034MJMwQu6ze8X2-5V";
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $validar_server = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response_recapcha&remoteip=$ip");
+        } else {
+            die(json_encode(array(
+                'respuesta' => 'error',
+                'Texto' => 'Debes de completar el capcha'
+            )));
+        }
         $email     = (isset($_POST['email'])    && !empty($_POST['email']))    ? strtolower($_POST['email']) : false;
         $emailR    = (isset($_POST['emailR'])   && !empty($_POST['emailR']))   ? strtolower($_POST['emailR']) : false;
         $nombre    = (isset($_POST['nombre'])   && !empty($_POST['nombre']))   ? strtolower($_POST['nombre']) : false;
@@ -94,6 +95,17 @@ switch ($_POST['opcion']) {
         die(json_encode($respuesta));
         break;
     case 'login':
+        $response_recapcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : false;
+        if (isset($response_recapcha) && $response_recapcha) {
+            $secret = "6LfTXMQUAAAAAJYmMvBxne034MJMwQu6ze8X2-5V";
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $validar_server = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response_recapcha&remoteip=$ip");
+        } else {
+            die(json_encode(array(
+                'respuesta' => 'error',
+                'Texto' => 'Debes de completar el capcha'
+            )));
+        }
         $email     = (isset($_POST['correo'])    && !empty($_POST['correo']))    ? strtolower($_POST['correo']) : false;
         $password  = (isset($_POST['password']) && !empty($_POST['password'])) ? $_POST['password'] : false;
 
@@ -139,7 +151,7 @@ switch ($_POST['opcion']) {
         if ($resultado && $resultado->num_rows) {
             $usuario = $resultado->fetch_assoc();
             if ($usuario['validar'] != 1) {
-                $sql = "UPDATE `usuarios` SET validar=1 WHERE idUsuario = " . $usuario['idUsuario'];
+                $sql = "UPDATE usuarios SET validar=1 WHERE idUsuario = " . $usuario['idUsuario'];
                 $resultado = $conexion->query($sql);
                 if ($resultado && $conexion->affected_rows) {
                     $respuesta = array('respuesta' => 'exito', 'Texto' => 'Tu cuenta fue validada de manera exitosa!, Inicia Sesión y continua con la tu configuración');
@@ -160,13 +172,72 @@ switch ($_POST['opcion']) {
         // $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
         die(json_encode($respuesta = array('respuesta' => 'exito', 'Texto' => 'Por el momento no es posible generar más subscripciones',)));
         break;
+    case 'recuperacion':
+        $correo     = (isset($_POST['correo'])    && !empty($_POST['correo']))    ? strtolower($_POST['correo']) : false;
+        $password  = (isset($_POST['pass']) && !empty($_POST['pass'])) ? $_POST['pass'] : false;
+        $passwordR = (isset($_POST['passR']) && !empty($_POST['passR'])) ? $_POST['passR'] : false;
+        $codigo = (isset($_POST['codigo']) && !empty($_POST['codigo'])) ? $_POST['codigo'] : false;
+        $paso = (isset($_POST['paso']) && !empty($_POST['paso'])) ? (int) $_POST['paso'] : false;
+        if ($correo) {
+            $ADMINFUNC = new AdminFunciones();
+            $ADMINFUNC->CONEXION = $conexion;
+            $USUARIO = $ADMINFUNC->revicionCorreo($correo);
+            if ($USUARIO && $USUARIO['validar'] == 1) {
+                if (!$codigo) {
+                    
+                    /////////////////////////////////////////
+
+                    $codigoVer = $ADMINFUNC->generarCodigo(16); //Genera un codigo de recuperación de la cuenta IMPORTANTE PARA ENVIAR POR CORREO!!!!
+                    
+                    /////////////////////////////////////////
+                    
+                    $arregloVer = "true|$codigoVer";
+                    $sql = "UPDATE usuarios SET recuperacion ='$arregloVer' WHERE idUsuario = " . $USUARIO['iduser'];
+                    $conexion->query($sql);
+                    $respuesta = array(
+                        'respuesta' => 'exito',
+                        'Texto' => 'Se ha enviado un código a tu correo electronico, ve a tu bandeja de entrada, ahí encontraras los pasos para contunuar con tu recuperación',
+                    );
+                } else {
+                    $compararCodigo = explode("|", $USUARIO['recuperacion']);
+                    if (isset($compararCodigo[1]) && $compararCodigo[1] == $codigo) {
+                        if ($paso == 2) {
+                            if (($password && $passwordR) && $password === $passwordR) {
+                                if (strlen($password) > 6) {
+                                    $newPass = md5($password);
+                                    $sql = "UPDATE usuarios SET password ='$newPass',recuperacion='' WHERE idUsuario = " . $USUARIO['iduser'];
+                                    if ($conexion->query($sql)) {
+                                        $respuesta = array('respuesta' => 'exito', 'Texto' => 'Contraseña cambiada de manera exitosa', 'change' => 'si');
+                                    } else {
+                                        $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible cambiar la contraseña',);
+                                    }
+                                } else {
+                                    $respuesta = array('respuesta' => 'error', 'Texto' => 'La nueva contraseña es muy corta',);
+                                }
+                            } else {
+                                $respuesta = array('respuesta' => 'error', 'Texto' => 'Las contraseñas no son correctas');
+                            }
+                        } else {
+                            $respuesta = array('respuesta' => 'verificado', 'Texto' => 'El código esta verificado');
+                        }
+                    } else {
+                        $respuesta = array('respuesta' => 'error', 'Texto' => 'El código de verificación no concuerda',);
+                    }
+                }
+            } else {
+                $respuesta = array('respuesta' => 'error', 'Texto' => 'El Usuario no existe o aún no ha sido verificado',);
+            }
+        } else {
+            $respuesta = array('respuesta' => 'error', 'Texto' => 'Es necesario completar el correo',);
+        }
+        die(json_encode($respuesta));
+        break;
     default:
         break;
 }
 
 function enviarCorreo($plantilla, $datos)
 {
-    // exit;
     $mail = new PHPMailer\PHPMailer\PHPMailer();
     $mail->IsSMTP(); // enable SMTP
     $mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only

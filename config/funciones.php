@@ -284,10 +284,10 @@ class AdminFunciones
         }
         return $resultado;
     }
-    function codigoUnico()
+    function codigoUnico($long = 12)
     {
         $ADMINFUN = new AdminFunciones(); //trae la clase, por que de lo contrario no puedes acceder a las funciones
-        $codigo = $ADMINFUN->generarCodigo(12); //Genera un codigo aleatorio
+        $codigo = $ADMINFUN->generarCodigo($long); //Genera un codigo aleatorio
         $codigoStatus = $ADMINFUN->verificarCodigo($codigo); //Es necesario comparar los registros y verificar que no exista
         if ($codigoStatus) {
             $this->codigoUnico(); //Recursividad, si ya existe prueba otro, hasta que el sistema diga que ya no existe registro
@@ -314,6 +314,17 @@ class AdminFunciones
             $sql = "SELECT usersinfo.*,usuarios.nombre,usuarios.apellidos,usuarios.fecha,usuarios.img FROM usersinfo,usuarios WHERE usersinfo.iduser = usuarios.idUsuario AND usuarios.idUsuario = $idUsuario";
             $resultado = $conexion->query($sql);
             $resultado = ($resultado && $resultado->num_rows) ? $resultado : false;
+        }
+        return $resultado;
+    }
+    function revicionCorreo($correo)
+    {
+        $conexion = $this->CONEXION;
+        $resultado = false;
+        if ($conexion) {
+            $sql = "SELECT usersinfo.*,usuarios.nombre,usuarios.apellidos,usuarios.fecha,usuarios.img,usuarios.recuperacion,usuarios.validar FROM usersinfo,usuarios WHERE usersinfo.iduser = usuarios.idUsuario AND usuarios.correo = '$correo'";
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
         }
         return $resultado;
     }
