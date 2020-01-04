@@ -60,7 +60,7 @@
       </script>';
   }
   if (isset($ADSENSE) && $ADSENSE) {
-    echo '<script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
+    // echo '<script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>';
   }
   if (isset($RECAPTCHA) && $RECAPTCHA) {
     echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';

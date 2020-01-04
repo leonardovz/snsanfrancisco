@@ -28,7 +28,7 @@ require_once 'templates/header.php';
                 tus inquietudes, envianos tus dudad y sugerencias! estamos para atenderte!
 
               </h6>
-              <a href="<?php echo $ruta;?>acercade" class="btn btn-outline-white">Leer Más</a>
+              <a href="<?php echo $ruta; ?>acercade" class="btn btn-outline-white">Leer Más</a>
             </div>
             <!--Grid column-->
             <!--Grid column-->
@@ -99,9 +99,9 @@ require_once 'templates/header.php';
       </div>
       <div class="row p-3">
         <div class="col my-5">
-        <?php if(isset($ADSENSE) && $ADSENSE) { ?>
-          <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <?php }?>
+          <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+            <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <?php } ?>
         </div>
       </div>
       <div class="row py-3">
@@ -113,9 +113,9 @@ require_once 'templates/header.php';
       </div>
       <div class="row p-3">
         <div class="col-md-12 bg-secondary my-5">
-        <?php if(isset($ADSENSE) && $ADSENSE) { ?>
-          <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <?php }?>
+          <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+            <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <?php } ?>
         </div>
       </div>
       <h2>Nuevos Servicios Registrados!</h2>
@@ -124,9 +124,9 @@ require_once 'templates/header.php';
       </div>
       <div class="row p-3">
         <div class="col-md-12 bg-secondary my-5">
-        <?php if(isset($ADSENSE) && $ADSENSE) { ?>
-          <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <?php }?>
+          <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+            <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <?php } ?>
         </div>
       </div>
     </section>
