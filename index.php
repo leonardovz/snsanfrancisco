@@ -168,6 +168,6 @@ if ($rutas) { //Ruta Vacia
         header('Location: ' . $ruta . 'error/404');
     }
 } else {
-    // $ADSENSE = true;
+    $ADSENSE = true;
     require_once 'views/index.view.php';
 }

@@ -6,7 +6,7 @@ global $SystemName;
 global $EMAILCONFIG;
 
 $systemName = "Servicios y Noticias San Francisco de Asís";
-$keyWords = "Trabajos y Servicios, Construcción, Estilistas en San Francisco ,Albañiles, Troqueros, Papeleria, Arquitectos, San Francisco de Asís, Servicios y Noticias";
+$keyWords = "San Francisco De Asis Atotonilco el Alto Jalisco ,San pancho Atotonilco, San Francisco de asís, Atotonilco el Alto, Francisco Javier Mina,Escuelas en San Francisco de Asis Jal, Servicio de Hambulancia San Francisco, Trabajos y Servicios, Construcción, Estilistas en San Francisco ,Albañiles, Troqueros, Papeleria, Arquitectos, San Francisco de Asís, Servicios y Noticias,obras de san francisco de asis";
 $descripcionServ = "Aquí encontraras los servicios que ofrece San Francisco se Asís, municipio de Atotonilco el alto, Jalisco. Entra y encuentra lo que necesitas";
 $mesesAnio = array('', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 
