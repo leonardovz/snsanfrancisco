@@ -81,7 +81,7 @@
   <div class="footer-copyright text-center py-3">WEBMASTER:
     <a href="<?php echo $ruta; ?>desarrollador"> Leonardo Vázquez Angulo</a>
   </div>
-  <div class="footer-copyright text-center py-3">© 2019 SnSanfrancisco:
+  <div class="footer-copyright text-center py-3">© 2019 SNSanfrancisco:
     <a href="<?php echo $ruta; ?>"> snsanfrancisco.com</a>
     <span class="ml-5">Recuerda revisar nuestros <a target="_blank" href="<?php echo $ruta; ?>galeria/documentos/terminos_y_condiciones.pdf">Términos y Condiciones</a> </span>
   </div>

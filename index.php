@@ -164,6 +164,8 @@ if ($rutas) { //Ruta Vacia
         require_once 'views/acercade.view.php';
     } elseif ($RUTAS0 == 'ayuda') {
         require_once 'views/ayuda.view.php';
+    } elseif ($RUTAS0 == 'vercorreos') {
+        require_once 'vercorreos.php';
     } else {
         header('Location: ' . $ruta . 'error/404');
     }

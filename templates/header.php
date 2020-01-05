@@ -15,9 +15,9 @@
   <meta name="author" content="WEBMASTER - Leonardo Vázquez Angulo">
   <!-- Open Graph protocol -->
   <meta property="og:title" content="Servicios y Noticias" />
-  <meta property="og:site_name" content="SnSanfrancisco" />
+  <meta property="og:site_name" content="SNSanFrancisco" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.snsanfrancisco.com" />
+  <meta property="og:url" content="https://www.SNSanFrancisco.com" />
   <meta property="og:image" content="<?php echo $ruta; ?>/galeria/sistema/logo/5.ico" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="200" />
@@ -25,7 +25,7 @@
   <meta property="og:description" content="<?php echo $keyWords; ?>" />
   <meta name="twitter:title" content="Servicios y Noticias | San Francisco de Asis  | Jalisco" />
   <meta name="twitter:image" content="<?php echo $ruta; ?>galeria/sistema/logo/5.ico" />
-  <meta name="twitter:url" content="https://snsanfrancisco.com" />
+  <meta name="twitter:url" content="https://SNSanFrancisco.com" />
   <meta name="twitter:card" content="" />
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
