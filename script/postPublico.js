@@ -13,7 +13,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                // console.log(data);
                 if (data.respuesta == "exito") {
                     let cuerpo = "";
                     for (let i in data.publicaciones) {

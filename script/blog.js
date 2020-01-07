@@ -204,7 +204,7 @@ $(document).ready(function () {
     }
     function cuerpoPostBlog(publicacion, ruta, rutaImagen) {
         var cuerpo = ``;
-        let nombreMin = publicacion.nombre.replace(" ", "-"),
+        let nombreMin = removeSpecialChars(publicacion.nombre),
             apellidoMin = publicacion.apellidos.replace(" ", "-"),
             nameUser = nombreMin + '-' + apellidoMin;
         var fecha = publicacion.fecha.split(" ")[0];
@@ -216,7 +216,7 @@ $(document).ready(function () {
                 <div class="card card-personal mb-md-0 m-1">
                     <div class="view overlay">
                         <img class="card-img-top" src="${ruta}${rutaImagen}${publicacion.imagen}" alt="Card image cap">
-                        <a href="${ruta + 'blog/post/' + (publicacion.id)}">
+                        <a href="${ruta + 'blog/post/' + (publicacion.id)}/${removeSpecialChars(normalize(publicacion.titulo.substr(0, 30)))}">
                             <div class="mask rgba-white-slight"></div>
                         </a>
                     </div>

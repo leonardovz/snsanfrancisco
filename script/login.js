@@ -37,12 +37,12 @@ $(document).ready(() => {
     /*///////////////////////////////
         BOTÓN DE FACEBOOK
     *////////////////////////////////
-    $("#loginFacebook").on('click', function (e) {
-        e.preventDefault();
-        FB.login(function () {
-            validarUsuario();
-        }, { scope: 'public_profile,email' })
-    });
+    // $("#loginFacebook").on('click', function (e) {
+    //     e.preventDefault();
+    //     FB.login(function () {
+    //         validarUsuario();
+    //     }, { scope: 'public_profile,email' })
+    // });
 
     //VALIDAR INGRESO
     function validarUsuario() {

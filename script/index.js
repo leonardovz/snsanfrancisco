@@ -135,7 +135,7 @@ $(document).ready(function () {
             cuerpo += (cuerpoServicios(data.servicios[i], ruta, data.rutaImagen));
           }
           $("#contServicios").html(cuerpo);
-          new WOW().init();
+          // new WOW().init();
           // wowElement();
         } else {
 

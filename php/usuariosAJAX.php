@@ -180,18 +180,29 @@ switch ($_POST['opcion']) {
         $paso = (isset($_POST['paso']) && !empty($_POST['paso'])) ? (int) $_POST['paso'] : false;
         if ($correo) {
             $ADMINFUNC = new AdminFunciones();
+            $PLANTILLAS = new PlantillasEmail();
             $ADMINFUNC->CONEXION = $conexion;
             $USUARIO = $ADMINFUNC->revicionCorreo($correo);
             if ($USUARIO && $USUARIO['validar'] == 1) {
                 if (!$codigo) {
-                    
+
                     /////////////////////////////////////////
 
                     $codigoVer = $ADMINFUNC->generarCodigo(16); //Genera un codigo de recuperación de la cuenta IMPORTANTE PARA ENVIAR POR CORREO!!!!
-                    
+
                     /////////////////////////////////////////
-                    
+
                     $arregloVer = "true|$codigoVer";
+                    $userDatos = array(
+                        'correo' => $USUARIO['correo'],
+                        'nombre' => $USUARIO['nombre'] . $USUARIO['apellidos'],
+                        'apellidos' => $USUARIO['apellidos'],
+                        'verificacion' => '654654654',
+                        'codigo' => $codigoVer,
+                    );
+
+                    $TEMPLATE = $PLANTILLAS->templateRecuperarPass($userDatos, $ruta);//Trae la plantilla de correo
+
                     $sql = "UPDATE usuarios SET recuperacion ='$arregloVer' WHERE idUsuario = " . $USUARIO['iduser'];
                     $conexion->query($sql);
                     $respuesta = array(

@@ -47,13 +47,13 @@
                             <p>¿No eres miembro?
                                 <a href="<?php echo $ruta; ?>registro">Registrate</a>
                             </p>
-                            <p>Inicia Sesión con :</p>
-                            <a id="loginFacebook" class="btn btn-primary text-white text-center">
+                            <!-- <p>Inicia Sesión con :</p> -->
+                            <!-- <a id="loginFacebook" class="btn btn-primary text-white text-center">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
                             <a id="loginGoogle" class="btn btn-danger text-white text-center">
                                 <i class="fab fa-google"></i>
-                            </a>
+                            </a> -->
 
                         </form>
                         <!-- Form -->
