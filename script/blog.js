@@ -209,7 +209,9 @@ $(document).ready(function () {
             nameUser = nombreMin + '-' + apellidoMin;
         var fecha = publicacion.fecha.split(" ")[0];
         fecha = fecha.split("-");
-        fecha = MESES[fecha[1]] + " de " + fecha[0];
+        let mes = parseInt(fecha[1]);
+        fecha = MESES[mes] + " de " + fecha[0];
+
         numDesc = publicacion.descripcion.length;
         cuerpo += `
             <div class="col-md-6 mb-4">

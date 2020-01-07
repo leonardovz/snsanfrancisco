@@ -415,3 +415,27 @@ class Publicaciones
         return $resultado;
     }
 }
+class BlogPost
+{
+    public $CONEXION;
+
+    function buscarBlogPost($id)
+    {
+        $sql = "SELECT * FROM blogposts WHERE id=" . $id;
+        $respuesta = $this->CONEXION->query($sql);
+        return (($respuesta && $respuesta->num_rows) ? $respuesta->fetch_assoc() : false);
+    }
+    function registrarVista($id, $estado = false)
+    {
+        $BlogPost = $this->buscarBlogPost($id);
+        if ($BlogPost) {
+            $vistaActual = (int) $BlogPost['vistas'];
+            $vistaActual++;
+            $sql = "UPDATE blogposts SET vistas = $vistaActual WHERE id = $id ;";
+            $respuesta = $this->CONEXION->query($sql);
+            return $respuesta;
+        } else {
+            return false;
+        }
+    }
+}

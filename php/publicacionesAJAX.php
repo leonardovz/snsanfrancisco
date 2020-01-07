@@ -224,7 +224,7 @@ switch ($_POST['opcion']) {
         if ($BUSQUEDA != "") {
             $BUSQUEDA = " AND (B.titulo LIKE '%$BUSQUEDA%' OR B.descripcion LIKE '%$BUSQUEDA%' OR concat_ws(' ', U.nombre,U.apellidos) LIKE '%$BUSQUEDA%') ";
         }
-        $BUSQUEDA .= $limitPostAc.$LimitIdPub;
+        $BUSQUEDA .= $limitPostAc . $LimitIdPub;
         $PUBLICACIONES = new Publicaciones();
         $PUBLICACIONES->CONEXION = $conexion;
         //PAGINACION
@@ -330,6 +330,31 @@ switch ($_POST['opcion']) {
             );
         }
 
+        die(json_encode($respuesta));
+        break;
+
+    case 'actualizarVista':
+        $idLibro = isset($_POST['idLibro']) && !empty($_POST['idLibro']) ? (int) ($_POST['idLibro']) : false;
+        if ($idLibro) {
+            $BlogPost =  new BlogPost();
+            $BlogPost->CONEXION = $conexion;
+            if ($BlogPost->registrarVista($idLibro)) {
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'Visita registrada'
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No fue posible actualizar la vista'
+                );
+            }
+        } else {
+            $respuesta = array(
+                'respuesta' => 'error',
+                'Texto' => 'No fue posible actualizar los  datos'
+            );
+        }
         die(json_encode($respuesta));
         break;
     default:
