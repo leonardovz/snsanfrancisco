@@ -94,7 +94,7 @@ require_once 'templates/header.php';
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 p-4">
+            <div class="col-md-12 p-4 tituloPublicacion">
                 <h1></h1>
                 <h3>Personas encontradas</h3>
             </div>
@@ -106,7 +106,7 @@ require_once 'templates/header.php';
 
         </div>
         <div class="row">
-            <div class="col-md-12 p-4">
+            <div class="col-md-12 p-4 tituloPublicacion">
                 <h3>Ultimas Publicaciones!</h3>
             </div>
             <div class="col">
@@ -115,7 +115,7 @@ require_once 'templates/header.php';
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 p-4">
+            <div class="col-md-12 p-4 tituloPublicacion">
                 <h3>Nuevos Servicios Registrados!</h3>
             </div>
             <div class="col">
@@ -123,10 +123,11 @@ require_once 'templates/header.php';
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 p-4">
+            <div class="col-md-12 p-4 tituloPublicacion">
                 <h3>Post blog encontrados!</h3>
             </div>
             <div class="col">
+                <div class="row justify-content-between" id="paginacion"></div>
                 <div class="row justify-content-center" id="cuerpoPostBlog"></div>
             </div>
         </div>

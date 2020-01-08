@@ -201,8 +201,9 @@ switch ($_POST['opcion']) {
 
         break;
     case 'traerPostsBlog':
-        $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
-        $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
+        $idUser = false;
+        //  ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
+        // $idUser = isset($_POST['idUsuario']) && !empty($_POST['idUsuario']) ? (int) $_POST['idUsuario'] : $idUser;
         $idPublicacion = isset($_POST['idPublicacion']) && !empty($_POST['idPublicacion']) ? (int) $_POST['idPublicacion'] : $idUser;
         $LimitIdPub = "";
         if ($idUser) {

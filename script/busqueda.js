@@ -1,8 +1,12 @@
 new WOW().init();
 var ruta = ruta();
 $(document).ready(function () {
-  var BUSQUEDA = (window.location.pathname).split("/")[2].replace(/-/g, " ");//Cacha la ruta y separa los datos para enviar a SQL
+  var BUSQUEDA = (window.location.pathname).split("/")[3].replace(/-/g, " ");//Cacha la ruta y separa los datos para enviar a SQL
+  var paginaAC = 1;
   traerPosts();
+  traerBlogs(BUSQUEDA);
+
+
   $("#inBusqueda").val(BUSQUEDA);
   function traerPosts() {
     var contPersonas = $("#contPersonas");
@@ -26,21 +30,27 @@ $(document).ready(function () {
               cuerpoPub += (cuerpoPerfil(data.Perfil[i].Perfil, ruta, data.Perfil[i].rutaImagen));
             }
             contPersonas.html(cuerpoPub);
-
+            contPersonas.parent().parent().show();
+          } else {
+            contPersonas.parent().parent().hide();
           }
           if (data.Servicio) {
             for (let i in data.Servicio) {
               cuerpoUser += (cuerpoServicios(data.Servicio[i].Servicio, ruta, data.Servicio[i].rutaImagen));
             }
             contServicios.html(cuerpoUser);
+            contServicios.parent().parent().show();
           } else {
-            contServicios.hide();
+            contServicios.parent().parent().hide();
           }
           if (data.Publicacion) {
             for (let i in data.Publicacion) {
               cuerpoServ += (cuerpoPublicacion(data.Publicacion[i].Publicacion, ruta, data.Publicacion[i].rutaImagen));
             }
             contPersonasPub.html(cuerpoServ);
+            contPersonasPub.parent().parent().show();
+          } else {
+            contPersonasPub.parent().parent().hide();
           }
           acciones();
         } else {
@@ -139,16 +149,12 @@ $(document).ready(function () {
       opcionMostrar.remove();
     });
   }
-  function traerBlogs(blogPublicacion = false) {
-    var tituloPrincipal = $("#tituloPrincipal");
-    var imagenPrincipal = $("#imagenPrincipal");
-    var cuerpoPrincipal = $("#cuerpoPrincipal");
-    blogPublicacion = (blogPublicacion) ? "&idPublicacion=" + blogPublicacion : "";
+  function traerBlogs(busqueda) {
     $.ajax({
       type: "POST",
       url: ruta + 'php/publicacionesAJAX.php',
       dataType: "json",
-      data: `opcion=traerPostsBlog&pagina=${paginaAC}&busqueda=${busqueda}${blogPublicacion}`,
+      data: `opcion=traerPostsBlog&pagina=${paginaAC}&busqueda=${busqueda}`,
       error: function (xhr, resp) {
         console.log(xhr.responseText);
       },
@@ -156,29 +162,20 @@ $(document).ready(function () {
         if (data.respuesta == 'exito') {
           PUBLICACIONES = data.publicaciones;
           setTimeout(() => {
-            let cuerpo = "",
-              cuerpoRigth = "";
+            let cuerpo = "";
+
             for (let i in PUBLICACIONES) {
-              if (i == 0) {
-                tituloPrincipal.html(PUBLICACIONES[i].titulo);
-                imagenPrincipal.html(`<img class="rounded z-depth-3 mt-0 pt-0" src="${ruta + data.rutaImagen}${PUBLICACIONES[i].imagen}" alt="avatar" style="width: 100%;">`);
-                cuerpoPrincipal.html(PUBLICACIONES[i].descripcion);
-              } else {
-                cuerpo += (cuerpoPostBlog(PUBLICACIONES[i], ruta, data.rutaImagen));
-              }
+              cuerpo += (cuerpoPostBlog(PUBLICACIONES[i], ruta, data.rutaImagen));
             }
             $("#cuerpoPostBlog").html(cuerpo);
-            $("#cuerpoRigth").html(cuerpoRigth);
+
             paginaAC = parseInt(paginaAC);
             paginaAC = (paginaAC) ? paginaAC : 1;
-            paginar(paginaAC, data.totalPublicaciones, ruta + 'blog/' + busquedaRuta);
-
+            paginar(paginaAC, data.totalPublicaciones)
             acciones();
           }, 1000);
         } else {
-          setTimeout(() => {
-            $("#cuerpoPostBlog").html("");
-          }, 3000);
+          $("#cuerpoPostBlog").parent().parent().hide();;
         }
       }
     });
@@ -233,13 +230,18 @@ $(document).ready(function () {
     }
     i = (i < 1) ? 1 : i;
     var cuerpo = `<ul class="pagination">`;
-    cuerpo += ` <li class="page-item ${((pagina <= 1) ? " disabled" : "")}"><a class="page-link" ${((pagina <= 1) ? "" : 'href="' + rutaDir + 'pagina-' + (paginaAC - 1) + '"')}>Previous</a></li>`;
+    cuerpo += ` <li class="page-item ${((pagina <= 1) ? " disabled" : "")}"><a class="page-link ${((pagina <= 1) ? "" : "activarPaginacion")}" ${((pagina <= 1) ? "" : 'data-id-paginacion="' + (paginaAC - 1) + '"')}>Previous</a></li>`;
     for (i; i <= limite; i++) {
-      cuerpo += `<li class="page-item ${((i == pagina) ? " active" : " ")}"><a class="page-link" ${(i == paginaAC) ? "" : 'href="' + rutaDir + 'pagina-' + i + '"'}>${i}</a></li>`;
+      cuerpo += `<li class="page-item ${((i == pagina) ? " active" : " ")}"><a class="page-link ${(i == paginaAC) ? "" : "activarPaginacion"}" ${(i == paginaAC) ? "" : 'data-id-paginacion="' + i + '"'}>${i}</a></li>`;
     }
-    cuerpo += `<li class="page-item ${((pagina >= paginas) ? " disabled" : "")}" ><a class="page-link" ${((pagina >= paginas) ? "" : 'href="' + rutaDir + 'pagina-' + ((paginaAC) + 1) + '"')} >Next</a></li>`;
-    cuerpo += (pagina != paginas) ? `<li class="page-item ${((pagina >= paginas) ? " disabled" : "")}" ><a class="page-link" href="${rutaDir}pagina-${paginas}"><i class="fa fa-fast-forward" aria-hidden="true"></i> </a></li>` : "";
+    cuerpo += `<li class="page-item ${((pagina >= paginas) ? " disabled" : "")}" ><a class="page-link ${((pagina >= paginas) ? "" : "activarPaginacion")}" ${((pagina >= paginas) ? "" : 'data-id-paginacion="' + ((paginaAC) + 1) + '"')} >Next</a></li>`;
+    cuerpo += (pagina != paginas) ? `<li class="page-item ${((pagina >= paginas) ? " disabled" : "")}" ><a class="page-link" data-id-paginacion="${paginas}"><i class="fa fa-fast-forward" aria-hidden="true"></i> </a></li>` : "";
     cuerpo += `</ul>`;
     $("#paginacion").html(cuerpo);
+    $(".activarPaginacion").on('click', function () {
+      paginaAC = ($(this).attr('data-id-paginacion'));
+      traerBlogs(BUSQUEDA);
+    })
   }
+
 });
