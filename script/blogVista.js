@@ -182,7 +182,7 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.respuesta == 'exito') {
                     PUBLICACIONES = data.publicaciones;
                     setTimeout(() => {
@@ -215,7 +215,7 @@ $(document).ready(function () {
                                 console.log(xhr.responseText);
                             },
                             success: function (resp) {
-                                console.log(resp);
+                                // console.log(resp);
                             },
                         });
                     }

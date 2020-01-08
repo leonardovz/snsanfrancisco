@@ -128,15 +128,12 @@ $(document).ready(function () {
         console.log(xhr.responseText);
       },
       success: function (data) {
-        // console.log(data);
         if (data.respuesta == 'exito') {
           var cuerpo = '';
           for (let i in data.servicios) {
             cuerpo += (cuerpoServicios(data.servicios[i], ruta, data.rutaImagen));
           }
           $("#contServicios").html(cuerpo);
-          // new WOW().init();
-          // wowElement();
         } else {
 
         }

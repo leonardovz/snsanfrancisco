@@ -284,6 +284,19 @@ class AdminFunciones
         }
         return $resultado;
     }
+    function codigosUser($idUsuario, $status = false)
+    {
+        $idUsuario = (int) $idUsuario;
+
+        $conexion = $this->CONEXION;
+        $resultado = false;
+        if ($conexion) {
+            $sql = "SELECT C.*,R.tipo,R.duracion,R.costo,R.nombre FROM codigos AS C,rango AS R WHERE C.idRango = R.id AND C.idUsuario = '$idUsuario' AND C.estado = " . (($status) ? '"activo"' : '"disponible"');
+            $resultado = $conexion->query($sql);
+            $resultado = ($resultado && $resultado->num_rows) ? $resultado : false;
+        }
+        return $resultado;
+    }
     function codigoUnico($long = 12)
     {
         $ADMINFUN = new AdminFunciones(); //trae la clase, por que de lo contrario no puedes acceder a las funciones

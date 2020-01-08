@@ -15,15 +15,7 @@ $(document).ready(function () {
     var $progressPub = $("#progressPub");
     loading(50);
     function loading(tiempo, limite = 75) {
-        // setTimeout(() => {
         $progressPub.width(tiempo + '%').attr('aria-valuenow', tiempo).text(tiempo + '%');
-        //     console.log(tiempo);
-        //     tiempo++;
-        //     if(tiempo<=limite && false){
-        //         loading(tiempo);
-
-        //     }
-        // }, 50);
     }
 
     $("#titulo").on('click', function (e) {
@@ -31,7 +23,6 @@ $(document).ready(function () {
         $("#cancelar").parent().show();
     });
     $("#cancelar").on('click', function (e) {
-        // e.preventDefault()
         $(this).parent().hide();
         $publicacion.hide();
     });
@@ -70,7 +61,6 @@ $(document).ready(function () {
     });
     $("#formPublicacion").on('submit', function (e) {
         e.preventDefault();
-        // if(cropper == "" || cropper.length){
         Swal.fire({
             position: 'top-end',
             type: 'error',
@@ -78,7 +68,6 @@ $(document).ready(function () {
             showConfirmButton: false,
             timer: 1500
         })
-        // }
     });
     $modal.on('shown.bs.modal', function () {
         cropper = new Cropper(image, {
@@ -160,7 +149,6 @@ $(document).ready(function () {
                             },
 
                             success: function (response) {
-                                console.log(response);
                                 $progressBar.width('100%').attr('aria-valuenow', 100).text('100%');
                                 setTimeout(() => {
                                     $alert.show().addClass('alert-success').text(response.Texto);
@@ -209,7 +197,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
                 if (data.respuesta == 'exito') {
                     var cuerpo = '';
                     for (let i in data.servicios) {

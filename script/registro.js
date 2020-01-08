@@ -19,7 +19,7 @@ $(document).ready(() => {
             success: function (data) {
                 // console.log(data);
                 if (data.respuesta == 'exito') {
-                    Swal.fire('¡Exito!', data.Texto, 'exito');
+                    Swal.fire('¡Exito!', data.Texto, 'success');
 
                 } else {
                     var posicion = $("#apellido").offset().top;

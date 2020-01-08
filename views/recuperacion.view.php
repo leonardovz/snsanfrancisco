@@ -190,9 +190,6 @@
                         cambiarPassword(correo, codigo, passNew, passNewR);
                     }
                 }
-                console.log(codigo);
-                console.log(errores);
-
             });
 
             function cambiarPassword(correo, codigo = false, pass = false, passR = false) {
@@ -211,7 +208,6 @@
                         console.log(xhr.responseText);
                     },
                     success: function(data) {
-                        console.log(data);
                         if (data.respuesta == 'exito') {
                             Swal.fire(
                                 'EXITO',

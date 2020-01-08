@@ -85,8 +85,8 @@ require_once 'templates/header.php';
                 <div class="col-md-8 my-4">
                     <?php
 
-                        if (!$PERFIL) {
-                            ?>
+                    if (!$PERFIL) {
+                    ?>
                         <div class="card">
 
                             <h5 class="card-header <?php echo $PAQUETE['bgColor'] . ' ' . $PAQUETE['textColor']; ?>  text-center py-4">
@@ -193,8 +193,8 @@ require_once 'templates/header.php';
 
                         </div>
                     <?php
-                        } else {
-                            ?>
+                    } else {
+                    ?>
                         <div class="card">
 
                             <h5 class="card-header <?php echo $PAQUETE['bgColor'] . ' ' . $PAQUETE['textColor']; ?>  text-center py-4">
@@ -225,8 +225,8 @@ require_once 'templates/header.php';
                             </div>
                         </div>
                     <?php
-                        }
-                        ?>
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -309,7 +309,6 @@ require_once 'templates/header.php';
                                 console.log(xhr.responseText);
                             },
                             success: function(data) {
-                                console.log(data);
                                 if (data.respuesta == 'exito') {
                                     alertaSwal(data.Texto, 'success');
                                     setTimeout(() => {

@@ -107,7 +107,8 @@ switch ($_POST['opcion']) {
 
         $MEMBRESIA = $ADMINFUNC->paquetePerfilUser($USERLOGIN['idUsuario']);
         $nPub = $ADMINFUNC->contarPublicacionUser($USERLOGIN['idUsuario']); //Permite contar el numero de publicaciones actuales
-        if (!$MEMBRESIA) { }
+        if (!$MEMBRESIA) {
+        }
 
         if (!$MEMBRESIA || ($nPub >= $MEMBRESIA['membresia']['publicacion'])) {
             die(json_encode(array('respuesta' => 'error', 'Texto' => "El número de publicaciones exede tu paquete actual, si requieres de más publicaciónes puedes eliminar pubicaciónes pasadas, o consultar al administrador para mejorar tu paquete")));
@@ -697,6 +698,35 @@ switch ($_POST['opcion']) {
         }
         die(json_encode($respuesta));
 
+        break;
+    case 'codigos':
+        $ADMINISTRADOR = new AdminFunciones();
+        $ADMINISTRADOR->CONEXION = $conexion;
+        if ($USERLOGIN) {
+
+            $idUsuario =  $USERLOGIN['idUsuario'];
+
+            $codigos = $ADMINISTRADOR->codigosUser($idUsuario);
+
+            if ($codigos && $codigos->num_rows) {
+                $codigosArray = [];
+                while ($codigo = $codigos->fetch_assoc()) {
+                    $codigosArray[] = $codigo;
+                }
+
+                $respuesta = array(
+                    'respuesta' => 'exito',
+                    'Texto' => 'Te envio los códigos generados',
+                    'codigos' => $codigosArray,
+                );
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No te puedo mostrar códigos'
+                );
+            }
+        }
+        die(json_encode($respuesta));
         break;
     default:
         break;

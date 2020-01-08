@@ -146,7 +146,6 @@ $(document).ready(function () {
                             },
 
                             success: function (response) {
-                                console.log(response);
                                 if (response.respuesta == "exito") {
                                     $progressBar.width('100%').attr('aria-valuenow', 100).text('100%');
                                     setTimeout(() => {
@@ -201,7 +200,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
                 if (data.respuesta == 'exito') {
                     loading(75);
                     setTimeout(() => {
@@ -312,8 +310,6 @@ $(document).ready(function () {
                 let idPublicacion = Button.parent().attr('data-idPub');
                 let titulo = Button.parent().attr('data-titulo');
                 let descripcion = "";
-                console.log(titulo);
-                console.log(idPublicacion);
                 for (const i in PUBLICACIONES) {
                     if (PUBLICACIONES[i].id == idPublicacion) {
                         descripcion = (PUBLICACIONES[i].descripcion);
@@ -392,7 +388,6 @@ $(document).ready(function () {
                     console.log(xhr.responseText);
                 },
                 success: function (data) {
-                    console.log(data);
                     if (data.respuesta == "removido") {
                         destruirPub(Button);
                         alerta(data.Texto, 'success', '1000');

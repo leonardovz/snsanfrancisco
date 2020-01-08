@@ -65,7 +65,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                // console.log(data);
                 if (data.respuesta == 'exito') {
                     let cuerpo = "";
                     for (let i in data.publicaciones) {
@@ -124,7 +123,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                // console.log(data);
                 if (data.respuesta == 'exito') {
                     var cuerpo = '';
                     for (let index = 0; index < 6 && index < data.servicios.length; index++) {

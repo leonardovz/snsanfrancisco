@@ -81,6 +81,9 @@ require_once 'templates/header.php'; ?>
                         <div class="col-md-6"></div>
                         <div class="col-md-6" id="errorPassword"></div>
                     </div>
+                    <div class="row mt-5 justify-content-center" id="contenedorCodigosDisp">
+                        <!-- Aqui aparecen codigos en caso de existir -->
+                    </div>
                     <div class="row mt-5">
                         <div class="col-md-8 text-center" id="planInactivo" style="display: none;">
                             <p class="note note-primary"><strong>Nota:</strong> No tienes ningun Plan activo puedes ir a <strong><a href="<?php echo $ruta; ?>planes">Registrar</a></strong> un plan para continuar con la verificación de tu servicio.</p>
@@ -177,6 +180,47 @@ require_once 'templates/header.php'; ?>
                     }
                 }
             });
+            $.ajax({
+                type: "POST",
+                url: ruta + 'php/usuariosFunciones.php',
+                dataType: "json",
+                data: 'opcion=codigos',
+                error: function(xhr, resp) {
+                    console.log(xhr.responseText);
+                },
+                success: function(data) {
+                    if (data.respuesta == 'exito') {
+                        let cuerpo = "";
+                        cuerpo += `
+                            <div class="col-12 my-3">
+                                    <b class="h5 p-3 "> Tienes algunos códigos sin activar</b>
+                            </div>`;
+                        for (const i in data.codigos) {
+                            paquete = data.codigos[i];
+                            cuerpo += `
+                            <div class="col-md-5 col-sm-8 col-12">
+                                <div class="card testimonial-card">
+                                    <div class="card-body">
+                                        <p class="card-title">Codigo: <b>${paquete.codigo}</b></p>
+                                        <hr>
+                                        <p>Paquete: <i class="fas fa-quote-left ml-2"></i><b class="mx-2">${paquete.nombre} </b> - <b class="mx-2">${paquete.tipo}</b>  <i class="fas fa-quote-right"></i></p>
+                                        <hr>
+                                        <p> Cantidad: <b>${paquete.cantidad}</b></p>
+                                        <a href="${ruta}planes/${paquete.idRango}" class="btn unique-color text-white btn-sm">Activar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+
+                        }
+                        $("#contenedorCodigosDisp").html(cuerpo);
+                    } else {
+                        var cuerpo = `
+
+                        `;
+                    }
+                }
+            });
             $("#formEditPerfil").on('submit', function(e) {
                 e.preventDefault();
                 var formulario = $(this).serialize();
@@ -212,7 +256,6 @@ require_once 'templates/header.php'; ?>
                             console.log(xhr.responseText);
                         },
                         success: function(data) {
-                            console.log(data);
                             if (data.respuesta == "exito") {
                                 alertaSwal(data.Texto, "success", 2000);
                                 $("#formCambiarPass").parent().hide();
@@ -387,7 +430,6 @@ require_once 'templates/header.php'; ?>
                                 </select>`);
                             $('#servicio').select2();
                         }
-                        // console.log(data);
                     }
                 });
             }
@@ -467,7 +509,6 @@ require_once 'templates/header.php'; ?>
                         console.log(xhr.responseText);
                     },
                     success: function(data) {
-                        console.log(data);
                         if (data.respuesta == "exito") {
                             data = data.codigos[0];
 
@@ -528,7 +569,6 @@ require_once 'templates/header.php'; ?>
                                 colonias.html("");
                                 coloniasImp.html("");
                             }
-                            // console.log(data);
                         }
                     }
                 });
@@ -574,7 +614,6 @@ require_once 'templates/header.php'; ?>
                             console.log(xhr.responseText);
                         },
                         success: function(data) {
-                            console.log(data);
                             if (data.respuesta == 'exito') {
                                 alertaSwal(data.Texto, 'success');
                             } else {

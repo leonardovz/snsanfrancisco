@@ -50,13 +50,15 @@ function fechaFormato(fecha) {
     return [dia, mes, anio];
 }
 function alertaSwal(texto, tipo, tiempo = 1500) {
-    Swal.fire({
-        position: 'top-end',
-        type: tipo,
-        title: texto,
-        showConfirmButton: false,
-        timer: tiempo
-    })
+    Swal.fire(tipo, texto, tipo);
+
+    // Swal.fire({
+    //     position: 'top-end',
+    //     type: tipo,
+    //     title: texto,
+    //     showConfirmButton: false,
+    //     timer: tiempo
+    // })
 }
 
 $(".inBusqueda").change(function (e) {

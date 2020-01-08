@@ -52,7 +52,7 @@ $(document).ready(() => {
 
     }
     function statusChangeCallback(response) {
-        console.log(response);
+        // console.log(response);
         if (response.status === "conected") {
             testApi();
         } else {
@@ -80,7 +80,7 @@ $(document).ready(() => {
                 datos.append('email', email);
                 datos.append('nombre', name);
                 datos.append('foto', foto);
-                console.log(datos);
+                // console.log(datos);
             }
         });
     }

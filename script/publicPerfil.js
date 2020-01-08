@@ -17,7 +17,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                // console.log(data);
                 if (data.respuesta == 'exito') {
                     loading(75);
                     setTimeout(() => {
@@ -31,9 +30,7 @@ $(document).ready(function () {
                                     cuerpo += (cuerpoPublicacion(data.publicaciones[i], ruta, data.rutaImagen));
                                 }
                             }
-                            // console.log(cuerpo);
                             var actual = (data.publicaciones.length > 6) ? 6 : 0;
-
 
                             $("#cuerpoPublicaciones").html(cuerpo);
                             if (data.publicaciones.length > 6) {
@@ -70,8 +67,6 @@ $(document).ready(function () {
                 $("#cuerpoPublicaciones").append(imprimir);
                 verMasPost(data, actual + nImpresiones, nImpresiones, rutaAC);
             });
-            // console.log(actual);
-            // console.log(nImpresiones);
         } else {
             $("#verMasPosts").off();
             $("#verMasPosts").hide();
@@ -94,7 +89,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                // console.log(data);
                 if (data.respuesta == "exito") {
                     let cuerpo = "";
                     for (let i in data.publicaciones) {
@@ -186,7 +180,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                // console.log(data);
                 if (data.respuesta == 'exito') {
                     var cuerpo = '';
                     for (let i in data.servicios) {
@@ -194,7 +187,6 @@ $(document).ready(function () {
                     }
                     $("#contServicios").html(cuerpo);
                     new WOW().init();
-                    // wowElement();
                 } else {
 
                 }

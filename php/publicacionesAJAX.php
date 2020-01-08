@@ -17,7 +17,7 @@ if ($conexion->connect_errno) {
     die(json_encode($respuesta));
 }
 // $_POST['opcion']="cargarNotas";
-// $tipoUsuario = $_SESSION['tipoUser']; //Verificacion de el tipo de usuario, Solo admin puede crear ADMIN y Vendedor.
+// $tipoUsuario = $_SESSION['rol']; //Verificacion de el tipo de usuario, Solo admin puede crear ADMIN y Vendedor.
 // $idUsuario = $_SESSION['idUsuario']; //Verificacion de el tipo de usuario, Solo admin puede crear ADMIN y Vendedor.
 $ruta = ruta(); //Usamos la ruta absoluta para no tener conflicto con las direcciones
 $respuesta = ''; //almacena la respuesta que arrojara el servidor
@@ -156,7 +156,7 @@ switch ($_POST['opcion']) {
         }
         $limitPostAc = " AND B.estado = 'AC' ";
 
-        if ($USERLOGIN && $USERLOGIN['tipoUser'] == 1) {
+        if ($USERLOGIN && $USERLOGIN['rol'] == 1) {
             $limitPostAc = '';
         }
         $BUSQUEDA = isset($_POST['busqueda']) && !empty($_POST['busqueda']) ? htmlspecialchars($_POST['busqueda']) : "";
@@ -213,7 +213,7 @@ switch ($_POST['opcion']) {
         }
         $limitPostAc = " AND B.estado = 'AC' ";
 
-        if ($USERLOGIN && $USERLOGIN['tipoUser'] == 1) {
+        if ($USERLOGIN && $USERLOGIN['rol'] == 1) {
             $limitPostAc = '';
         }
         $BUSQUEDA = isset($_POST['busqueda']) && !empty($_POST['busqueda']) ? htmlspecialchars($_POST['busqueda']) : "";

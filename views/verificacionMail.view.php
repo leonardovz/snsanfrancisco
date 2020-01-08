@@ -133,7 +133,6 @@
                                 console.log(JSON.stringify(xhr));
                             },
                             success: function(data) {
-                                console.log(data);
                                 if (data.respuesta == 'exito') {
                                     alertaSwal(data.Texto, 'success');
                                     location.reload();
@@ -141,7 +140,6 @@
                                     alertaSwal(data.Texto, 'error', 3000);
 
                                 }
-                                // console.log(data);
                             }
 
                         });

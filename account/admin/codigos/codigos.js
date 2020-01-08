@@ -30,7 +30,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
                 if(data.respuesta=="exito"){
                     alertaSwal(data.Texto,'success');
                     traerPaquetes();
@@ -51,7 +50,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
                 if (data.respuesta = "exito") {
                     let cuerpo = "";
                     for (const i in data.planes) {
@@ -72,7 +70,6 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
                 if (data.respuesta = "exito") {
                     let cuerpo = "";
                     cuerpo += `<option value="0">No asignar</option>`;
@@ -94,14 +91,12 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
                 $("#dablaCodigos").html(cuerpoTabla(data.codigos));
 
             }
         });
     }
     function cuerpoTabla(codigos) {
-        console.log(codigos);
         let cuerpo = `
         <table class="table">
             <thead class="black white-text">

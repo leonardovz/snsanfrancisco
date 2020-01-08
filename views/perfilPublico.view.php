@@ -251,7 +251,6 @@ require_once 'templates/header.php'; ?>
                     console.log(xhr.responseText);
                 },
                 success: function(data) {
-                    console.log(data);
                     if (data.respuesta == "exito") {
                         data = data.codigos[0];
                         $codigoPostal.html(` <p><i class="fas fa-phone pr-2"></i>${data.municipio}</p>`);

@@ -6,7 +6,6 @@
     <header class="mb-5">
         <!--Navbar-->
         <?php require_once 'templates/header.view.php'; ?>
-
         <br><br>
     </header>
     <div class="container ripe-malinka-gradient rounded shadow"><br>
