@@ -201,7 +201,7 @@ switch ($_POST['opcion']) {
                         'codigo' => $codigoVer,
                     );
 
-                    $TEMPLATE = $PLANTILLAS->templateRecuperarPass($userDatos, $ruta);//Trae la plantilla de correo
+                    $TEMPLATE = $PLANTILLAS->templateRecuperarPass($userDatos, $ruta); //Trae la plantilla de correo
 
                     $sql = "UPDATE usuarios SET recuperacion ='$arregloVer' WHERE idUsuario = " . $USUARIO['iduser'];
                     $conexion->query($sql);
@@ -209,6 +209,7 @@ switch ($_POST['opcion']) {
                         'respuesta' => 'exito',
                         'Texto' => 'Se ha enviado un código a tu correo electronico, ve a tu bandeja de entrada, ahí encontraras los pasos para contunuar con tu recuperación',
                     );
+                    enviarCorreo($TEMPLATE, $userDatos);
                 } else {
                     $compararCodigo = explode("|", $USUARIO['recuperacion']);
                     if (isset($compararCodigo[1]) && $compararCodigo[1] == $codigo) {
