@@ -7,116 +7,62 @@
         <?php require_once 'templates/header.view.php'; ?>
         <br><br>
     </header>
-    <?php if (isset($rutas[1]) && !empty($rutas[1])) { ?>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Jumbotron -->
-                    <div class="jumbotron text-center my-5">
 
-                        <!-- Title -->
-                        <h2 class="card-title h2"><?php echo $systemName; ?> </h2>
-                        <!-- Subtitle -->
-                        <p class="blue-text my-4 font-weight-bold">Para iniciar Sesión es necesario continuar con la validación </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Jumbotron -->
+                <div class="jumbotron text-center my-5">
 
-                        <!-- Grid row -->
-                        <div class="row d-flex justify-content-center">
+                    <!-- Title -->
+                    <h2 class="card-title h2"><?php echo $systemName; ?> </h2>
+                    <!-- Subtitle -->
+                    <p class="blue-text my-4 font-weight-bold">Para continuar con la recuperación es necesario que ingreses tu correo electrónico</p>
 
-                            <!-- Grid column -->
-                            <div class="col-xl-7 pb-2">
+                    <!-- Grid row -->
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-7">
+                            <form id="verificarpOne" class="text-center" style="color: #757575;" action="#!">
+                                <div class="md-form">
+                                    <input type="email" id="correoNew" class="form-control">
+                                    <label for="correoNew">Ingresa tu correo</label>
+                                </div>
+                                <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Enviar código de Verificación</button>
+                                <p><a id="codigoya" class="text-primary">- YA TENGO UN CÓDIGO -</a></p>
+                            </form>
+                            <form id="verificarTwo" class="text-center" style="color: #757575; display: none;">
+                                <div class="md-form">
+                                    <input type="text" id="codigoNew" class="form-control">
+                                    <label for="codigoNew">Ingresa tu código</label>
+                                </div>
+                                <div class="md-form" style="display: none;">
+                                    <input type="password" id="passNew" class="form-control">
+                                    <label for="passNew">Nueva contraseña</label>
+                                </div>
+                                <div class="md-form" style="display: none;">
+                                    <input type="password" id="passNewR" class="form-control">
+                                    <label for="passNewR">Repite tu nueva contraseña</label>
+                                </div>
+                                <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="nextFile">Siguiente</button>
+                                <a id="volverMail" class=" waves-effect text-primary"><i class="fas fa-backward mr-1"></i> Regresar </a>
 
-                                <p class="card-text">Para asegurarnos de que seas tu, es necesario que ingreses nuevamente tu correo electronico registrado</p>
-                                <p><b>Tu código es: </b> <?php echo $rutas[1]; ?></p>
-                            </div>
-                            <div class="col-md-7">
-                                <form id="formVerificar" class="text-center" style="color: #757575;" action="#!">
-
-                                    <!-- Email -->
-                                    <div class="md-form">
-                                        <input type="hidden" id="codVerificacion" value="<?php echo $rutas[1]; ?>" style="display:none;">
-                                        <input type="email" id="correoVerificar" class="form-control">
-                                        <label for="correoVerificar">Ingresa tu correo</label>
-                                    </div>
-                                    <div class="col-md-12 p-0 mb-5">
-                                        <div class="g-recaptcha" data-sitekey="6LfTXMQUAAAAAFrpHyGr_-sXZzdaQ4Pgy4Hmjhlg"></div>
-                                    </div>
-                                    <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id=>Validar Correo Electronico</button>
-                                </form>
-                            </div>
-                            <!-- Grid column -->
-
+                            </form>
                         </div>
-                        <!-- Grid row -->
-
-                        <hr class="my-4">
-
-                        <div class="pt-2">
-                            <a href="<?php echo $ruta; ?>" type="button" class="btn btn-blue waves-effect">Volver <span class="fas fa-home ml-1"></span></a>
-                            <!-- <a href="<?php echo $ruta; ?>planes" type="button" class="btn btn-outline-primary waves-effect">Validar mi cuenta <i class="fas fa-download ml-1"></i></a> -->
-                        </div>
-
                     </div>
-                    <!-- Jumbotron -->
+                    <!-- Grid row -->
+
+                    <hr class="my-4">
+
+                    <div class="pt-2">
+                        <a href="<?php echo $ruta; ?>" type="button" class="btn btn-outline-primary waves-effect">Volver <i class="fas fa-home ml-1"></i></a>
+                        <!-- <a href="<?php echo $ruta; ?>registro" type="button" class="btn btn-blue waves-effect">Registrarme <span class="far fa-gem ml-1"></span></a> -->
+                    </div>
+
                 </div>
+                <!-- Jumbotron -->
             </div>
         </div>
-    <?php } else { ?>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Jumbotron -->
-                    <div class="jumbotron text-center my-5">
-
-                        <!-- Title -->
-                        <h2 class="card-title h2"><?php echo $systemName; ?> </h2>
-                        <!-- Subtitle -->
-                        <p class="blue-text my-4 font-weight-bold">Para continuar con la recuperación es necesario que ingreses tu correo electrónico</p>
-
-                        <!-- Grid row -->
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-md-7">
-                                <form id="verificarpOne" class="text-center" style="color: #757575;" action="#!">
-                                    <div class="md-form">
-                                        <input type="email" id="correoNew" class="form-control">
-                                        <label for="correoNew">Ingresa tu correo</label>
-                                    </div>
-                                    <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Enviar código de Verificación</button>
-                                    <p><a id="codigoya" class="text-primary">- YA TENGO UN CÓDIGO -</a></p>
-                                </form>
-                                <form id="verificarTwo" class="text-center" style="color: #757575; display: none;">
-                                    <div class="md-form">
-                                        <input type="text" id="codigoNew" class="form-control">
-                                        <label for="codigoNew">Ingresa tu código</label>
-                                    </div>
-                                    <div class="md-form" style="display: none;">
-                                        <input type="password" id="passNew" class="form-control">
-                                        <label for="passNew">Nueva contraseña</label>
-                                    </div>
-                                    <div class="md-form" style="display: none;">
-                                        <input type="password" id="passNewR" class="form-control">
-                                        <label for="passNewR">Repite tu nueva contraseña</label>
-                                    </div>
-                                    <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="nextFile">Siguiente</button>
-                                    <a id="volverMail" class=" waves-effect text-primary"><i class="fas fa-backward mr-1"></i> Regresar </a>
-
-                                </form>
-                            </div>
-                        </div>
-                        <!-- Grid row -->
-
-                        <hr class="my-4">
-
-                        <div class="pt-2">
-                            <a href="<?php echo $ruta; ?>" type="button" class="btn btn-outline-primary waves-effect">Volver <i class="fas fa-home ml-1"></i></a>
-                            <!-- <a href="<?php echo $ruta; ?>registro" type="button" class="btn btn-blue waves-effect">Registrarme <span class="far fa-gem ml-1"></span></a> -->
-                        </div>
-
-                    </div>
-                    <!-- Jumbotron -->
-                </div>
-            </div>
-        </div>
-    <?php } ?>
+    </div>
     <?php
     require_once 'templates/footer.view.php';
     require_once 'templates/footer.php';

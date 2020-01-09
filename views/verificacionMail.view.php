@@ -127,7 +127,7 @@
                         $.ajax({
                             type: 'POST',
                             url: ruta + 'php/usuariosAJAX.php',
-                            data: 'opcion=verificacion&email=' + correo + '&codVerificacion=' + codVerificacion+'&'+formulario,
+                            data: 'opcion=verificacion&email=' + correo + '&codVerificacion=' + codVerificacion + '&' + formulario,
                             dataType: 'json',
                             error: function(xhr, status) {
                                 console.log(JSON.stringify(xhr));
@@ -135,7 +135,7 @@
                             success: function(data) {
                                 if (data.respuesta == 'exito') {
                                     alertaSwal(data.Texto, 'success');
-                                    location.reload();
+                                    location.href = ruta + 'login';
                                 } else {
                                     alertaSwal(data.Texto, 'error', 3000);
 

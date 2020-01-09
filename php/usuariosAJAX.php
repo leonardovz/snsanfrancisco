@@ -71,6 +71,7 @@ switch ($_POST['opcion']) {
                                 'correo' => $email,
                                 'nombre' => $nombre . " " . $apellidos,
                                 'verificacion' => md5($email),
+                                'Subject' => 'Verificación de correo cuenta',
                             );
                             $CORREO = $PLANTILLAS->templateRegistro($datos, $ruta);
 
@@ -199,9 +200,11 @@ switch ($_POST['opcion']) {
                         'apellidos' => $USUARIO['apellidos'],
                         'verificacion' => '654654654',
                         'codigo' => $codigoVer,
+                        'Subject' => 'Recuperación de contraseña',
+
                     );
 
-                    $TEMPLATE = $PLANTILLAS->templateRecuperarPass($userDatos, $ruta);//Trae la plantilla de correo
+                    $TEMPLATE = $PLANTILLAS->templateRecuperarPass($userDatos, $ruta); //Trae la plantilla de correo
 
                     $sql = "UPDATE usuarios SET recuperacion ='$arregloVer' WHERE idUsuario = " . $USUARIO['iduser'];
                     $conexion->query($sql);
@@ -209,6 +212,9 @@ switch ($_POST['opcion']) {
                         'respuesta' => 'exito',
                         'Texto' => 'Se ha enviado un código a tu correo electronico, ve a tu bandeja de entrada, ahí encontraras los pasos para contunuar con tu recuperación',
                     );
+                    if ($_SERVER['HTTP_HOST'] != "localhost") {
+                        enviarCorreo($TEMPLATE, $userDatos);
+                    }
                 } else {
                     $compararCodigo = explode("|", $USUARIO['recuperacion']);
                     if (isset($compararCodigo[1]) && $compararCodigo[1] == $codigo) {
@@ -263,8 +269,8 @@ function enviarCorreo($plantilla, $datos)
     $mail->IsHTML(true);
     $mail->Username = "webmaster@snsanfrancisco.com";
     $mail->Password = "onyK!1bL(VWi";
-    $mail->SetFrom("webmaster@snsanfrancisco.com", "Leonardo Vázquez");
-    $mail->Subject = "Verificación de Cuenta";
+    $mail->SetFrom("webmaster@snsanfrancisco.com", "SNSanFrancisco");
+    $mail->Subject = $datos['Subject'];
     $mail->msgHTML($plantilla);
     $mail->AddAddress('leonardovazquez81@gmail.com');
     $mail->AddAddress($datos['correo']);
