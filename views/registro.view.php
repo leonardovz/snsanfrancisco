@@ -2,6 +2,8 @@
 
 
 <body>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <!-- Main navigation -->
     <header class="mb-5">
         <!--Navbar-->
@@ -71,6 +73,8 @@
                                 <a type="button" class="btn btn-danger text-white text-center">
                                     <i class="fab fa-google"></i>
                                 </a>
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
                             </div>
                         </form>
                     </div>
