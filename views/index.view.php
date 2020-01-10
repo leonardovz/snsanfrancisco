@@ -1,6 +1,6 @@
 <?php
 $acStyles = true; //deja que se impriman los estios para el formulario
-
+$OwlCarousel = true;
 require_once 'templates/header.php';
 // $header = new header();
 // $header->Metadatados();
@@ -94,49 +94,130 @@ require_once 'templates/header.php';
         </div>
         <div class="col-md-12 mb-4">
           <div class="row" id="cuerpoPerfiles">
+            <div class="spinner-grow text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row p-3">
-        <div class="col my-5">
-          <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+      <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+        <div class="row p-3">
+          <div class="col my-5">
             <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <?php } ?>
+          </div>
         </div>
-      </div>
+      <?php } ?>
       <div class="row py-3">
         <h2 class="ml-3 my-4">Más recientes publicaciones</h2>
         <div class="col-md-12 mb-4">
           <div class="row" id="cuerpoPublicaciones">
+            <div class="spinner-grow text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row p-3">
-        <div class="col-md-12 bg-secondary my-5">
-          <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+      <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+        <div class="row p-3">
+          <div class="col-md-12 bg-secondary my-5">
             <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <?php } ?>
+          </div>
+        </div>
+      <?php } ?>
+      <div class="row my-5">
+        <div class="col-12">
+          <div class="row mb-3">
+            <div class="col text-center">
+              <h3 class="h1 "> <i class="fab fa-cuttlefish" style="font-size: 1.35em;"></i>olaboradores <span class="h6 pb-3"><i class="fas fa-crown ml-5 orange-text"></i> </span></h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="owl-carousel owl-theme">
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_1.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_2.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_1.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_2.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_1.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_2.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_1.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_2.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_1.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_2.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_1.png" alt="">
+                </div>
+                <div class="item">
+                  <img src="<?php echo $ruta; ?>galeria/patrocinadores/default_2.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <h2>Nuevos Servicios Registrados!</h2>
       <div class="row justify-content-center" id="contServicios">
-
-      </div>
-      <div class="row p-3">
-        <div class="col-md-12 bg-secondary my-5">
-          <?php if (isset($ADSENSE) && $ADSENSE) { ?>
-            <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-          <?php } ?>
+        <div class="spinner-grow text-primary" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
       </div>
+      <?php if (isset($ADSENSE) && $ADSENSE) { ?>
+        <div class="row p-3">
+          <div class="col-md-12 bg-secondary my-5">
+            <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          </div>
+        </div>
+      <?php } ?>
     </section>
 
   </div>
+
 
   <?php require_once 'templates/footer.view.php'; ?>
   <?php require_once 'templates/footer.php'; ?>
 
   <script src="<?php echo $ruta; ?>script/index.js"></script>
+  <script>
+    $('.owl-carousel').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      mouseDrag: true,
+      autoplay: true,
+      navSpeed: 1,
+      responsive: {
+        0: {
+          items: 3
+        },
+        600: {
+          items: 6
+        },
+        1000: {
+          items: 9
+        }
+      }
+    })
+  </script>
 
 
 </body>

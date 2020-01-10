@@ -155,6 +155,17 @@ switch ($_POST['opcion']) {
                 $sql = "UPDATE usuarios SET validar=1 WHERE idUsuario = " . $usuario['idUsuario'];
                 $resultado = $conexion->query($sql);
                 if ($resultado && $conexion->affected_rows) {
+
+                    $ADMINISTRADOR = new AdminFunciones();
+                    $ADMINISTRADOR->CONEXION = $conexion;
+                    $idUsuario =  $usuario['idUsuario'];
+                    $codigos = $ADMINISTRADOR->codigosUser($idUsuario);
+                    if (!$codigos) {
+                        $codigo = $ADMINFUNC->codigoUnico();
+                        $sql = "INSERT INTO codigos(codigo, idRango,idUsuario, idUser_Creador) VALUES ('$codigo',2,$idUsuario,1)";
+                        $conexion->query($sql);
+                    }
+
                     $respuesta = array('respuesta' => 'exito', 'Texto' => 'Tu cuenta fue validada de manera exitosa!, Inicia Sesión y continua con la tu configuración');
                 } else {
                     $respuesta = array('respuesta' => 'error', 'Texto' => 'Por el momento no es posible verificar tu cuenta');

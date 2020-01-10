@@ -48,6 +48,11 @@
     echo '<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />';
     echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>';
   }
+  if (isset($OwlCarousel) && $OwlCarousel) {
+    echo '<link href="' . $ruta . 'recursos/OwlCarousel/dist/assets/owl.carousel.min.css" rel="stylesheet">';
+    echo '<link href="' . $ruta . 'recursos/OwlCarousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">';
+    echo '<script type="text/javascript" src="' . $ruta . 'recursos/OwlCarousel/dist/owl.carousel.min.js"></script>';
+  }
   if (isset($ANALYTICS) && $ANALYTICS) {
     echo '
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129896419-1"></script>

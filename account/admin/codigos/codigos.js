@@ -74,7 +74,7 @@ $(document).ready(function () {
                     let cuerpo = "";
                     cuerpo += `<option value="0">No asignar</option>`;
                     for (const i in data.perfiles) {
-                        cuerpo += `<option value="${data.perfiles[i].idUsuario}">${data.perfiles[i].nombre} ${data.perfiles[i].apellidos} ${data.perfiles[i].nombreServicio}</option>`;
+                        cuerpo += `<option value="${data.perfiles[i].idUsuario}">${data.perfiles[i].nombre} ${data.perfiles[i].apellidos} -|- ${data.perfiles[i].correo}</option>`;
                     }
                     $("#idUsuarioSel").html(cuerpo);
                 }

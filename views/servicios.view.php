@@ -63,6 +63,9 @@ require_once 'templates/header.php';
             </div>
         </div>
         <div class="row justify-content-center" id="serviciosSystem">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
     </div>
     <div class="container">
@@ -74,6 +77,9 @@ require_once 'templates/header.php';
                 </div>
             </div>
             <div class="row justify-content-center" id="publicacionesBody">
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8 col my-5">
@@ -88,12 +94,15 @@ require_once 'templates/header.php';
                 </div>
             </div>
             <div class="row justify-content-center" id="cuerpoPerfiles">
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8 col my-5">
                     <?php if (isset($ADSENSE) && $ADSENSE) { ?>s
-                        <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <?php } ?>
+                    <script data-ad-client="ca-pub-3411329531589521" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <?php } ?>
                 </div>
             </div>
         </section>
