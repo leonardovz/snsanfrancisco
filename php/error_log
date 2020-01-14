@@ -1,1 +1,5 @@
 [18-Nov-2019 19:45:05 America/Mexico_City] PHP Warning:  unlink(../galeria/usuario/00001/post_1574125601_00001.jpg): No such file or directory in /home2/snsanfra/public_html/php/usuariosFunciones.php on line 219
+[13-Jan-2020 08:21:29 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to a member function codigoUnico() on null in /home2/snsanfra/public_html/php/usuariosAJAX.php:164
+Stack trace:
+#0 {main}
+  thrown in /home2/snsanfra/public_html/php/usuariosAJAX.php on line 164
