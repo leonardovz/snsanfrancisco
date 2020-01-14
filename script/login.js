@@ -4,36 +4,47 @@ $(".wow").on('click', (e) => {
 });
 var ruta = ruta();
 $(document).ready(() => {
-    $("#formLogin").on('submit', function (e) {
-        e.preventDefault();
-        var formulario = $(this).serialize();
-        $.ajax({
-            type: 'POST',
-            url: ruta + 'php/usuariosAJAX.php',
-            data: 'opcion=login&' + formulario,
-            dataType: 'json',
-            error: function (xhr, status) {
-                console.log(JSON.stringify(xhr));
-            },
-            success: function (data) {
-                // console.log(data);
-                if (data.respuesta == 'exito') {
-                    Swal.fire(
-                        'Exito!',
-                        data.Texto,
-                        'success'
-                    );
-                    setInterval(() => { location.reload() }, 1500);
-                } else {
-                    Swal.fire(
-                        'Alerta!',
-                        data.Texto,
-                        'error'
-                    );
+    formLogin();
+    function evitarCarga() {
+        $("#formLogin").off().on('submit', function (e) {
+            e.preventDefault();
+            alert("Quieto perro");
+        })
+    }
+    function formLogin() {
+        $("#formLogin").off().on('submit', function (e) {
+            e.preventDefault();
+            evitarCarga();
+            var formulario = $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: ruta + 'php/usuariosAJAX.php',
+                data: 'opcion=login&' + formulario,
+                dataType: 'json',
+                error: function (xhr, status) {
+                    console.log(JSON.stringify(xhr));
+                    formLogin();
+                },
+                success: function (data) {
+                    if (data.respuesta == 'exito') {
+                        Swal.fire(
+                            'Exito!',
+                            data.Texto,
+                            'success'
+                        );
+                        setInterval(() => { location.reload() }, 1500);
+                    } else {
+                        Swal.fire(
+                            'Alerta!',
+                            data.Texto,
+                            'error'
+                        );
+                    }
+                    formLogin();
                 }
-            }
+            });
         });
-    });
+    }
     /*///////////////////////////////
         BOTÓN DE FACEBOOK
     *////////////////////////////////

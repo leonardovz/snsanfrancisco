@@ -161,7 +161,7 @@ switch ($_POST['opcion']) {
                     $idUsuario =  $usuario['idUsuario'];
                     $codigos = $ADMINISTRADOR->codigosUser($idUsuario);
                     if (!$codigos) {
-                        $codigo = $ADMINFUNC->codigoUnico();
+                        $codigo = $ADMINISTRADOR->codigoUnico();
                         $sql = "INSERT INTO codigos(codigo, idRango,idUsuario, idUser_Creador) VALUES ('$codigo',2,$idUsuario,1)";
                         $conexion->query($sql);
                     }
@@ -221,7 +221,7 @@ switch ($_POST['opcion']) {
                     $conexion->query($sql);
                     $respuesta = array(
                         'respuesta' => 'exito',
-                        'Texto' => 'Se ha enviado un código a tu correo electronico, ve a tu bandeja de entrada, ahí encontraras los pasos para contunuar con tu recuperación',
+                        'Texto' => 'Se ha enviado un código a tu correo electronico, ve a tu bandeja de entrada, ahí encontraras los pasos para contunuar con tu recuperación', getdate()
                     );
                     if ($_SERVER['HTTP_HOST'] != "localhost") {
                         enviarCorreo($TEMPLATE, $userDatos);

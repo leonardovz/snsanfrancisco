@@ -2,7 +2,7 @@
 
 
 <body>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Main navigation -->
     <header class="mb-5">
@@ -65,16 +65,6 @@
                                 <p>Ya eres miembro?
                                     <a href="<?php echo $ruta; ?>login">Ingresa</a>
                                 </p>
-
-                                <p>Ingresa con :</p>
-                                <a type="button" class="btn btn-primary text-white text-center">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a type="button" class="btn btn-danger text-white text-center">
-                                    <i class="fab fa-google"></i>
-                                </a>
-                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
                             </div>
                         </form>
                     </div>
