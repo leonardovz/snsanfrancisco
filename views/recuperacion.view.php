@@ -154,6 +154,7 @@
                         console.log(xhr.responseText);
                     },
                     success: function(data) {
+                        console.log(data);
                         if (data.respuesta == 'exito') {
                             Swal.fire(
                                 'EXITO',

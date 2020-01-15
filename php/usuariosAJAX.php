@@ -221,7 +221,7 @@ switch ($_POST['opcion']) {
                     $conexion->query($sql);
                     $respuesta = array(
                         'respuesta' => 'exito',
-                        'Texto' => 'Se ha enviado un código a tu correo electronico, ve a tu bandeja de entrada, ahí encontraras los pasos para contunuar con tu recuperación', getdate()
+                        'Texto' => 'Se ha enviado un código a tu correo electronico, ve a tu bandeja de entrada, ahí encontraras los pasos para contunuar con tu recuperación',
                     );
                     if ($_SERVER['HTTP_HOST'] != "localhost") {
                         enviarCorreo($TEMPLATE, $userDatos);
