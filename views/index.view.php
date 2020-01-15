@@ -25,7 +25,7 @@ require_once 'templates/header.php';
               <h1 class="display-4 font-weight-bold"><?php echo $systemName; ?></h1>
               <hr class="hr-light">
               <h6 class="mb-3">Subscribete a las noticias y nuevas publicaciónes de nuestros Usuarios. Resuelve todas
-                tus inquietudes, envianos tus dudad y sugerencias! estamos para atenderte!
+                tus inquietudes, envianos tus dudas y sugerencias! estamos para atenderte!
 
               </h6>
               <a href="<?php echo $ruta; ?>acercade" class="btn btn-outline-white">Leer Más</a>
@@ -39,7 +39,7 @@ require_once 'templates/header.php';
                   <!--Header-->
                   <div class="text-center">
                     <h3 class="dark-grey-text">
-                      <strong>Contactanos:</strong>
+                      <strong>Contáctanos:</strong>
                     </h3>
                     <hr>
                   </div>
