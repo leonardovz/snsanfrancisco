@@ -70,24 +70,28 @@
                         <!-- Title -->
                         <h2 class="card-title h2"><?php echo $systemName; ?> </h2>
                         <!-- Subtitle -->
-                        <p class="blue-text my-4 font-weight-bold">Para continuar con la validacion es necesario contar con un codigo de verificación</p>
+                        <p class="blue-text my-4 font-weight-bold">Para continuar con la validacion es necesario contar con un código de verificación</p>
 
                         <!-- Grid row -->
                         <div class="row d-flex justify-content-center">
 
                             <!-- Grid column -->
                             <div class="col-xl-7 pb-2">
-                                <p class="card-text">¿Aún no recibes tu código?</p>
+                                <!-- <p class="card-text">¿Aún no recibes tu código?</p> -->
                             </div>
                             <div class="col-md-7">
                                 <form id="formSendVerificar" class="text-center" style="color: #757575;" action="#!">
 
                                     <!-- Email -->
                                     <div class="md-form">
-                                        <input type="email" id="materialLoginFormEmail" class="form-control">
-                                        <label for="materialLoginFormEmail">Ingresa tu correo</label>
+                                        <input type="email" id="email" class="form-control">
+                                        <label for="email">Ingresa tu correo</label>
                                     </div>
-                                    <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Reenviar Correo de Verificación</button>
+                                    <div class="md-form">
+                                        <input type="text" id="codeVerify" class="form-control">
+                                        <label for="codeVerify">Código</label>
+                                    </div>
+                                    <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Verificar</button>
                                 </form>
                             </div>
                             <!-- Grid column -->
@@ -115,42 +119,87 @@
 
     <script>
         var ruta = ruta();
+
         $(document).ready(function() {
-            $("#formVerificar").on('submit', function(e) {
-                e.preventDefault();
-                let correo = $("#correoVerificar").val();
-                let codVerificacion = $("#codVerificacion").val();
-                var formulario = $(this).serialize();
-                if (correo != "") {
-                    var expresion = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
-                    if (expresion.test(correo)) {
-                        $.ajax({
-                            type: 'POST',
-                            url: ruta + 'php/usuariosAJAX.php',
-                            data: 'opcion=verificacion&email=' + correo + '&codVerificacion=' + codVerificacion + '&' + formulario,
-                            dataType: 'json',
-                            error: function(xhr, status) {
-                                console.log(JSON.stringify(xhr));
-                            },
-                            success: function(data) {
-                                if (data.respuesta == 'exito') {
-                                    alertaSwal(data.Texto, 'success');
-                                    location.href = ruta + 'login';
-                                } else {
-                                    alertaSwal(data.Texto, 'error', 3000);
+            <?php if (isset($rutas[1]) && !empty($rutas[1])) { ?>
+                $("#formVerificar").on('submit', function(e) {
+                    e.preventDefault();
+                    let correo = $("#correoVerificar").val();
+                    let codVerificacion = $("#codVerificacion").val();
+                    var formulario = $(this).serialize();
+                    if (correo != "") {
+                        var expresion = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+                        if (expresion.test(correo)) {
+                            $.ajax({
+                                type: 'POST',
+                                url: ruta + 'php/usuariosAJAX.php',
+                                data: 'opcion=verificacion&email=' + correo + '&codVerificacion=' + codVerificacion + '&' + formulario,
+                                dataType: 'json',
+                                error: function(xhr, status) {
+                                    console.log(JSON.stringify(xhr));
+                                },
+                                success: function(data) {
+                                    if (data.respuesta == 'exito') {
+                                        setTimeout(() => {
+                                            alertaSwal(data.Texto, 'success');
+                                        }, 1500);
+                                        location.href = ruta + 'login';
+                                    } else {
+                                        alertaSwal(data.Texto, 'error', 3000);
 
+                                    }
                                 }
-                            }
 
-                        });
+                            });
+                        } else {
+                            alertaSwal('El correo electronico que has ingresado no esta escrito de forma correcta', 'error');
+                        }
                     } else {
-                        alertaSwal('El correo electronico que has ingresado no esta escrito de forma correcta', 'error');
+                        alertaSwal('Es necesario que introduzcas tu correo electronico', 'error');
                     }
-                } else {
-                    alertaSwal('Es necesario que introduzcas tu correo electronico', 'error');
-                }
-                // alert("HOLA que hace");
-            })
+                    // alert("HOLA que hace");
+                });
+            <?php } else { ?>
+
+                $("#formSendVerificar").on('submit', function(e) {
+                    e.preventDefault();
+                    let correo = $("#email").val();
+                    let codVerificacion = $("#codeVerify").val();
+                    var formulario = $(this).serialize();
+                    if (correo != "") {
+                        var expresion = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+                        if (expresion.test(correo)) {
+                            $.ajax({
+                                type: 'POST',
+                                url: ruta + 'php/usuariosAJAX.php',
+                                data: 'opcion=verificacion&email=' + correo + '&codVerificacion=' + codVerificacion + '&' + formulario,
+                                dataType: 'json',
+                                error: function(xhr, status) {
+                                    console.log(JSON.stringify(xhr));
+                                },
+                                success: function(data) {
+                                    if (data.respuesta == 'exito') {
+                                        setTimeout(() => {
+                                            alertaSwal(data.Texto, 'success');
+                                        }, 1500);
+                                        location.href = ruta + 'login';
+                                    } else {
+                                        alertaSwal(data.Texto, 'error', 3000);
+
+                                    }
+                                }
+
+                            });
+                        } else {
+                            alertaSwal('El correo electronico que has ingresado no esta escrito de forma correcta', 'error');
+                        }
+                    } else {
+                        alertaSwal('Es necesario que introduzcas tu correo electronico', 'error');
+                    }
+                    // alert("HOLA que hace");
+                });
+            <?php } ?>
+
         });
     </script>
 </body>

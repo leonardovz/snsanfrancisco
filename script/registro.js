@@ -23,6 +23,9 @@ $(document).ready(() => {
                 success: function (data) {
                     if (data.respuesta == 'exito') {
                         Swal.fire('¡Exito!', data.Texto, 'success');
+                        setTimeout(() => {
+                            location.href = ruta + 'login';
+                        }, 1500);
                     } else {
                         var posicion = $("#apellido").offset().top;
                         $("#errores").html(`<div class="alert alert-primary" role="alert"> ${data.Texto} </div>`);

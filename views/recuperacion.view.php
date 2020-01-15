@@ -27,7 +27,7 @@
                                     <input type="email" id="correoNew" class="form-control">
                                     <label for="correoNew">Ingresa tu correo</label>
                                 </div>
-                                <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Enviar código de Verificación</button>
+                                <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Enviar código de recuperación</button>
                                 <p><a id="codigoya" class="text-primary">- YA TENGO UN CÓDIGO -</a></p>
                             </form>
                             <form id="verificarTwo" class="text-center" style="color: #757575; display: none;">

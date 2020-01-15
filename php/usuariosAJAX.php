@@ -198,42 +198,79 @@ switch ($_POST['opcion']) {
             if ($USUARIO && $USUARIO['validar'] == 1) {
                 if (!$codigo) {
 
+
                     /////////////////////////////////////////
+                    $compararCodigo = explode("|", $USUARIO['recuperacion']);
+                    $intentos = isset($compararCodigo[3]) ? (int) $compararCodigo[3] : 0; //Obtener numero de intentos de recuperación
+                    $fechaIntento = isset($compararCodigo[2]) ? $compararCodigo[2] : date('Y-m-d'); //cachar fecha para validar envio
+                    $statusIntento = isset($compararCodigo[0]) ? $compararCodigo[0] : 'true'; //Si  no existen intentos asignarle un valor
+
+                    /**
+                     * Limitacion del número de intentos
+                     * 
+                     */
+                    if (isset($compararCodigo[1])) {
+                        if ($statusIntento == 'false') {
+                            die(json_encode(array('respuesta' => 'error', 'Texto' => 'Se excedieron el número de intentos de recuperación, intenta de nuevo mañana',)));
+                        } else {
+                            if ($statusIntento == 'true' && $intentos > 2 && $fechaIntento == date('Y-m-d')) {
+                                $statusIntento = 'false';
+                            } elseif ($fechaIntento != date('Y-m-d')) {
+                                $fechaIntento = date('Y-m-d'); //Solamente si cambiaron las fechas puede continuar intentando
+                                $intentos = 1;
+                            } else {
+                                $intentos++;
+                                if ($intentos > 2) {
+                                    $statusIntento = 'false';
+                                }
+                            }
+                        }
+                    }
+
+                    /**
+                     * //////////////////////////////
+                     */
+
 
                     $codigoVer = $ADMINFUNC->generarCodigo(16); //Genera un codigo de recuperación de la cuenta IMPORTANTE PARA ENVIAR POR CORREO!!!!
 
                     /////////////////////////////////////////
 
-                    $arregloVer = "true|$codigoVer";
+                    $arregloVer = $statusIntento . '|' . $codigoVer . '|' .  $fechaIntento . '|' . $intentos;
                     $userDatos = array(
                         'correo' => $USUARIO['correo'],
                         'nombre' => $USUARIO['nombre'] . $USUARIO['apellidos'],
                         'apellidos' => $USUARIO['apellidos'],
-                        'verificacion' => '654654654',
                         'codigo' => $codigoVer,
                         'Subject' => 'Recuperación de contraseña',
 
                     );
 
                     $TEMPLATE = $PLANTILLAS->templateRecuperarPass($userDatos, $ruta); //Trae la plantilla de correo
-
-                    $sql = "UPDATE usuarios SET recuperacion ='$arregloVer' WHERE idUsuario = " . $USUARIO['iduser'];
-                    $conexion->query($sql);
-                    $respuesta = array(
-                        'respuesta' => 'exito',
-                        'Texto' => 'Se ha enviado un código a tu correo electronico, ve a tu bandeja de entrada, ahí encontraras los pasos para contunuar con tu recuperación',
-                    );
-                    if ($_SERVER['HTTP_HOST'] != "localhost") {
-                        enviarCorreo($TEMPLATE, $userDatos);
+                    $sql = "UPDATE usuarios SET recuperacion ='$arregloVer' WHERE idUsuario = " . $USUARIO['idUsuario'];
+                    $resultado = $conexion->query($sql);
+                    if ($resultado) {
+                        if ($statusIntento != 'false') {
+                            $respuesta = array('respuesta' => 'exito', 'Texto' => 'Se ha enviado un código a tu correo electronico, ve a tu bandeja de entrada, ahí encontraras los pasos para contunuar con tu recuperación',);
+                            if ($_SERVER['HTTP_HOST'] != "localhost") {
+                                enviarCorreo($TEMPLATE, $userDatos);
+                            }
+                        } else {
+                            $respuesta = (array('respuesta' => 'error', 'Texto' => 'Se excedieron el número de intentos de recuperación, intenta de nuevo mañana'));
+                        }
+                    } else {
+                        $respuesta = array('respuesta' => 'error', 'Texto' => 'No fue posible generar un código',);
                     }
                 } else {
                     $compararCodigo = explode("|", $USUARIO['recuperacion']);
                     if (isset($compararCodigo[1]) && $compararCodigo[1] == $codigo) {
-                        if ($paso == 2) {
+                        if ($compararCodigo[0] == 'false') {
+                            $respuesta = array('respuesta' => 'error', 'Texto' => 'Se excedieron el número de intentos de recuperación, intenta de nuevo mañana',);
+                        } elseif ($paso == 2) {
                             if (($password && $passwordR) && $password === $passwordR) {
                                 if (strlen($password) > 6) {
                                     $newPass = md5($password);
-                                    $sql = "UPDATE usuarios SET password ='$newPass',recuperacion='' WHERE idUsuario = " . $USUARIO['iduser'];
+                                    $sql = "UPDATE usuarios SET password ='$newPass',recuperacion='' WHERE idUsuario = " . $USUARIO['idUsuario'];
                                     if ($conexion->query($sql)) {
                                         $respuesta = array('respuesta' => 'exito', 'Texto' => 'Contraseña cambiada de manera exitosa', 'change' => 'si');
                                     } else {

@@ -335,7 +335,7 @@ class AdminFunciones
         $conexion = $this->CONEXION;
         $resultado = false;
         if ($conexion) {
-            $sql = "SELECT usersinfo.*,usuarios.nombre,usuarios.apellidos,usuarios.fecha,usuarios.img,usuarios.recuperacion,usuarios.validar,usuarios.correo FROM usersinfo,usuarios WHERE usersinfo.iduser = usuarios.idUsuario AND usuarios.correo = '$correo'";
+            $sql = "SELECT idUsuario,nombre,apellidos,fecha,img,recuperacion,validar,correo FROM usuarios WHERE correo = '$correo' ";
             $resultado = $conexion->query($sql);
             $resultado = ($resultado && $resultado->num_rows) ? $resultado->fetch_assoc() : false;
         }
