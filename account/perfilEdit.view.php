@@ -72,7 +72,7 @@ require_once 'templates/header.php'; ?>
                             </div>
                             <div class="row">
                                 <div class="col-12 my-3">
-                                    <form id="formEditPerfil" class="text-center border border-light p-md-5 p-3">
+                                    <form id="formSocialNetwork" class="text-center border border-light p-md-5 p-3">
                                         <p class="h4 mb-4">Redes Sociales</p>
                                         <p>Modifica los datos de contacto.</p>
                                         <!-- Nombre -->
