@@ -54,20 +54,77 @@ require_once 'templates/header.php'; ?>
                             <!-- Card Dark -->
                         </div>
                         <div class="col-md-8">
-                            <form id="formEditPerfil" class="text-center border border-light p-5">
+                            <div class="row">
+                                <div class="col">
+                                    <form id="formEditPerfil" class="text-center border border-light p-5">
 
-                                <p class="h4 mb-4"><?php echo $UserLogin['nombre'] . ' ' . $UserLogin['apellidos']; ?></p>
+                                        <p class="h4 mb-4"><?php echo $UserLogin['nombre'] . ' ' . $UserLogin['apellidos']; ?></p>
 
-                                <p>Aquí puedes modificar los datos de tu perfil.</p>
-                                <!-- Nombre -->
-                                <input type="text" name="nombre" id="nombre" class="form-control mb-4" placeholder="Nombre" value="<?php echo $UserLogin['nombre']; ?>">
-                                <!-- Apellidos -->
-                                <input type="text" name="apellidos" id="apellidos" class="form-control mb-4" placeholder="Apellidos" value="<?php echo $UserLogin['apellidos']; ?>">
-                                <!-- Sign in button -->
-                                <button class="btn btn-info btn-block" type="submit">Guardar Cambios</button>
-                            </form>
-                            <button class="btn btn-info" id="cambioPassword" type="submit">Cambiar Contraseña</button>
+                                        <p>Aquí puedes modificar los datos de tu perfil.</p>
+                                        <!-- Nombre -->
+                                        <input type="text" name="nombre" id="nombre" class="form-control mb-4" placeholder="Nombre" value="<?php echo $UserLogin['nombre']; ?>">
+                                        <!-- Apellidos -->
+                                        <input type="text" name="apellidos" id="apellidos" class="form-control mb-4" placeholder="Apellidos" value="<?php echo $UserLogin['apellidos']; ?>">
+                                        <!-- Sign in button -->
+                                        <button class="btn btn-info btn-block" type="submit">Guardar Cambios</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 my-3">
+                                    <form id="formEditPerfil" class="text-center border border-light p-md-5 p-3">
+                                        <p class="h4 mb-4">Redes Sociales</p>
+                                        <p>Modifica los datos de contacto.</p>
+                                        <!-- Nombre -->
+                                        <div class="row">
+                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                <a target="_blank" href="https://www.facebook.com/snsanfrancisco" class="py-2 px-2 bg-primary rounded"><i class="fab fa-facebook-f text-white"></i></a>
+                                            </div>
+                                            <div class="col-xl-10 col-md-9 col-9">
+                                                <input type="text" name="facebookVal" id="facebookVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco" value="">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                <a target="_blank" href="https://www.instagram.com/snsanfrancisco/" class="py-2 px-2 purple-gradient rounded"><i class="fab fa-instagram text-white"></i></a>
+                                            </div>
+                                            <div class="col-xl-10 col-md-9 col-9">
+                                                <input type="text" name="instagramVal" id="instagramVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco" value="">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                <a target="_blank" href="http://m.me/snsanfrancisco" class="py-2 px-2 bg-info rounded"><i class="fab fa-facebook-messenger text-white"></i></a>
+                                            </div>
+                                            <div class="col-xl-10 col-md-9 col-9">
+                                                <input type="text" name="messengerVal" id="messengerVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco" value="">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                <a target="_blank" href="https://api.whatsapp.com/send?phone=523481016176" class="py-2 px-2 bg-success rounded"><i class="fab fa-whatsapp text-white"></i></a>
+                                            </div>
+                                            <div class="col-xl-10 col-md-9 col-9">
+                                                <input type="text" name="whatsappVal" id="whatsappVal" class="form-control mb-4" placeholder="p. ej. : 3481016176" value="">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                <a target="_blank" href="https://snsanfrancisco.com/" class="py-2 px-2 bg-dark rounded"><i class="fas fa-laptop-code text-white"></i></a>
+                                            </div>
+                                            <div class="col-xl-10 col-md-9 col-9">
+                                                <input type="text" name="webVal" id="webVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco.com" value="">
+                                            </div>
+                                        </div>
+                                        <!-- Apellidos -->
+                                        <button class="btn btn-info btn-block" type="submit">Guardar Cambios</button>
+                                    </form>
+                                    <button class="btn btn-info" id="cambioPassword" type="submit">Cambiar Contraseña</button>
+
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                     <div class="row mt-5">
                         <div class="col-md-6" style="display:none;">

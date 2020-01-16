@@ -19,11 +19,21 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if (data.respuesta == 'exito') {
-                    var cuerpo = '';
-                    for (let i in data.servicios) {
-                        cuerpo += (cuerpoServicios(data.servicios[i], ruta, data.rutaImagen));
+                    var contenedor = $("#serviciosSystem");
+                    var servicios = data.servicios;
+                    contenedor.html("");
+                    imprimirServ(0, servicios, contenedor);
+
+                    function imprimirServ(i, servicios, contenedor) {
+                        contenedor.append(cuerpoServicios(servicios[i], ruta, data.rutaImagen));
+                        setTimeout(() => {
+                            if (i < servicios.length) {
+                                imprimirServ(i, servicios, contenedor);
+                            }
+                        }, 200);
+                        i++;
                     }
-                    $("#serviciosSystem").html(cuerpo);
+
                     new WOW().init();
                 } else {
 

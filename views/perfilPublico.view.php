@@ -267,17 +267,21 @@ require_once 'templates/header.php'; ?>
             echo 'var social = ' . $PERFIL['social'] . ';';
             echo '';
 
-            ?>
+        ?>
             var cuerpoSocial = "";
             if (social.facebook && social.facebook != '') {
                 cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://www.facebook.com/${(social.facebook)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-facebook-f"></"></i></a> </li>`;
+            }
+            if (social.instagram && social.instagram != '') {
+                cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://www.instagram.com/${(social.instagram)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-instagram"></i></a> </li>`;
             }
             if (social.whatsapp && social.whatsapp != '') {
                 cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://api.whatsapp.com/send?phone=52${(social.whatsapp)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-whatsapp"></i></a> </li>`;
             }
             if (social.messenger && social.messenger != '') {
-                cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://www.messenger.com/t/${(social.messenger)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-facebook-messenger"></i></a> </li>`;
+                cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="http://m.me/${(social.messenger)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-facebook-messenger"></i></a> </li>`;
             }
+
             if (social.personalWeb && social.personalWeb != '') {
                 cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://${(social.personalWeb)}"class="p-2 fa-lg tw-ic text-white"><i class="fas fa-laptop-code"></i></a> </li>`;
             }

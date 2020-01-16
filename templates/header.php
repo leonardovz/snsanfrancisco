@@ -27,7 +27,7 @@
   <meta name="twitter:image" content="<?php echo $ruta; ?>galeria/sistema/logo/5.ico" />
   <meta name="twitter:url" content="https://SNSanFrancisco.com" />
   <meta name="twitter:card" content="" />
-
+  <link rel="icon" href="<?php echo $ruta; ?>galeria/sistema/logo/logo_v2_white.png" sizes="192x192">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <link href="<?php echo $ruta; ?>recursos/css/bootstrap.min.css" rel="stylesheet">
   <link href="<?php echo $ruta; ?>recursos/sweetalert2/sweetalert2.min.css" rel="stylesheet">
