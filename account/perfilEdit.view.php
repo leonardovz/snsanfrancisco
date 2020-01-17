@@ -270,9 +270,17 @@ require_once 'templates/header.php'; ?>
                     success: function(data) {
                         console.log(data);
                         if (data.respuesta == 'exito') {
-
+                            Swal.fire(
+                                '¡Exito!',
+                                data.Texto,
+                                'success'
+                            )
                         } else {
-
+                            Swal.fire(
+                                '¡ERROR!',
+                                data.Texto,
+                                'error'
+                            )
                         }
                     }
                 });
