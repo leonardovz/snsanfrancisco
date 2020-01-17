@@ -1,7 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar bg-dark mb-5">
     <div class="container">
-        <a class="navbar-brand" href="<?php echo $ruta; ?>">
-            <strong>SNSanFrancisco</strong>
+        <a class="navbar-brand p-0 my-0 " href="<?php echo $ruta; ?>">
+            <strong>
+                <img src="<?php echo $ruta . 'galeria/sistema/logo/logo_v3_' . ((isset($acStyles)) ? "dark" : "white") . '.png' ?>" alt="" style="height: 67px;">
+            </strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7" aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

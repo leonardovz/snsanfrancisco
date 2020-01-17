@@ -284,6 +284,8 @@ switch ($_POST['opcion']) {
         break;
     case 'miMembresia':
         $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
+        $idUser = (isset($_POST['idPerfil']) && !empty($_POST['idPerfil'])) ? (int) $_POST['idPerfil'] : false;
+
         if ($idUser) {
             // Siempre te arrojara la membresia con la ultima fecha de finalizacion
             $sql = "SELECT M.*,R.nombre AS rol,R.imagen,R.tag,R.duracion,R.iconColor,R.icono,R.publicacion FROM membresias AS M,rango AS R WHERE M.idRango = R.id AND M.idUser = $idUser ORDER BY M.fechaFinal DESC LIMIT 1  ";
@@ -723,6 +725,62 @@ switch ($_POST['opcion']) {
                 $respuesta = array(
                     'respuesta' => 'error',
                     'Texto' => 'No te puedo mostrar códigos'
+                );
+            }
+        }
+        die(json_encode($respuesta));
+        break;
+    case 'redesSociales':
+        $ADMINISTRADOR = new AdminFunciones();
+        $ADMINISTRADOR->CONEXION = $conexion;
+        if ($USERLOGIN) {
+            $facebook     = isset($_POST['facebookVal'])   && !empty($_POST['facebookVal'])   ? htmlspecialchars($_POST['facebookVal']) : false;
+            $instagram    = isset($_POST['instagramVal'])  && !empty($_POST['instagramVal'])  ? htmlspecialchars($_POST['instagramVal']) : false;
+            $messenger    = isset($_POST['messengerVal'])  && !empty($_POST['messengerVal'])  ? htmlspecialchars($_POST['messengerVal']) : false;
+            $whatsapp     = isset($_POST['whatsappVal'])   && !empty($_POST['whatsappVal'])   ? htmlspecialchars($_POST['whatsappVal']) : false;
+            $web          = isset($_POST['webVal'])        && !empty($_POST['webVal'])        ? htmlspecialchars($_POST['webVal']) : false;
+
+            $idUsuario =  $USERLOGIN['idUsuario'];
+            $SOCIALES = [];
+            if ($facebook) {
+                $SOCIALES['facebook'] = $facebook;
+            }
+            if ($instagram) {
+                $SOCIALES['instagram'] = $instagram;
+            }
+            if ($messenger) {
+                $SOCIALES['messenger'] = $messenger;
+            }
+            if ($whatsapp) {
+                $SOCIALES['whatsapp'] = $whatsapp;
+            }
+            if ($web) {
+                $SOCIALES['personalWeb'] = $web;
+            }
+            $SOCIALES = json_encode($SOCIALES);
+
+
+            $PERFIL = $ADMINISTRADOR->verificarPerfil($USERLOGIN['idUsuario']); //configuraci[on del perfil]
+            if ($PERFIL) {
+                $resultado = $conexion->query("UPDATE usersinfo SET social ='" . $SOCIALES . "' WHERE iduser = " . $USERLOGIN['idUsuario']);
+                if ($resultado) {
+                    $respuesta = array(
+                        'respuesta' => 'exito',
+                        'Texto' => 'Perfil actualizado de manera exitosa',
+                        'DATOS' => json_decode($SOCIALES),
+                    );
+                } else {
+                    $respuesta = array(
+                        'respuesta' => 'error',
+                        'Texto' => 'No fue posible actualizar el perfil',
+                        'DATOS' => json_decode($SOCIALES),
+                    );
+                }
+            } else {
+                $respuesta = array(
+                    'respuesta' => 'error',
+                    'Texto' => 'No te puedo mostrar códigos',
+                    'DATOS' => json_decode($SOCIALES),
                 );
             }
         }

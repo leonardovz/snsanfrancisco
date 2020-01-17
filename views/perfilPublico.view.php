@@ -27,6 +27,7 @@ if ($PERFIL) {
     $keyWords = $SERVICIO['nombre'] . ' | ' . $keyWords;
     $descripcionServ = $descripcionServ . ' - ' . $PERFIL['nombre'] . ' ' . $PERFIL['apellidos'] . ' te ofrece su servicio de ' . $SERVICIO['nombre'];
 }
+
 require_once 'templates/header.php'; ?>
 
 
@@ -189,11 +190,13 @@ require_once 'templates/header.php'; ?>
                                         <hr class="hr-light my-4">
                                         <?php
                                         if ($PAQUETE && $PAQUETE['membresia']['rol'] != 'Gratis' && $PAQUETE['status']) { ?>
-                                            <h3 class="my-4 pb-2">Redes Sociales</h3>
+                                            <div>
+                                                <h3 class="my-4 pb-2">Redes Sociales</h3>
 
-                                            <ul class="list-inline text-center list-unstyled" id="socialContact">
+                                                <ul class="list-inline text-center list-unstyled" id="socialContact">
 
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         <?php } ?>
 
                                     </div>
@@ -232,6 +235,8 @@ require_once 'templates/header.php'; ?>
     <?php require_once 'templates/footer.php'; ?>
 
     <script>
+        var ruta = ruta();
+
         $(document).ready(function() {
             new WOW().init();
             $(".wow").on('click', (e) => {
@@ -244,7 +249,7 @@ require_once 'templates/header.php'; ?>
             var $codigoPostal = $("#codigoPostal");
             $.ajax({
                 type: "POST",
-                url: '<?php echo $ruta; ?>/php/publico.php',
+                url: ruta + 'php/publico.php',
                 dataType: "json",
                 data: "opcion=codigoPostal&CP=" + $codigoPostal.attr('data-postal'),
                 error: function(xhr, resp) {
@@ -260,32 +265,62 @@ require_once 'templates/header.php'; ?>
                 }
             });
         });
-        var perfilAC = <?php echo $idUsuario; ?> + 0;
+        <?php echo 'var perfilAC = ' . $idUsuario . ';'; ?>
+
         <?php
 
         if ($PAQUETE && $PAQUETE['membresia']['rol'] != 'Gratis' && $PAQUETE['status']) {
             echo 'var social = ' . $PERFIL['social'] . ';';
-            echo '';
-
         ?>
-            var cuerpoSocial = "";
-            if (social.facebook && social.facebook != '') {
-                cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://www.facebook.com/${(social.facebook)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-facebook-f"></"></i></a> </li>`;
-            }
-            if (social.instagram && social.instagram != '') {
-                cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://www.instagram.com/${(social.instagram)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-instagram"></i></a> </li>`;
-            }
-            if (social.whatsapp && social.whatsapp != '') {
-                cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://api.whatsapp.com/send?phone=52${(social.whatsapp)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-whatsapp"></i></a> </li>`;
-            }
-            if (social.messenger && social.messenger != '') {
-                cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="http://m.me/${(social.messenger)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-facebook-messenger"></i></a> </li>`;
-            }
 
-            if (social.personalWeb && social.personalWeb != '') {
-                cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://${(social.personalWeb)}"class="p-2 fa-lg tw-ic text-white"><i class="fas fa-laptop-code"></i></a> </li>`;
-            }
-            $("#socialContact").html(cuerpoSocial);
+
+            $.ajax({
+                type: "POST",
+                url: ruta + 'php/usuariosFunciones.php',
+                dataType: "json",
+                data: 'opcion=miMembresia&idPerfil=' + perfilAC,
+                error: function(xhr, resp) {
+                    console.log(xhr.responseText);
+                },
+                success: function(data) {
+                    if (data.respuesta == 'exito') {
+                        if (data.planActivo) {
+                            if (data.ultimaMembresia) {
+                                let membresia = data.ultimaMembresia;
+                                var cuerpoSocial = "";
+                                if (parseInt(membresia.cobro) > 800) {
+                                    if (social.instagram && social.instagram != '') {
+                                        cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://www.instagram.com/${(social.instagram)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-instagram"></i></a> </li>`;
+                                    }
+                                    if (social.personalWeb && social.personalWeb != '') {
+                                        cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://${(social.personalWeb)}"class="p-2 fa-lg tw-ic text-white"><i class="fas fa-laptop-code"></i></a> </li>`;
+                                    }
+                                }
+                                if (parseInt(membresia.cobro) > 500) {
+                                    if (social.facebook && social.facebook != '') {
+                                        cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://www.facebook.com/${(social.facebook)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-facebook-f"></"></i></a> </li>`;
+                                    }
+                                    if (social.messenger && social.messenger != '') {
+                                        cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="http://m.me/${(social.messenger)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-facebook-messenger"></i></a> </li>`;
+                                    }
+                                }
+                                if (parseInt(membresia.cobro) > 120) {
+                                    if (social.whatsapp && social.whatsapp != '') {
+                                        cuerpoSocial += `<li class="list-inline-item"> <a target="_blank" href="https://api.whatsapp.com/send?phone=52${(social.whatsapp)}"class="p-2 fa-lg tw-ic text-white"><i class="fab fa-whatsapp"></i></a> </li>`;
+                                    }
+                                } else {
+                                    $("#socialContact").parent().remove();
+                                }
+                                $("#socialContact").html(cuerpoSocial);
+                            }
+                        } else {
+                            $("#socialContact").parent().remove();
+                        }
+                    } else {
+                        $("#socialContact").parent().remove();
+                    }
+                }
+            });
         <?php  } ?>
     </script>
     <script src="<?php echo $ruta; ?>script/publicPerfil.js "></script>

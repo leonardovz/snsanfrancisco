@@ -1,5 +1,21 @@
 <?php
 $CROOPER = true;
+
+$conexion = conexion($bd_config);
+$FUNCIONES = new AdminFunciones();
+$FUNCIONES->CONEXION = $conexion;
+
+$PERFIL = $FUNCIONES->verificarPerfil($UserLogin['idUsuario']); //configuraci[on del perfil]
+$SERVICIO = false;
+$SOCIALES = false;
+if ($PERFIL) {
+    $PERFIL = $PERFIL->fetch_assoc();
+    $SERVICIO = $FUNCIONES->verificarServicio($PERFIL['idServicio']);
+    $SOCIALES = json_decode($PERFIL['social'], true);
+    if ($SERVICIO) {
+        $SERVICIO = $SERVICIO->fetch_assoc();
+    }
+}
 require_once 'templates/header.php'; ?>
 
 <body>
@@ -72,53 +88,55 @@ require_once 'templates/header.php'; ?>
                             </div>
                             <div class="row">
                                 <div class="col-12 my-3">
-                                    <form id="formSocialNetwork" class="text-center border border-light p-md-5 p-3">
-                                        <p class="h4 mb-4">Redes Sociales</p>
-                                        <p>Modifica los datos de contacto.</p>
-                                        <!-- Nombre -->
-                                        <div class="row">
-                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
-                                                <a target="_blank" href="https://www.facebook.com/snsanfrancisco" class="py-2 px-2 bg-primary rounded"><i class="fab fa-facebook-f text-white"></i></a>
+                                    <?php if ($PERFIL) { ?>
+                                        <form id="formSocialNetwork" class="text-center border border-light p-md-5 p-3">
+                                            <p class="h4 mb-4">Redes Sociales</p>
+                                            <p>Modifica los datos de contacto.</p>
+                                            <!-- Nombre -->
+                                            <div class="row" id="facebookCont" style="display:none;">
+                                                <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                    <a target="_blank" href="https://www.facebook.com/snsanfrancisco" class="py-2 px-2 bg-primary rounded"><i class="fab fa-facebook-f text-white"></i></a>
+                                                </div>
+                                                <div class="col-xl-10 col-md-9 col-9">
+                                                    <input type="text" name="facebookVal" id="facebookVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco" value="<?php echo ($SOCIALES && isset($SOCIALES['facebook'])) ? $SOCIALES['facebook'] : "" ?>">
+                                                </div>
                                             </div>
-                                            <div class="col-xl-10 col-md-9 col-9">
-                                                <input type="text" name="facebookVal" id="facebookVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco" value="">
+                                            <div class="row" id="instagramCont" style="display:none;">
+                                                <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                    <a target="_blank" href="https://www.instagram.com/snsanfrancisco/" class="py-2 px-2 purple-gradient rounded"><i class="fab fa-instagram text-white"></i></a>
+                                                </div>
+                                                <div class="col-xl-10 col-md-9 col-9">
+                                                    <input type="text" name="instagramVal" id="instagramVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco" value="<?php echo ($SOCIALES && isset($SOCIALES['instagram'])) ? $SOCIALES['instagram'] : "" ?>">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
-                                                <a target="_blank" href="https://www.instagram.com/snsanfrancisco/" class="py-2 px-2 purple-gradient rounded"><i class="fab fa-instagram text-white"></i></a>
+                                            <div class="row" id="messengerCont" style="display:none">
+                                                <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                    <a target="_blank" href="http://m.me/snsanfrancisco" class="py-2 px-2 bg-info rounded"><i class="fab fa-facebook-messenger text-white"></i></a>
+                                                </div>
+                                                <div class="col-xl-10 col-md-9 col-9">
+                                                    <input type="text" name="messengerVal" id="messengerVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco" value="<?php echo ($SOCIALES && isset($SOCIALES['messenger'])) ? $SOCIALES['messenger'] : "" ?>">
+                                                </div>
                                             </div>
-                                            <div class="col-xl-10 col-md-9 col-9">
-                                                <input type="text" name="instagramVal" id="instagramVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco" value="">
+                                            <div class="row" id="whatsappCont">
+                                                <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                    <a target="_blank" href="https://api.whatsapp.com/send?phone=523481016176" class="py-2 px-2 bg-success rounded"><i class="fab fa-whatsapp text-white"></i></a>
+                                                </div>
+                                                <div class="col-xl-10 col-md-9 col-9">
+                                                    <input type="text" name="whatsappVal" id="whatsappVal" class="form-control mb-4" placeholder="p. ej. : 3481016176" value="<?php echo ($SOCIALES && isset($SOCIALES['whatsapp'])) ? $SOCIALES['whatsapp'] : "" ?>">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
-                                                <a target="_blank" href="http://m.me/snsanfrancisco" class="py-2 px-2 bg-info rounded"><i class="fab fa-facebook-messenger text-white"></i></a>
+                                            <div class="row" id="webCont" style="display:none;">
+                                                <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
+                                                    <a target="_blank" href="https://snsanfrancisco.com/" class="py-2 px-2 bg-dark rounded"><i class="fas fa-laptop-code text-white"></i></a>
+                                                </div>
+                                                <div class="col-xl-10 col-md-9 col-9">
+                                                    <input type="text" name="webVal" id="webVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco.com" value="<?php echo ($SOCIALES && isset($SOCIALES['personalWeb'])) ? $SOCIALES['personalWeb'] : "" ?>">
+                                                </div>
                                             </div>
-                                            <div class="col-xl-10 col-md-9 col-9">
-                                                <input type="text" name="messengerVal" id="messengerVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco" value="">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
-                                                <a target="_blank" href="https://api.whatsapp.com/send?phone=523481016176" class="py-2 px-2 bg-success rounded"><i class="fab fa-whatsapp text-white"></i></a>
-                                            </div>
-                                            <div class="col-xl-10 col-md-9 col-9">
-                                                <input type="text" name="whatsappVal" id="whatsappVal" class="form-control mb-4" placeholder="p. ej. : 3481016176" value="">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xl-1 col-md-2 col-2 text-center pt-2">
-                                                <a target="_blank" href="https://snsanfrancisco.com/" class="py-2 px-2 bg-dark rounded"><i class="fas fa-laptop-code text-white"></i></a>
-                                            </div>
-                                            <div class="col-xl-10 col-md-9 col-9">
-                                                <input type="text" name="webVal" id="webVal" class="form-control mb-4" placeholder="p. ej. : snsanfrancisco.com" value="">
-                                            </div>
-                                        </div>
-                                        <!-- Apellidos -->
-                                        <button class="btn btn-info btn-block" type="submit">Guardar Cambios</button>
-                                    </form>
+                                            <!-- Apellidos -->
+                                            <button class="btn btn-info btn-block" type="submit">Guardar Cambios</button>
+                                        </form>
+                                    <?php } ?>
                                     <button class="btn btn-info" id="cambioPassword" type="submit">Cambiar Contraseña</button>
 
                                 </div>
@@ -205,15 +223,62 @@ require_once 'templates/header.php'; ?>
                 success: function(data) {
                     if (data.respuesta == 'exito') {
                         if (data.planActivo) {
+                            if (data.ultimaMembresia) {
+                                let membresia = data.ultimaMembresia;
+                                if (parseInt(membresia.cobro) > 800) {
+                                    $("#whatsappCont").show();
+                                    $("#messengerCont").show();
+                                    $("#facebookCont").show();
+                                    $("#instagramCont").show();
+                                    $("#webCont").show();
+                                } else if (parseInt(membresia.cobro) > 500) {
+                                    $("#whatsappCont").show();
+                                    $("#messengerCont").show();
+                                    $("#facebookCont").show();
+                                    $("#instagramCont").remove();
+                                    $("#webCont").remove();
+                                } else if (parseInt(membresia.cobro) > 120) {
+                                    $("#whatsappCont").show();
+                                    $("#messengerCont").remove();
+                                    $("#facebookCont").remove();
+                                    $("#instagramCont").remove();
+                                    $("#webCont").remove();
+                                } else {
+                                    $("#formSocialNetwork").remove();
+                                }
+                            }
                             $("#paqueteActivo").html(planActivo(data));
                         } else {
+                            $("#formSocialNetwork").remove();
                             $("#planInactivo").show();
                         }
                     } else {
+                        $("#formSocialNetwork").remove();
                         $("#planInactivo").show();
                     }
                 }
             });
+            $("#formSocialNetwork").on('submit', function(e) {
+                e.preventDefault();
+                var formulario = $(this).serialize();
+                $.ajax({
+                    type: "POST",
+                    url: ruta + 'php/usuariosFunciones.php',
+                    dataType: "json",
+                    data: 'opcion=redesSociales&' + formulario,
+                    error: function(xhr, resp) {
+                        console.log(xhr.responseText);
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data.respuesta == 'exito') {
+
+                        } else {
+
+                        }
+                    }
+                });
+            })
 
             $.ajax({
                 type: "POST",

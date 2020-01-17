@@ -1,4 +1,3 @@
-var ruta = ruta();
 var $publicacion = $('.oculta');
 $publicacion.hide();
 $("#cancelar").parent().hide();

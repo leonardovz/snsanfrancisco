@@ -1,8 +1,8 @@
 <?php
 $CROOPER = true;
 $FUNCIONES = new AdminFunciones();
+// $conexion = conexion($bd_config);
 $FUNCIONES->CONEXION = $conexion;
-$conexion = conexion($bd_config);
 
 if ($conexion->connect_errno) {
     $respuesta = array(
@@ -20,6 +20,7 @@ if ($PERFIL) {
         $SERVICIO = $SERVICIO->fetch_assoc();
     }
 }
+
 require_once 'templates/header.php'; ?>
 
 
