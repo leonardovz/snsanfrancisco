@@ -284,7 +284,7 @@ switch ($_POST['opcion']) {
         break;
     case 'miMembresia':
         $idUser = ($USERLOGIN) ? $USERLOGIN['idUsuario'] : false;
-        $idUser = (isset($_POST['idPerfil']) && !empty($_POST['idPerfil'])) ? (int) $_POST['idPerfil'] : false;
+        $idUser = (isset($_POST['idPerfil']) && !empty($_POST['idPerfil'])) ? (int) $_POST['idPerfil'] : $idUser;
 
         if ($idUser) {
             // Siempre te arrojara la membresia con la ultima fecha de finalizacion
