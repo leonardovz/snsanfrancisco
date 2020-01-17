@@ -250,11 +250,9 @@ require_once 'templates/header.php'; ?>
                             $("#paqueteActivo").html(planActivo(data));
                         } else {
                             $("#formSocialNetwork").remove();
-                            $("#planInactivo").show();
                         }
                     } else {
                         $("#formSocialNetwork").remove();
-                        $("#planInactivo").show();
                     }
                 }
             });
