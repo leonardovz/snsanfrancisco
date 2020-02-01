@@ -299,9 +299,8 @@ class AdminFunciones
     }
     function codigoUnico($long = 12)
     {
-        $ADMINFUN = new AdminFunciones(); //trae la clase, por que de lo contrario no puedes acceder a las funciones
-        $codigo = $ADMINFUN->generarCodigo($long); //Genera un codigo aleatorio
-        $codigoStatus = $ADMINFUN->verificarCodigo($codigo); //Es necesario comparar los registros y verificar que no exista
+        $codigo = $this->generarCodigo($long); //Genera un codigo aleatorio
+        $codigoStatus = $this->verificarCodigo($codigo); //Es necesario comparar los registros y verificar que no exista
         if ($codigoStatus) {
             $this->codigoUnico(); //Recursividad, si ya existe prueba otro, hasta que el sistema diga que ya no existe registro
         } else {

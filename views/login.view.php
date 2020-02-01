@@ -36,7 +36,7 @@
                                 <label for="password">Contraseña</label>
                             </div>
                             <div class="col-md-12 p-0 mb-5">
-                                <div class="g-recaptcha" data-sitekey="6LfTXMQUAAAAAFrpHyGr_-sXZzdaQ4Pgy4Hmjhlg"></div>
+                                <div class="g-recaptcha" data-sitekey="6LcQ4tQUAAAAAEziLRqunTXdhfs8xNDml7LHKGds"></div>
                             </div>
                             <div class="d-flex justify-content-around">
                                 <div>

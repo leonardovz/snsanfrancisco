@@ -33,7 +33,7 @@ switch ($_POST['opcion']) {
     case 'registro':
         $response_recapcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : false;
         if (isset($response_recapcha) && $response_recapcha) {
-            $secret = "6LfTXMQUAAAAAJYmMvBxne034MJMwQu6ze8X2-5V";
+            $secret = "6LcQ4tQUAAAAALXxtaqxtRYLAFOO3nGp8NbscwOl";
             $ip = $_SERVER['REMOTE_ADDR'];
             $validar_server = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response_recapcha&remoteip=$ip");
         } else {
