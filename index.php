@@ -13,6 +13,7 @@ if (!isset($conexion)) {
 $ANALYTICS = true;
 $ADSENSE = false;
 $RECAPTCHA = true;
+$PIXEL_FACEBOOK = true;
 
 $rutas = (isset($_GET['ruta']) && !empty($_GET['ruta'])) ? explode("/", strtolower($_GET['ruta'])) : false; //validacion de la segmentacion
 $RUTAS0 = (isset($rutas[0]) && !empty($rutas[0])) ? $rutas[0] : false; //validacion de la RUTA CERO
@@ -109,6 +110,7 @@ if ($rutas) { //Ruta Vacia
     } elseif ($RUTAS0 == 'perfil') {
         $idUsuario = 0;
         if ($UserLogin) { //Por si acaso hay algun usuario Logueado
+            $PIXEL_FACEBOOK = false;
             $idUsuario = $UserLogin['idUsuario'];
             if ($UserLogin['rol'] == 1) {
                 // >> < Apartado para el administrador > << 
@@ -119,6 +121,7 @@ if ($rutas) { //Ruta Vacia
                         require_once 'account/perfilEdit.view.php';
                     } elseif (is_numeric($RUTAS1)) {
                         $idUsuario = (int) $RUTAS1;
+                        $PIXEL_FACEBOOK = true;
                         require_once 'views/perfilPublico.view.php';
                     } elseif ($RUTAS1 == 'servicios') {
                         require_once 'account/admin/servicios/servicios.php';
