@@ -24,7 +24,7 @@
             <button class="btn btn-sm btn-outline-white my-0" type="submit">Subscribete</button>
           </div>
           <div class="col-md-12 my-md-2 ml-md-5 my-2">
-            <div class="g-recaptcha" data-sitekey="6LfTXMQUAAAAAFrpHyGr_-sXZzdaQ4Pgy4Hmjhlg"></div>
+            <div class="g-recaptcha" data-sitekey="6LcQ4tQUAAAAAEziLRqunTXdhfs8xNDml7LHKGds"></div>
           </div>
         </form>
       </div>

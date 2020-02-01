@@ -1,12 +1,14 @@
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/popper.min.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/js/mdb.min.js"></script>
-<script type="text/javascript" src="<?php echo $ruta; ?>script/funciones.js"></script>
 <script type="text/javascript" src="<?php echo $ruta; ?>recursos/sweetalert2/sweetalert2.min.js"></script>
 
 <?php if (isset($summernote) && $summernote) { ?>
   <script type="text/javascript" src="<?php echo $ruta; ?>recursos/summernote/summernote-lite.js"></script>
 <?php } ?>
+
+<script type="text/javascript" src="<?php echo $ruta; ?>script/funciones.js"></script>
+
 <?php if ($UserLogin) { ?>
   <script>
     $("#cerrarSesion").on('click', (e) => {
