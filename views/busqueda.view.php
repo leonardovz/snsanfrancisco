@@ -15,11 +15,11 @@ if ($conexion->connect_errno) {
 $FUNCIONES = new AdminFunciones();
 $FUNCIONES->CONEXION = $conexion;
 $BUSCADOR = ($RUTAS1) ? $RUTAS1 : "";
-$systemName =  $BUSCADOR . ' | ' . $systemName;
+
 $keyWords = $BUSCADOR . ' | ' . $keyWords;
 $descripcionServ = $descripcionServ . ' - ' . $BUSCADOR;
 
-
+$systemName = "Busqueda | " . $systemName;
 // exit;
 require_once 'templates/header.php';
 ?>

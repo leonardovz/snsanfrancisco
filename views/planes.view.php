@@ -1,4 +1,6 @@
-<?php require_once 'templates/header.php'; ?>
+<?php 
+$systemName = "Paquetes & Planes | " . $systemName;
+require_once 'templates/header.php'; ?>
 
 <body>
     <!-- Main navigation -->
