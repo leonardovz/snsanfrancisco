@@ -38,7 +38,7 @@
                                         <label for="correoVerificar">Ingresa tu correo</label>
                                     </div>
                                     <div class="col-md-12 p-0 mb-5">
-                                        <div class="g-recaptcha" data-sitekey="6LfTXMQUAAAAAFrpHyGr_-sXZzdaQ4Pgy4Hmjhlg"></div>
+                                        <div class="g-recaptcha" data-sitekey="6LcQ4tQUAAAAAEziLRqunTXdhfs8xNDml7LHKGds"></div>
                                     </div>
                                     <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id=>Validar Correo Electronico</button>
                                 </form>

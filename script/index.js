@@ -62,8 +62,8 @@ $(document).ready(function () {
 
   function cuerpoPublicacion(publicacion, ruta, rutaImagen) {
     var cuerpo = ``;
-    let nombreMin = publicacion.nombre.replace(" ", "-"),
-      apellidoMin = publicacion.apellidos.replace(" ", "-"),
+    let nombreMin = publicacion.nombre.replace(/ /gi, "-"),
+      apellidoMin = publicacion.apellidos.replace(/ /gi, "-"),
       nameUser = nombreMin + '-' + apellidoMin,
       fecha = publicacion.fecha.split(" "),
       numDesc = publicacion.descripcion.length;
@@ -92,8 +92,8 @@ $(document).ready(function () {
   }
   function cuerpoPerfil(perfil, ruta, rutaImagen) {
     var cuerpo = ``;
-    let nombreMin = perfil.nombre.replace(" ", "-"),
-      apellidoMin = perfil.apellidos.replace(" ", "-"),
+    let nombreMin = perfil.nombre.replace(/ /gi, "-"),
+      apellidoMin = perfil.apellidos.replace(/ /gi, "-"),
       nameUser = nombreMin + '-' + apellidoMin,
       fecha = perfil.fecha.split(" ");
     cuerpo += `
@@ -154,7 +154,7 @@ $(document).ready(function () {
                     <h5 class="pink-text"><i class="${servicio.icono} mx-3"></i> ${servicio.nombre}</h5>
                     <h3 class="card-title pt-2"><strong>${servicio.descripcion}</strong></h3>
                     <p></p>
-                    <a href="${ruta}servicios/${servicio.id}/${normalize(servicio.nombre).replace(" ", "-")}" class="btn ${servicio.color}"><i class="fas fa-clone left"></i> Ver</a>
+                    <a href="${ruta}servicios/${servicio.id}/${normalize(servicio.nombre).replace(/ /gi, "-")}" class="btn ${servicio.color}"><i class="fas fa-clone left"></i> Ver</a>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 <?php
 $acStyles = true;
+$systemName = "Servicios | " . $systemName;
 require_once 'templates/header.php';
 ?>
 
