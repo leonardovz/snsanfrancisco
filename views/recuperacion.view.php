@@ -136,6 +136,13 @@
                         cambiarPassword(correo, codigo, passNew, passNewR);
                     }
                 }
+                if (errores > 0) {
+                    Swal.fire(
+                        'ERROR',
+                        'El código de verificación no es correcto',
+                        'error'
+                    );
+                }
             });
 
             function cambiarPassword(correo, codigo = false, pass = false, passR = false) {

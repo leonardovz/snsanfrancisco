@@ -9,7 +9,7 @@ $bd_config = array(
 if ($_SERVER['HTTP_HOST'] == "localhost") {
 	$bd_config = array(
 		'host' => 'localhost',
-		'database' => 'sanfrancisco',
+		'database' => 'snsanfrancisco',
 		'usuario' => 'rootLeo',
 		'pass' => 'data1122'
 	);

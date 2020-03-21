@@ -73,6 +73,7 @@
     });
   });
 </script>
+
 <script>
   var terminos = localStorage.getItem('terminos_y_condiciones_snsanfrancisco')
   if (!terminos) {
